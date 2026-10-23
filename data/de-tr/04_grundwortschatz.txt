@@ -1,0 +1,193 @@
+# native | article | pos | translation | alternatives (;) | example_native | example_target ([gap]) | note | frequency keys (,)
+Montag | der | n | pazartesi |  | Am Montag arbeite ich. | [Pazartesi] çalışıyorum. |
+Dienstag | der | n | salı |  | Der Kurs ist am Dienstag. | Kurs [salı] günü. |
+Mittwoch | der | n | çarşamba |  | Am Mittwoch gehe ich schwimmen. | [Çarşamba] yüzmeye gidiyorum. |
+Donnerstag | der | n | perşembe |  | Am Donnerstag kommt meine Schwester. | Kız kardeşim [perşembe] geliyor. |
+Freitag | der | n | cuma |  | Freitag ist mein Lieblingstag. | [Cuma] en sevdiğim gün. |
+Samstag | der | n | cumartesi |  | Am Samstag gehen wir einkaufen. | [Cumartesi] alışverişe gidiyoruz. |
+Sonntag | der | n | pazar |  | Am Sonntag schlafe ich lange. | [Pazar] günü geç kalkarım. | pazar heißt auch Markt.
+Januar | der | n | ocak |  | Im Januar ist es kalt. | [Ocakta] hava soğuk. |
+Februar | der | n | şubat |  | Mein Geburtstag ist im Februar. | Doğum günüm [şubatta]. |
+März | der | n | mart |  | Im März wird es wärmer. | [Martta] hava ısınıyor. |
+April | der | n | nisan |  | Im April regnet es oft. | [Nisanda] sık sık yağmur yağar. |
+Mai | der | n | mayıs |  | Im Mai blühen die Blumen. | [Mayısta] çiçekler açar. |
+Juni | der | n | haziran |  | Die Schule endet im Juni. | Okul [haziranda] bitiyor. |
+Juli | der | n | temmuz |  | Im Juli fahren wir ans Meer. | [Temmuzda] denize gidiyoruz. |
+August | der | n | ağustos |  | Im August ist es sehr heiß. | [Ağustosta] hava çok sıcak. |
+September | der | n | eylül |  | Im September beginnt die Schule. | Okul [eylülde] başlıyor. |
+Oktober | der | n | ekim |  | Im Oktober fallen die Blätter. | [Ekimde] yapraklar düşer. |
+November | der | n | kasım |  | Im November ist es neblig. | [Kasımda] hava sisli. |
+Dezember | der | n | aralık |  | Im Dezember schneit es. | [Aralıkta] kar yağar. |
+Frühling | der | n | ilkbahar | bahar | Im Frühling ist es schön. | [İlkbaharda] hava güzel. |
+Herbst | der | n | sonbahar |  | Im Herbst regnet es viel. | [Sonbaharda] çok yağmur yağar. |
+Winter | der | n | kış |  | Der Winter ist lang. | [Kış] uzun. |
+elf |  | num | on bir |  | Mein Sohn ist elf Jahre alt. | Oğlum [on bir] yaşında. |
+zwölf |  | num | on iki |  | Das Jahr hat zwölf Monate. | Yılda [on iki] ay vardır. |
+zwanzig |  | num | yirmi |  | Ich bin zwanzig Jahre alt. | [Yirmi] yaşındayım. |
+dreißig |  | num | otuz |  | Der Monat hat dreißig Tage. | Ay [otuz] gün çekiyor. |
+null |  | num | sıfır |  | Es sind null Grad. | Hava [sıfır] derece. |  | null,nullen
+erster |  | adj | birinci | ilk | Das ist mein erster Tag. | Bu benim [ilk] günüm. |  | erst,erster
+dritter |  | adj | üçüncü |  | Ich wohne im dritten Stock. | [Üçüncü] katta oturuyorum. |  | dritt,dritter
+Zahl | die | n | sayı |  | Nenn mir eine Zahl! | Bana bir [sayı] söyle! |
+Brot | das | n | ekmek |  | Ich kaufe frisches Brot. | Taze [ekmek] alıyorum. |
+Käse | der | n | peynir |  | Türkischer Käse ist lecker. | Türk [peyniri] lezzetli. |  | käse,käsen
+Milch | die | n | süt |  | Ich trinke Milch. | [Süt] içiyorum. |
+Zucker | der | n | şeker |  | Tee ohne Zucker, bitte. | [Şekersiz] çay, lütfen. |  | zucker,zuckern
+Salz | das | n | tuz |  | Gib mir bitte das Salz. | Bana lütfen [tuzu] ver. |
+Obst | das | n | meyve |  | Ich esse jeden Tag Obst. | Her gün [meyve] yerim. |
+Gemüse | das | n | sebze |  | Gemüse ist gesund. | [Sebze] sağlıklıdır. |
+Apfel | der | n | elma |  | Der Apfel ist rot. | [Elma] kırmızı. |
+Kartoffel | die | n | patates |  | Ich mag Kartoffeln. | [Patatesi] severim. |
+Suppe | die | n | çorba |  | Die Suppe ist heiß. | [Çorba] sıcak. |  | suppe,suppen
+Kuchen | der | n | pasta | kek | Der Kuchen schmeckt gut. | [Pasta] çok lezzetli. |
+Huhn | das | n | tavuk |  | Wir essen heute Huhn. | Bugün [tavuk] yiyoruz. |
+Reis | der | n | pirinç | pilav | Ich koche Reis. | [Pilav] pişiriyorum. | gekochter Reis = pilav.
+Essen | das | n | yemek |  | Das Essen ist fertig. | [Yemek] hazır. |  | essen
+frühstücken |  | v | kahvaltı yapmak |  | Wir frühstücken um acht. | Sekizde [kahvaltı yapıyoruz]. |  | frühstücken
+Mittagessen | das | n | öğle yemeği |  | Was gibt es zum Mittagessen? | [Öğle yemeğinde] ne var? |
+Durst | der | n | susuzluk |  | Ich habe Durst. | [Susadım]. | Durst haben = susamak.
+lecker |  | adj | lezzetli | nefis | Das Essen ist lecker. | Yemek [lezzetli]. |
+Gabel | die | n | çatal |  | Ich brauche eine Gabel. | Bir [çatala] ihtiyacım var. |
+Löffel | der | n | kaşık |  | Gib mir einen Löffel! | Bana bir [kaşık] ver! |
+Teller | der | n | tabak |  | Der Teller ist leer. | [Tabak] boş. |
+Tasse | die | n | fincan |  | Eine Tasse Kaffee, bitte. | Bir [fincan] kahve, lütfen. |
+Kühlschrank | der | n | buzdolabı |  | Die Milch ist im Kühlschrank. | Süt [buzdolabında]. |
+Bett | das | n | yatak |  | Ich gehe ins Bett. | [Yatağa] gidiyorum. |
+Stuhl | der | n | sandalye |  | Der Stuhl ist bequem. | [Sandalye] rahat. |
+Schrank | der | n | dolap |  | Die Kleider sind im Schrank. | Elbiseler [dolapta]. |
+Sofa | das | n | kanepe |  | Die Katze liegt auf dem Sofa. | Kedi [kanepede] yatıyor. |
+Wand | die | n | duvar |  | Das Bild hängt an der Wand. | Resim [duvarda] asılı. |
+Garten | der | n | bahçe |  | Die Kinder spielen im Garten. | Çocuklar [bahçede] oynuyor. |
+Badezimmer | das | n | banyo |  | Das Badezimmer ist sauber. | [Banyo] temiz. |
+Schlafzimmer | das | n | yatak odası |  | Das Schlafzimmer ist groß. | [Yatak odası] büyük. |
+Treppe | die | n | merdiven |  | Die Treppe ist steil. | [Merdiven] dik. |
+Kopfschmerzen |  | n | baş ağrısı |  | Ich habe starke Kopfschmerzen. | Çok kötü bir [baş ağrım] var. | Nur Plural: die Kopfschmerzen. | kopfschmerz
+Zahn | der | n | diş |  | Mein Zahn tut weh. | [Dişim] ağrıyor. |  | zahn,zähnen
+Nase | die | n | burun |  | Meine Nase läuft. | [Burnum] akıyor. |
+Bauch | der | n | karın |  | Mein Bauch tut weh. | [Karnım] ağrıyor. |  | bauch,bauchen
+Herz | das | n | kalp | gönül | Mein Herz schlägt schnell. | [Kalbim] hızlı atıyor. |  | herz,herzen
+Blut | das | n | kan |  | Er hat viel Blut verloren. | Çok [kan] kaybetti. |  | blut,bluten
+Schulter | die | n | omuz |  | Meine Schulter tut weh. | [Omzum] ağrıyor. |  | schulter,schultern
+Brust | die | n | göğüs |  | Ich habe Schmerzen in der Brust. | [Göğsümde] ağrı var. |
+Haut | die | n | deri | cilt | Die Sonne ist schlecht für die Haut. | Güneş [cilde] zararlı. |
+Zunge | die | n | dil |  | Zeig mir deine Zunge! | [Dilini] göster! | dil heißt auch Sprache.
+Lippe | die | n | dudak |  | Meine Lippen sind trocken. | [Dudaklarım] kuru. |
+Wetter | das | n | hava |  | Wie ist das Wetter? | [Hava] nasıl? |
+Schnee | der | n | kar |  | Der Schnee ist weiß. | [Kar] beyaz. |
+regnen |  | v | yağmur yağmak |  | Es regnet. | [Yağmur yağıyor]. |
+Wolke | die | n | bulut |  | Am Himmel sind keine Wolken. | Gökyüzünde hiç [bulut] yok. |
+Sturm | der | n | fırtına |  | Morgen kommt ein Sturm. | Yarın [fırtına] geliyor. |
+weiß |  | adj | beyaz | ak | Die Wand ist weiß. | Duvar [beyaz]. |  | #900
+gelb |  | adj | sarı |  | Die Banane ist gelb. | Muz [sarı]. |
+braun |  | adj | kahverengi |  | Er hat braune Augen. | [Kahverengi] gözleri var. |
+grau |  | adj | gri |  | Der Himmel ist grau. | Gökyüzü [gri]. |
+rosa |  | adj | pembe |  | Das Kleid ist rosa. | Elbise [pembe]. |
+Jacke | die | n | ceket | mont | Nimm deine Jacke mit! | [Ceketini] al! |
+Hemd | das | n | gömlek |  | Das Hemd ist weiß. | [Gömlek] beyaz. |
+Mantel | der | n | palto | mont | Im Winter trage ich einen Mantel. | Kışın [palto] giyerim. |
+Kleidung | die | n | kıyafet | giysi | Ich brauche neue Kleidung. | Yeni [kıyafete] ihtiyacım var. |
+Socke | die | n | çorap |  | Wo sind meine Socken? | [Çoraplarım] nerede? |  | socke,socken
+Brille | die | n | gözlük |  | Ich brauche eine Brille. | [Gözlüğe] ihtiyacım var. |
+Bahnhof | der | n | tren istasyonu | gar; istasyon | Wo ist der Bahnhof? | [Tren istasyonu] nerede? |
+Flughafen | der | n | havalimanı | havaalanı | Wir fahren zum Flughafen. | [Havalimanına] gidiyoruz. |
+Fahrrad | das | n | bisiklet |  | Ich fahre mit dem Fahrrad. | [Bisikletle] gidiyorum. |
+Fahrkarte | die | n | bilet |  | Ich kaufe eine Fahrkarte. | Bir [bilet] alıyorum. |
+Koffer | der | n | bavul | valiz | Mein Koffer ist schwer. | [Bavulum] ağır. |
+Reise | die | n | yolculuk | seyahat | Gute Reise! | İyi [yolculuklar]! |
+Supermarkt | der | n | süpermarket | market | Ich gehe in den Supermarkt. | [Markete] gidiyorum. |
+Apotheke | die | n | eczane |  | Die Apotheke ist geschlossen. | [Eczane] kapalı. |
+Post | die | n | postane | posta | Ich gehe zur Post. | [Postaneye] gidiyorum. |
+Markt | der | n | pazar | çarşı | Wir kaufen Obst auf dem Markt. | [Pazardan] meyve alıyoruz. |
+Universität | die | n | üniversite |  | Ich gehe zur Universität. | [Üniversiteye] gidiyorum. |
+Museum | das | n | müze |  | Das Museum ist montags geschlossen. | [Müze] pazartesileri kapalı. |
+Kino | das | n | sinema |  | Gehen wir ins Kino? | [Sinemaya] gidelim mi? |
+Strand | der | n | plaj | sahil | Wir liegen am Strand. | [Plajda] uzanıyoruz. |  | strand,stranden
+Ausweis | der | n | kimlik | kimlik kartı | Zeigen Sie mir bitte Ihren Ausweis. | Lütfen [kimliğinizi] gösterin. |
+Sprache | die | n | dil |  | Türkisch ist eine schöne Sprache. | Türkçe güzel bir [dil]. |
+Türkisch |  | n | Türkçe |  | Ich lerne Türkisch. | [Türkçe] öğreniyorum. | Sprachen haben im Türkischen die Endung -ce/-ca. | türkisch
+Türkei | die | n | Türkiye |  | Ich fahre in die Türkei. | [Türkiye'ye] gidiyorum. |
+Deutschland |  | n | Almanya |  | Ich wohne in Deutschland. | [Almanya'da] oturuyorum. | Ländernamen ohne Artikel.
+Satz | der | n | cümle |  | Bilde einen Satz! | Bir [cümle] kur! |
+Frage | die | n | soru |  | Ich habe eine Frage. | Bir [sorum] var. |
+Antwort | die | n | cevap | yanıt | Die Antwort ist richtig. | [Cevap] doğru. |
+Übung | die | n | alıştırma | egzersiz | Übung macht den Meister. | [Alıştırma] ustalaştırır. |
+Prüfung | die | n | sınav |  | Morgen habe ich eine Prüfung. | Yarın [sınavım] var. |
+Schüler | der | n | öğrenci |  | Die Schüler lernen. | [Öğrenciler] ders çalışıyor. |
+Student | der | n | üniversite öğrencisi | öğrenci | Er ist Student. | O [üniversite öğrencisi]. |
+Lektion | die | n | ders |  | Das ist die erste Lektion. | Bu ilk [ders]. |
+üben |  | v | alıştırma yapmak | pratik yapmak | Ich übe jeden Tag. | Her gün [pratik yapıyorum]. |
+Uhrzeit | die | n | saat |  | Weißt du die Uhrzeit? | [Saati] biliyor musun? |
+Morgen | der | n | sabah |  | Am Morgen trinke ich Tee. | [Sabah] çay içerim. | Guten Morgen! = Günaydın! | morgens
+Mittag | der | n | öğle |  | Wir essen zu Mittag. | [Öğle] yemeği yiyoruz. |
+täglich |  | adj | her gün | günlük | Ich lerne täglich. | [Her gün] öğreniyorum. |
+Leben | das | n | hayat | yaşam | Das Leben ist schön. | [Hayat] güzel. |  | leben
+Liebe | die | n | aşk | sevgi | Liebe ist alles. | [Aşk] her şeydir. | sevgi = Liebe (allgemein, Familie).
+Freundschaft | die | n | arkadaşlık | dostluk | Unsere Freundschaft ist wichtig. | [Arkadaşlığımız] önemli. |
+Arbeit | die | n | iş |  | Ich gehe zur Arbeit. | [İşe] gidiyorum. |  | arbeit
+Krieg | der | n | savaş |  | Der Krieg ist vorbei. | [Savaş] bitti. |
+Stimme | die | n | ses | oy | Sie hat eine schöne Stimme. | Güzel bir [sesi] var. | Wählerstimme = oy.
+Augenblick | der | n | an |  | Warte einen Augenblick! | Bir [an] bekle! |
+Kopie | die | n | kopya |  | Ich brauche eine Kopie. | Bir [kopyaya] ihtiyacım var. |
+Chaos | das | n | kaos | karmaşa | In meinem Zimmer herrscht Chaos. | Odamda [kaos] var. |
+Charakter | der | n | karakter |  | Er hat einen guten Charakter. | İyi bir [karakteri] var. |
+Champion | der | n | şampiyon |  | Unsere Mannschaft ist Champion. | Takımımız [şampiyon]. |
+Café | das | n | kafe | kahvehane | Wir sitzen im Café. | [Kafede] oturuyoruz. | Traditionelles Teehaus = çay bahçesi / kahvehane. | café,cafe
+Clown | der | n | palyaço |  | Der Clown ist lustig. | [Palyaço] komik. |
+Cousin | der | n | kuzen |  | Mein Cousin wohnt in Bursa. | [Kuzenim] Bursa'da oturuyor. |
+Quatsch | der | n | saçmalık | saçma | Das ist doch Quatsch! | Bu [saçmalık]! |  | quatsch,quatschen
+Qualität | die | n | kalite |  | Die Qualität ist gut. | [Kalite] iyi. |
+Quelle | die | n | kaynak |  | Das Wasser kommt aus einer Quelle. | Su bir [kaynaktan] geliyor. |
+Quadrat | das | n | kare |  | Ein Quadrat hat vier Ecken. | Bir [karenin] dört köşesi var. |
+Ofen | der | n | fırın |  | Das Brot ist im Ofen. | Ekmek [fırında]. |
+Obstsalat | der | n | meyve salatası |  | Ich mache einen Obstsalat. | [Meyve salatası] yapıyorum. |
+Ozean | der | n | okyanus |  | Der Ozean ist tief. | [Okyanus] derin. |
+Osten | der | n | doğu |  | Die Sonne geht im Osten auf. | Güneş [doğudan] doğar. |
+Westen | der | n | batı |  | Die Sonne geht im Westen unter. | Güneş [batıdan] batar. |
+Norden | der | n | kuzey |  | Im Norden ist es kälter. | [Kuzeyde] hava daha soğuk. |
+Süden | der | n | güney |  | Antalya liegt im Süden. | Antalya [güneyde]. |
+Öl | das | n | yağ |  | Ich koche mit Olivenöl. | Zeytin[yağıyla] yemek yapıyorum. |  | öl,ölen
+Insekt | das | n | böcek |  | Im Garten gibt es viele Insekten. | Bahçede çok [böcek] var. |
+Igel | der | n | kirpi |  | Der Igel schläft im Winter. | [Kirpi] kışın uyur. |
+immer noch |  | adv | hâlâ |  | Es regnet immer noch. | [Hâlâ] yağmur yağıyor. |  | immer
+irgendwie |  | adv | bir şekilde |  | Wir schaffen das irgendwie. | Bunu [bir şekilde] başarırız. |
+innen |  | adv | içeride | içinde | Innen ist es warm. | [İçeride] hava sıcak. |
+Idiot | der | n | aptal | salak | Ich bin so ein Idiot! | Ne [aptalım]! |
+Jahrhundert | das | n | yüzyıl | asır | Das Haus ist aus dem letzten Jahrhundert. | Ev geçen [yüzyıldan] kalma. |
+jemals |  | adv | hiç |  | Warst du jemals in Istanbul? | [Hiç] İstanbul'a gittin mi? |
+jedenfalls |  | adv | her neyse | her halükârda | Jedenfalls komme ich morgen. | [Her neyse], yarın geliyorum. |
+Jugend | die | n | gençlik |  | In meiner Jugend habe ich viel gelesen. | [Gençliğimde] çok okudum. |
+Joghurt | der | n | yoğurt |  | Ich esse Joghurt mit Honig. | Ballı [yoğurt] yiyorum. |
+Journalist | der | n | gazeteci |  | Sie arbeitet als Journalistin. | [Gazeteci] olarak çalışıyor. |
+Kaufhaus | das | n | mağaza | alışveriş merkezi | Das Kaufhaus ist groß. | [Mağaza] büyük. |
+Kultur | die | n | kültür |  | Ich interessiere mich für die türkische Kultur. | Türk [kültürüyle] ilgileniyorum. |
+Kunst | die | n | sanat |  | Kunst ist mein Hobby. | [Sanat] benim hobim. |
+Kuss | der | n | öpücük |  | Gib mir einen Kuss! | Bana bir [öpücük] ver! |
+Lehrerin | die | n | öğretmen | kadın öğretmen | Meine Lehrerin ist nett. | [Öğretmenim] çok iyi. |
+Löwe | der | n | aslan |  | Der Löwe ist stark. | [Aslan] güçlü. |
+Mond | der | n | ay |  | Der Mond ist hell. | [Ay] parlak. |
+Maus | die | n | fare |  | Die Katze fängt eine Maus. | Kedi bir [fare] yakalıyor. |
+Medikament | das | n | ilaç |  | Nimm dein Medikament! | [İlacını] al! |
+Nachbarin | die | n | komşu | kadın komşu | Meine Nachbarin hat einen Hund. | [Komşumun] bir köpeği var. |
+Natur | die | n | doğa |  | Ich liebe die Natur. | [Doğayı] seviyorum. |
+Neffe | der | n | yeğen |  | Mein Neffe ist drei Jahre alt. | [Yeğenim] üç yaşında. |
+Paket | das | n | paket | koli | Ein Paket ist für dich gekommen. | Sana bir [paket] geldi. |
+Pass | der | n | pasaport |  | Ich habe meinen Pass vergessen. | [Pasaportumu] unuttum. | Reisepass = pasaport.
+Pflanze | die | n | bitki |  | Die Pflanze braucht Wasser. | [Bitkinin] suya ihtiyacı var. |  | pflanze,pflanzen
+Pech | das | n | şanssızlık | talihsizlik | So ein Pech! | Ne [şanssızlık]! |
+Rad | das | n | tekerlek |  | Das Rad ist kaputt. | [Tekerlek] bozuk. |
+Rezept | das | n | tarif | reçete | Hast du das Rezept? | [Tarifi] var mı sende? | Arztrezept = reçete.
+Rock | der | n | etek |  | Sie trägt einen roten Rock. | Kırmızı bir [etek] giyiyor. |  | rock,rocken
+Sand | der | n | kum |  | Der Sand ist heiß. | [Kum] sıcak. |
+Schokolade | die | n | çikolata |  | Ich liebe Schokolade. | [Çikolatayı] çok severim. |
+Spiegel | der | n | ayna |  | Schau in den Spiegel! | [Aynaya] bak! |
+Spiel | das | n | oyun | maç | Das Spiel beginnt um acht. | [Maç] sekizde başlıyor. | Fußballspiel = maç. | spiel
+Sport | der | n | spor |  | Ich mache jeden Tag Sport. | Her gün [spor] yapıyorum. |
+Teppich | der | n | halı |  | Der Teppich ist aus der Türkei. | [Halı] Türkiye'den. |
+Tomate | die | n | domates |  | Die Tomaten sind reif. | [Domatesler] olgun. |
+Vogel | der | n | kuş |  | Der Vogel singt. | [Kuş] ötüyor. |
+Vorschlag | der | n | öneri | teklif | Hast du einen Vorschlag? | Bir [önerin] var mı? |
+Wurst | die | n | sucuk | sosis | Die Wurst ist scharf. | [Sucuk] acı. | Türkische Knoblauchwurst = sucuk.
+Zahnbürste | die | n | diş fırçası |  | Ich habe meine Zahnbürste vergessen. | [Diş fırçamı] unuttum. |
+Zigarette | die | n | sigara |  | Er raucht keine Zigaretten. | [Sigara] içmiyor. |
+Zitrone | die | n | limon |  | Tee mit Zitrone, bitte. | [Limonlu] çay, lütfen. |
+Zwiebel | die | n | soğan |  | Ich schneide Zwiebeln. | [Soğan] doğruyorum. |

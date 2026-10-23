@@ -1,0 +1,13 @@
+{
+  "pair": {"native": "de", "target": "tr"},
+  "version": 1,
+  "attribution": "test",
+  "words": [
+    {"id": "haus", "rank": 5, "native": "Haus", "article": "das", "partOfSpeech": "noun", "translation": "ev", "alternatives": [], "exampleNative": "Das Haus ist groß.", "exampleTarget": "[Ev] büyük.", "note": null},
+    {"id": "auto", "rank": 9, "native": "Auto", "article": "das", "partOfSpeech": "noun", "translation": "araba", "alternatives": ["otomobil"], "exampleNative": "Das Auto ist neu.", "exampleTarget": "[Araba] yeni.", "note": null},
+    {"id": "arbeiten", "rank": 3, "native": "arbeiten", "partOfSpeech": "verb", "translation": "çalışmak", "alternatives": [], "exampleNative": "Ich arbeite viel.", "exampleTarget": "Çok [çalışıyorum].", "note": null},
+    {"id": "buch", "rank": 7, "native": "Buch", "article": "das", "partOfSpeech": "noun", "translation": "kitap", "alternatives": [], "exampleNative": "Ich lese ein Buch.", "exampleTarget": "Bir [kitap] okuyorum.", "note": null},
+    {"id": "oeffnen", "rank": 12, "native": "öffnen", "partOfSpeech": "verb", "translation": "açmak", "alternatives": [], "exampleNative": "Öffne die Tür!", "exampleTarget": "Kapıyı [aç]!", "note": null},
+    {"id": "zeit", "rank": 2, "native": "Zeit", "article": "die", "partOfSpeech": "noun", "translation": "zaman", "alternatives": ["vakit"], "exampleNative": "Ich habe keine Zeit.", "exampleTarget": "[Zamanım] yok.", "note": null}
+  ]
+}

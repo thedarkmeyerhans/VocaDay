@@ -1,0 +1,259 @@
+# native | article | pos | translation | alternatives (;) | example_native | example_target ([gap]) | note | frequency keys (,)
+Musik | die | n | müzik |  | Ich höre gern Musik. | [Müzik] dinlemeyi severim. |
+wenig |  | adv | az |  | Ich habe wenig Zeit. | [Az] zamanım var. |
+erinnern |  | v | hatırlamak |  | Ich erinnere mich an dich. | Seni [hatırlıyorum]. | jemanden erinnern = hatırlatmak.
+Sohn | der | n | oğul |  | Mein Sohn ist fünf Jahre alt. | [Oğlum] beş yaşında. | Mit Endung: oğlum = mein Sohn.
+nah |  | adj | yakın |  | Der Supermarkt ist ganz nah. | Market çok [yakın]. |
+Stunde | die | n | saat |  | Der Film dauert zwei Stunden. | Film iki [saat] sürüyor. | Nach Zahlen steht kein Plural: iki saat.  | stunde,stunden
+nennen |  | v | adlandırmak |  | Wir nennen ihn Ali. | Ona Ali [diyoruz]. | Umgangssprachlich mit demek: ona Ali diyoruz.
+sofort |  | adv | hemen | derhal | Komm sofort her! | [Hemen] buraya gel! |
+toll |  | adj | harika | süper | Das ist eine tolle Idee! | Bu [harika] bir fikir! |
+entschuldigen |  | v | özür dilemek |  | Ich möchte mich entschuldigen. | [Özür dilemek] istiyorum. | Entschuldigung! (Aufmerksamkeit) = Pardon! / Affedersiniz!
+passen |  | v | uymak |  | Die Schuhe passen mir. | Ayakkabılar bana [uyuyor]. |
+einmal |  | adv | bir kez | bir kere; bir defa | Ich war einmal in Istanbul. | İstanbul'a [bir kez] gittim. |
+letzter |  | adj | son | sonuncu | Das ist der letzte Bus. | Bu [son] otobüs. |
+Woche | die | n | hafta |  | Nächste Woche habe ich Urlaub. | Gelecek [hafta] tatildeyim. |
+Auge | das | n | göz |  | Sie hat blaue Augen. | Onun mavi [gözleri] var. |
+wann |  | adv | ne zaman |  | Wann kommst du? | [Ne zaman] geliyorsun? |
+fertig |  | adj | bitmiş | hazır | Ich bin mit der Arbeit fertig. | İşim [bitti]. | fertig sein (bereit) = hazır olmak.
+schlecht |  | adj | kötü |  | Das Wetter ist schlecht. | Hava [kötü]. |
+Minute | die | n | dakika |  | Ich komme in fünf Minuten. | Beş [dakika] içinde geliyorum. |
+allein |  | adv | yalnız | tek başına | Ich wohne allein. | [Yalnız] yaşıyorum. |
+einzig |  | adj | tek | biricik | Das ist die einzige Lösung. | Bu [tek] çözüm. |
+wichtig |  | adj | önemli |  | Das ist sehr wichtig. | Bu çok [önemli]. |
+verschwinden |  | v | kaybolmak |  | Meine Katze ist verschwunden. | Kedim [kayboldu]. | Verschwinde! = Defol!
+Hilfe | die | n | yardım |  | Hilfe! | [Yardım] edin! |
+gern |  | adv | seve seve | memnuniyetle | Ich helfe dir gern. | Sana [seve seve] yardım ederim. | etwas gern tun = -meyi sevmek: okumayı severim.
+trinken |  | v | içmek |  | Ich trinke Tee. | Çay [içiyorum]. |
+hoch |  | adj | yüksek |  | Der Berg ist sehr hoch. | Dağ çok [yüksek]. |
+nett |  | adj | nazik | hoş | Deine Mutter ist sehr nett. | Annen çok [nazik]. |
+schreiben |  | v | yazmak |  | Ich schreibe dir eine Nachricht. | Sana bir mesaj [yazıyorum]. |
+Baby | das | n | bebek |  | Das Baby weint. | [Bebek] ağlıyor. |
+hoffen |  | v | ummak | umut etmek | Ich hoffe, du kommst. | Gelmeni [umuyorum]. | Ich hoffe … = Umarım …
+Dank | der | n | teşekkür |  | Vielen Dank! | Çok [teşekkürler]! |
+kurz |  | adj | kısa |  | Der Weg ist kurz. | Yol [kısa]. |
+egal |  | adj | fark etmez | önemli değil | Das ist mir egal. | Benim için [fark etmez]. |
+Stadt | die | n | şehir | kent | Istanbul ist eine große Stadt. | İstanbul büyük bir [şehir]. |
+eigentlich |  | adv | aslında |  | Eigentlich wollte ich schlafen. | [Aslında] uyumak istiyordum. |
+verlassen |  | v | terk etmek | ayrılmak | Er hat das Haus verlassen. | Evden [ayrıldı]. |
+Auto | das | n | araba | otomobil | Mein Auto ist rot. | [Arabam] kırmızı. |
+sitzen |  | v | oturmak |  | Wir sitzen im Garten. | Bahçede [oturuyoruz]. |
+Uhr | die | n | saat |  | Wie viel Uhr ist es? | [Saat] kaç? | Es ist drei Uhr = Saat üç.
+schlagen |  | v | vurmak | dövmek | Schlag ihn nicht! | Ona [vurma]! |
+falsch |  | adj | yanlış |  | Die Nummer ist falsch. | Numara [yanlış]. |
+Tür | die | n | kapı |  | Mach die Tür zu! | [Kapıyı] kapat! |
+schlimm |  | adj | fena | kötü | Das ist nicht so schlimm. | O kadar [fena] değil. |
+Kopf | der | n | baş | kafa | Mir tut der Kopf weh. | [Başım] ağrıyor. |
+Land | das | n | ülke | memleket | Die Türkei ist ein schönes Land. | Türkiye güzel bir [ülke]. | auf dem Land = köyde / kırsalda. | land,landen
+Glück | das | n | şans | mutluluk | Viel Glück! | Bol [şans]! | Glück (Gefühl) = mutluluk. | glück,glücken
+lernen |  | v | öğrenmek |  | Ich lerne jeden Tag Türkisch. | Her gün Türkçe [öğreniyorum]. |
+retten |  | v | kurtarmak |  | Er hat mich gerettet. | Beni [kurtardı]. |
+Ende | das | n | son |  | Das Ende des Films war traurig. | Filmin [sonu] hüzünlüydü. |
+anrufen |  | v | telefon etmek | aramak | Ruf mich morgen an! | Yarın beni [ara]! |
+heiß |  | adj | sıcak |  | Der Tee ist heiß. | Çay [sıcak]. |
+kaufen |  | v | satın almak | almak | Ich kaufe Brot. | Ekmek [alıyorum]. |
+bedeuten |  | v | anlamına gelmek |  | Was bedeutet das Wort? | Bu kelime ne [anlamına geliyor]? |
+tragen |  | v | taşımak | giymek | Ich trage die Tasche. | Çantayı [taşıyorum]. | Kleidung tragen = giymek.
+bald |  | adv | yakında |  | Bis bald! | [Yakında] görüşürüz! |
+lesen |  | v | okumak |  | Ich lese die Zeitung. | Gazete [okuyorum]. |
+einige |  | pron | bazı |  | Einige Leute sind schon da. | [Bazı] insanlar zaten burada. |
+bisschen |  | adv | biraz |  | Ich spreche ein bisschen Türkisch. | [Biraz] Türkçe konuşuyorum. |
+scheinen |  | v | parlamak | görünmek | Die Sonne scheint. | Güneş [parlıyor]. | Er scheint müde zu sein = Yorgun görünüyor.
+verrückt |  | adj | deli | çılgın | Bist du verrückt? | [Deli] misin? |
+Idee | die | n | fikir |  | Ich habe eine Idee. | Bir [fikrim] var. |
+bereit |  | adj | hazır |  | Bist du bereit? | [Hazır] mısın? |
+Waffe | die | n | silah |  | Er hat keine Waffe. | [Silahı] yok. |
+Tod | der | n | ölüm |  | Der Tod gehört zum Leben. | [Ölüm] hayatın bir parçası. |
+Schwester | die | n | kız kardeş | abla | Meine Schwester studiert. | [Kız kardeşim] üniversitede okuyor. | ältere Schwester = abla.
+Monat | der | n | ay |  | Ich bleibe einen Monat. | Bir [ay] kalıyorum. |
+führen |  | v | götürmek | yönetmek | Er führt uns zum Hotel. | Bizi otele [götürüyor]. | ein Geschäft führen = yönetmek.
+draußen |  | adv | dışarıda |  | Die Kinder spielen draußen. | Çocuklar [dışarıda] oynuyor. |
+Ruhe | die | n | sessizlik | huzur | Ich brauche Ruhe. | [Huzura] ihtiyacım var. | Ruhe, bitte! = Sessiz olun, lütfen! | ruhe,ruhen
+ruhig |  | adj | sakin | sessiz | Das Dorf ist sehr ruhig. | Köy çok [sakin]. |
+Junge | der | n | oğlan | erkek çocuk | Der Junge spielt Fußball. | [Oğlan] futbol oynuyor. |
+versprechen |  | v | söz vermek |  | Ich verspreche es dir. | Sana [söz veriyorum]. |
+Polizei | die | n | polis |  | Ruf die Polizei! | [Polisi] ara! |
+kümmern |  | v | ilgilenmek | bakmak | Ich kümmere mich um die Kinder. | Çocuklarla ben [ilgileniyorum]. | sich kümmern um = ile ilgilenmek / -e bakmak.
+Tochter | die | n | kız evlat | kız | Meine Tochter geht zur Schule. | [Kızım] okula gidiyor. | Mit Endung: kızım = meine Tochter.
+Arm | der | n | kol |  | Mein Arm tut weh. | [Kolum] ağrıyor. |
+arm |  | adj | fakir | yoksul | Die Familie ist arm. | Aile [fakir]. |
+bestimmt |  | adv | kesinlikle | mutlaka | Er kommt bestimmt. | O [kesinlikle] gelir. |  | bestimmen,bestimmt
+fast |  | adv | neredeyse | hemen hemen | Ich bin fast fertig. | [Neredeyse] bitirdim. |
+fangen |  | v | yakalamak |  | Fang den Ball! | Topu [yakala]! |
+Plan | der | n | plan |  | Hast du einen Plan? | Bir [planın] var mı? |  | plan
+planen |  | v | planlamak |  | Wir planen eine Reise. | Bir yolculuk [planlıyoruz]. |
+Geschichte | die | n | hikâye | hikaye; tarih | Das ist eine schöne Geschichte. | Bu güzel bir [hikâye]. | Geschichte (Schulfach) = tarih.
+hinter |  | prep | arkasında |  | Der Garten ist hinter dem Haus. | Bahçe evin [arkasında]. |
+ziemlich |  | adv | oldukça | epey | Es ist ziemlich kalt. | Hava [oldukça] soğuk. |
+lachen |  | v | gülmek |  | Warum lachst du? | Neden [gülüyorsun]? |
+Grund | der | n | sebep | neden | Es gibt keinen Grund zur Sorge. | Endişe için bir [sebep] yok. |
+beten |  | v | dua etmek |  | Sie betet jeden Abend. | Her akşam [dua ediyor]. |
+folgen |  | v | takip etmek | izlemek | Folge mir! | Beni [takip et]! |
+sogar |  | adv | bile |  | Sogar mein Opa hat ein Handy. | Dedemin [bile] cep telefonu var. | „bile“ steht nach dem Wort.
+Teufel | der | n | şeytan |  | Der Teufel steckt im Detail. | [Şeytan] ayrıntıda gizlidir. |
+woher |  | adv | nereden | nereli | Woher kommst du? | [Nerelisin]? | Woher kommst du? = Nerelisin? (Herkunft)
+Job | der | n | iş |  | Ich suche einen neuen Job. | Yeni bir [iş] arıyorum. |
+verlieren |  | v | kaybetmek |  | Ich habe meine Tasche verloren. | Çantamı [kaybettim]. |
+wünschen |  | v | dilemek | istemek | Ich wünsche dir alles Gute. | Sana her şeyin en iyisini [dilerim]. |
+gefallen |  | v | hoşuna gitmek | beğenmek | Das Kleid gefällt mir. | Elbise [hoşuma gidiyor]. | beğenmek: Elbiseyi beğendim = das Kleid gefällt mir.
+gewinnen |  | v | kazanmak |  | Wir haben gewonnen! | [Kazandık]! |
+Seite | die | n | taraf | sayfa | Auf welcher Seite wohnst du? | Hangi [tarafta] oturuyorsun? | Buchseite = sayfa.
+Ort | der | n | yer |  | Das ist ein schöner Ort. | Burası güzel bir [yer]. |  | ort,orten
+frei |  | adj | özgür | serbest; boş | Ist der Platz frei? | Bu yer [boş] mu? | frei (unabhängig) = özgür.
+ernst |  | adj | ciddi |  | Das ist mein Ernst. | Ben [ciddiyim]. |
+heiraten |  | v | evlenmek |  | Wir heiraten im Sommer. | Yazın [evleniyoruz]. |
+erwarten |  | v | beklemek | ummak | Ich erwarte einen Anruf. | Bir telefon [bekliyorum]. |
+hassen |  | v | nefret etmek |  | Ich hasse Montage. | Pazartesilerden [nefret ediyorum]. | nefret etmek verlangt den Ablativ -den.
+beweisen |  | v | kanıtlamak |  | Kannst du das beweisen? | Bunu [kanıtlayabilir] misin? |
+oben |  | adv | yukarıda |  | Das Bad ist oben. | Banyo [yukarıda]. |
+gestern |  | adv | dün |  | Gestern war ich im Kino. | [Dün] sinemadaydım. |
+Art | die | n | tür | çeşit | Welche Art Musik magst du? | Ne [tür] müzik seversin? |
+Schatz | der | n | hazine | canım | Sie haben einen Schatz gefunden. | Bir [hazine] buldular. | Als Kosewort: Schatz = canım, hayatım. | schatz,schatzen
+vermissen |  | v | özlemek |  | Ich vermisse dich. | Seni [özledim]. |
+endlich |  | adv | nihayet | sonunda | Endlich ist Wochenende! | [Nihayet] hafta sonu! |
+etwa |  | adv | yaklaşık | aşağı yukarı | Das kostet etwa zehn Euro. | Bu [yaklaşık] on avro. |
+Wasser | das | n | su |  | Ein Glas Wasser, bitte. | Bir bardak [su], lütfen. |
+Chance | die | n | fırsat | şans | Das ist deine Chance. | Bu senin [fırsatın]. |
+fünf |  | num | beş |  | Ich arbeite fünf Tage pro Woche. | Haftada [beş] gün çalışıyorum. |
+Freundin | die | n | kız arkadaş | arkadaş; sevgili | Meine Freundin heißt Elif. | [Kız arkadaşımın] adı Elif. |
+lügen |  | v | yalan söylemek |  | Du lügst! | [Yalan söylüyorsun]! |
+bezahlen |  | v | ödemek |  | Ich bezahle die Rechnung. | Hesabı ben [ödüyorum]. |
+glücklich |  | adj | mutlu |  | Ich bin sehr glücklich. | Çok [mutluyum]. |
+Wahrheit | die | n | gerçek | hakikat; doğruluk | Sag mir die Wahrheit! | Bana [gerçeği] söyle! |
+deshalb |  | adv | bu yüzden | bu nedenle | Ich bin krank, deshalb bleibe ich zu Hause. | Hastayım, [bu yüzden] evde kalıyorum. |
+erklären |  | v | açıklamak | anlatmak | Kannst du mir das erklären? | Bunu bana [açıklayabilir] misin? |
+Spaß | der | n | eğlence | şaka | Viel Spaß! | İyi [eğlenceler]! | Das macht Spaß = Bu eğlenceli. | spaß,spassen
+ändern |  | v | değiştirmek |  | Ich ändere meinen Plan. | Planımı [değiştiriyorum]. |
+freuen |  | v | sevinmek |  | Ich freue mich auf dich. | Seni göreceğime [seviniyorum]. | Freut mich! (Kennenlernen) = Memnun oldum!
+Zimmer | das | n | oda |  | Mein Zimmer ist klein. | [Odam] küçük. |  | zimmer,zimmern
+vier |  | num | dört |  | Wir sind vier Personen. | [Dört] kişiyiz. |
+Feuer | das | n | ateş | yangın | Das Feuer ist warm. | [Ateş] sıcak. | Brand = yangın. | feuer,feuern
+fliegen |  | v | uçmak |  | Morgen fliegen wir nach Izmir. | Yarın İzmir'e [uçuyoruz]. |
+stark |  | adj | güçlü | kuvvetli | Er ist sehr stark. | O çok [güçlü]. |
+Schuld | die | n | suç | kabahat | Das ist nicht deine Schuld. | Bu senin [suçun] değil. |
+möglich |  | adj | mümkün | olası | Ist das möglich? | Bu [mümkün] mü? |
+schicken |  | v | göndermek | yollamak | Schick mir ein Foto! | Bana bir fotoğraf [gönder]! |
+oft |  | adv | sık sık | sık; çoğu zaman | Ich gehe oft schwimmen. | [Sık sık] yüzmeye giderim. |
+antworten |  | v | cevap vermek | yanıtlamak | Antworte mir bitte! | Bana lütfen [cevap ver]! |
+Wort | das | n | kelime | söz | Ich lerne jeden Tag ein Wort. | Her gün bir [kelime] öğreniyorum. | Wort (Versprechen) = söz. | wort,worten
+schließen |  | v | kapatmak | kapamak | Schließ das Fenster! | Pencereyi [kapat]! |
+Gesicht | das | n | yüz |  | Wasch dir das Gesicht! | [Yüzünü] yıka! |
+manchmal |  | adv | bazen |  | Manchmal koche ich. | [Bazen] yemek yaparım. |
+benutzen |  | v | kullanmak |  | Darf ich dein Telefon benutzen? | Telefonunu [kullanabilir] miyim? |
+schreien |  | v | bağırmak |  | Schrei nicht so! | Öyle [bağırma]! |
+zwischen |  | prep | arasında |  | Das Café ist zwischen der Bank und der Post. | Kafe banka ile postane [arasında]. |
+vertrauen |  | v | güvenmek |  | Ich vertraue dir. | Sana [güveniyorum]. |
+während |  | prep | sırasında | -ken | Während des Essens telefoniert er. | Yemek [sırasında] telefonla konuşuyor. |
+bluten |  | v | kanamak |  | Meine Nase blutet. | Burnum [kanıyor]. |
+schießen |  | v | ateş etmek | şut atmak | Er schießt ein Tor. | Gol için [şut atıyor]. |
+Film | der | n | film |  | Der Film war spannend. | [Film] heyecanlıydı. |  | film,filmen
+wohnen |  | v | oturmak | yaşamak; ikamet etmek | Wo wohnst du? | Nerede [oturuyorsun]? |
+Schule | die | n | okul |  | Die Schule beginnt um acht. | [Okul] sekizde başlıyor. |  | schule,schulen
+verkaufen |  | v | satmak |  | Er verkauft sein Auto. | Arabasını [satıyor]. |
+Gefühl | das | n | duygu | his | Ich habe ein gutes Gefühl. | İçimde iyi bir [his] var. |
+verdienen |  | v | hak etmek | kazanmak | Du hast eine Pause verdient. | Bir molayı [hak ettin]. | Geld verdienen = para kazanmak.
+kämpfen |  | v | savaşmak | mücadele etmek | Wir kämpfen für unsere Rechte. | Haklarımız için [mücadele ediyoruz]. |
+reichen |  | v | yetmek |  | Das Geld reicht nicht. | Para [yetmiyor]. | Es reicht! = Yeter!
+anfangen |  | v | başlamak |  | Wann fängt der Film an? | Film ne zaman [başlıyor]? |
+beginnen |  | v | başlamak |  | Der Unterricht beginnt um neun. | Ders saat dokuzda [başlıyor]. |
+Entschuldigung | die | n | özür | pardon; affedersiniz | Entschuldigung, wo ist der Bahnhof? | [Affedersiniz], gar nerede? | Für Aufmerksamkeit: Affedersiniz / Pardon. Als Bitte um Verzeihung: Özür dilerim.
+Wiedersehen |  | phr | hoşça kal | görüşürüz; güle güle | Auf Wiedersehen! | [Hoşça kal]! | Wer bleibt, sagt „Güle güle“ zu dem, der geht. | wiedersehen
+früh |  | adj | erken |  | Ich stehe früh auf. | [Erken] kalkarım. |
+ehrlich |  | adj | dürüst |  | Sei ehrlich zu mir! | Bana karşı [dürüst] ol! |
+Hund | der | n | köpek |  | Der Hund bellt. | [Köpek] havlıyor. |
+verstecken |  | v | saklamak | gizlemek | Wo hast du das Geld versteckt? | Parayı nereye [sakladın]? |
+aufhören |  | v | bırakmak | durmak | Hör auf zu rauchen! | Sigarayı [bırak]! |
+Nachricht | die | n | haber | mesaj | Ich habe eine gute Nachricht. | İyi bir [haberim] var. | Textnachricht = mesaj.
+böse |  | adj | kızgın | kötü | Bist du böse auf mich? | Bana [kızgın] mısın? | böse (schlecht) = kötü.
+weinen |  | v | ağlamak |  | Warum weinst du? | Neden [ağlıyorsun]? |
+hart |  | adj | sert | zor | Das Brot ist hart. | Ekmek [sert]. |
+voll |  | adj | dolu |  | Der Bus ist voll. | Otobüs [dolu]. |
+unten |  | adv | aşağıda |  | Die Küche ist unten. | Mutfak [aşağıda]. |
+Teil | der | n | parça | bölüm; kısım | Das ist nur ein Teil des Problems. | Bu sorunun sadece bir [parçası]. |
+leicht |  | adj | kolay | hafif | Die Prüfung war leicht. | Sınav [kolaydı]. | leicht (Gewicht) = hafif.
+langsam |  | adj | yavaş |  | Sprich bitte langsam! | Lütfen [yavaş] konuş! |
+dumm |  | adj | aptal |  | Das war eine dumme Idee. | Bu [aptalca] bir fikirdi. |
+besuchen |  | v | ziyaret etmek |  | Ich besuche meine Oma. | Anneannemi [ziyaret ediyorum]. |
+Eltern |  | n | anne baba | ebeveyn | Meine Eltern wohnen in Ankara. | [Annemle babam] Ankara'da oturuyor. | Nur Plural: die Eltern. | elter,eltern
+werfen |  | v | atmak | fırlatmak | Wirf den Ball! | Topu [at]! |
+Nummer | die | n | numara |  | Wie ist deine Nummer? | [Numaran] kaç? |
+laut |  | adj | gürültülü | yüksek sesle | Die Straße ist sehr laut. | Sokak çok [gürültülü]. | laut sprechen = yüksek sesle konuşmak.
+Schiff | das | n | gemi |  | Das Schiff fährt nach Bodrum. | [Gemi] Bodrum'a gidiyor. |  | schiff,schiffen
+König | der | n | kral |  | Der König wohnt im Palast. | [Kral] sarayda yaşıyor. |
+außer |  | prep | hariç | -den başka | Alle außer mir sind gekommen. | Ben [hariç] herkes geldi. |
+kaum |  | adv | neredeyse hiç | zar zor | Ich habe kaum geschlafen. | [Neredeyse hiç] uyumadım. |
+singen |  | v | şarkı söylemek |  | Sie singt sehr schön. | Çok güzel [şarkı söylüyor]. |
+Platz | der | n | meydan | yer | Wir treffen uns auf dem Platz. | [Meydanda] buluşuyoruz. | Sitzplatz = yer.
+Telefon | das | n | telefon |  | Das Telefon klingelt. | [Telefon] çalıyor. |
+Arzt | der | n | doktor | hekim | Ich muss zum Arzt. | [Doktora] gitmem lazım. |
+öffnen |  | v | açmak |  | Öffne bitte das Fenster! | Lütfen pencereyi [aç]! |
+dauern |  | v | sürmek |  | Wie lange dauert die Fahrt? | Yolculuk ne kadar [sürer]? |
+hübsch |  | adj | hoş | güzel; sevimli | Das ist ein hübsches Kleid. | Bu [hoş] bir elbise. |
+interessieren |  | v | ilgilendirmek |  | Das interessiert mich nicht. | Bu beni [ilgilendirmiyor]. | sich interessieren für = ile ilgilenmek.
+drehen |  | v | döndürmek | çevirmek | Dreh den Schlüssel! | Anahtarı [çevir]! |
+wohin |  | adv | nereye |  | Wohin gehst du? | [Nereye] gidiyorsun? |
+wahrscheinlich |  | adv | muhtemelen | büyük ihtimalle | Es regnet wahrscheinlich morgen. | Yarın [muhtemelen] yağmur yağacak. |
+verletzen |  | v | yaralamak | incitmek | Er hat sich am Bein verletzt. | Bacağını [yaraladı]. | Gefühle verletzen = incitmek.
+zuerst |  | adv | ilk önce | önce | Zuerst trinken wir Tee. | [İlk önce] çay içiyoruz. |
+froh |  | adj | sevinçli | memnun | Ich bin froh, dass du da bist. | Burada olduğuna [sevindim]. | froh sein = sevinmek.
+Fehler | der | n | hata | yanlış | Jeder macht Fehler. | Herkes [hata] yapar. |
+willkommen |  | intj | hoş geldin | hoş geldiniz | Willkommen in der Türkei! | Türkiye'ye [hoş geldiniz]! | Antwort: Hoş bulduk!
+Straße | die | n | sokak | cadde | In welcher Straße wohnst du? | Hangi [sokakta] oturuyorsun? | große Straße = cadde.
+Dame | die | n | hanım | bayan | Die Dame wartet draußen. | [Hanım] dışarıda bekliyor. | Meine Damen und Herren = Bayanlar ve baylar.
+tanzen |  | v | dans etmek |  | Wollen wir tanzen? | [Dans edelim] mi? |
+süß |  | adj | tatlı |  | Der Kuchen ist sehr süß. | Pasta çok [tatlı]. | Auch für Menschen: Ne tatlı! = Wie süß! | süß,süßen
+Büro | das | n | ofis | büro | Ich bin im Büro. | [Ofisteyim]. |
+vorstellen |  | v | tanıştırmak | hayal etmek | Darf ich dir meine Frau vorstellen? | Seni eşimle [tanıştırabilir] miyim? | sich etwas vorstellen = hayal etmek.
+direkt |  | adv | doğrudan | direkt | Der Bus fährt direkt zum Flughafen. | Otobüs [doğrudan] havalimanına gidiyor. |
+zehn |  | num | on |  | Der Kurs dauert zehn Wochen. | Kurs [on] hafta sürüyor. |
+reisen |  | v | seyahat etmek | gezmek | Ich reise gern. | [Seyahat etmeyi] severim. |
+hängen |  | v | asmak | asılı olmak | Ich hänge das Bild an die Wand. | Resmi duvara [asıyorum]. |
+Opfer | das | n | kurban |  | Er war das Opfer eines Unfalls. | Bir kazanın [kurbanı] oldu. |
+perfekt |  | adj | kusursuz | mükemmel | Dein Türkisch ist perfekt. | Türkçen [kusursuz]. |
+sechs |  | num | altı |  | Ich stehe um sechs Uhr auf. | Saat [altıda] kalkıyorum. |
+großartig |  | adj | muhteşem | harika | Das Konzert war großartig. | Konser [muhteşemdi]. |
+steigen |  | v | çıkmak | yükselmek | Wir steigen auf den Berg. | Dağa [çıkıyoruz]. |
+bewegen |  | v | hareket etmek | kıpırdamak | Beweg dich nicht! | [Kıpırdama]! |
+krank |  | adj | hasta |  | Ich bin krank. | [Hastayım]. |
+behalten |  | v | elinde tutmak | saklamak | Du kannst das Buch behalten. | Kitabı [saklayabilirsin]. |
+erkennen |  | v | fark etmek | tanımak | Ich habe dich nicht erkannt. | Seni [tanıyamadım]. |
+schwarz |  | adj | siyah | kara | Mein Auto ist schwarz. | Arabam [siyah]. | Schwarzer Kaffee = sade kahve.
+bauen |  | v | inşa etmek | yapmak | Sie bauen ein neues Haus. | Yeni bir ev [inşa ediyorlar]. |
+Sekunde | die | n | saniye |  | Warte eine Sekunde! | Bir [saniye] bekle! |
+stehlen |  | v | çalmak |  | Jemand hat mein Fahrrad gestohlen. | Biri bisikletimi [çaldı]. |
+Buch | das | n | kitap |  | Ich lese ein spannendes Buch. | Heyecanlı bir [kitap] okuyorum. |  | buch,buchen
+zweiter |  | adj | ikinci |  | Das ist mein zweiter Versuch. | Bu benim [ikinci] denemem. |  | zweit
+brechen |  | v | kırmak |  | Er hat sich das Bein gebrochen. | Bacağını [kırdı]. |
+leider |  | adv | maalesef | ne yazık ki | Leider habe ich keine Zeit. | [Maalesef] vaktim yok. |
+Foto | das | n | fotoğraf | foto | Machst du ein Foto von uns? | Bizim bir [fotoğrafımızı] çeker misin? |
+Million | die | n | milyon |  | Istanbul hat über fünfzehn Millionen Einwohner. | İstanbul'un on beş [milyondan] fazla nüfusu var. |
+Hölle | die | n | cehennem |  | Der Tag war die Hölle. | Gün tam bir [cehennemdi]. |
+Stück | das | n | parça | tane | Möchtest du ein Stück Kuchen? | Bir [parça] pasta ister misin? | Zählwort: zwei Stück = iki tane. | stück,stücken
+trotzdem |  | adv | yine de |  | Es regnet, trotzdem gehe ich raus. | Yağmur yağıyor, [yine de] dışarı çıkıyorum. |
+völlig |  | adv | tamamen | büsbütün | Ich bin völlig erschöpft. | [Tamamen] tükendim. |
+fehlen |  | v | eksik olmak |  | Hier fehlt ein Stuhl. | Burada bir sandalye [eksik]. | Du fehlst mir = Seni özledim.
+halb |  | adj | yarım | buçuk | Ich warte seit einer halben Stunde. | [Yarım] saattir bekliyorum. | Uhrzeit: halb drei = iki buçuk.
+überall |  | adv | her yerde | her yer | Ich habe überall gesucht. | [Her yerde] aradım. |
+gehören |  | v | ait olmak |  | Wem gehört die Tasche? | Çanta kime [ait]? |
+normal |  | adj | normal |  | Das ist ganz normal. | Bu çok [normal]. |
+reich |  | adj | zengin |  | Er ist sehr reich. | O çok [zengin]. |
+zerstören |  | v | yok etmek | tahrip etmek | Der Sturm hat das Dach zerstört. | Fırtına çatıyı [tahrip etti]. |
+befehlen |  | v | emretmek |  | Wer hat das befohlen? | Bunu kim [emretti]? |
+Licht | das | n | ışık |  | Mach bitte das Licht an! | Lütfen [ışığı] aç! |
+danach |  | adv | ondan sonra | sonra | Danach gehen wir essen. | [Ondan sonra] yemeğe gidiyoruz. |
+Ehre | die | n | onur | şeref | Es ist mir eine Ehre. | Bu benim için bir [onur]. |
+Regel | die | n | kural |  | Das ist die wichtigste Regel. | Bu en önemli [kural]. |  | regel,regeln
+Party | die | n | parti | eğlence | Kommst du zur Party? | [Partiye] geliyor musun? |
+tief |  | adj | derin |  | Das Wasser ist tief. | Su [derin]. |
+Kaffee | der | n | kahve |  | Möchtest du einen Kaffee? | [Kahve] ister misin? |
+Person | die | n | kişi |  | Ein Tisch für zwei Personen, bitte. | İki [kişilik] bir masa, lütfen. |
+Luft | die | n | hava |  | Die Luft ist frisch. | [Hava] temiz. | hava heißt auch Wetter.
+raten |  | v | tahmin etmek | tavsiye etmek | Rate mal, wer kommt! | [Tahmin et] bakalım, kim geliyor! | jemandem raten = tavsiye etmek.
+Sinn | der | n | anlam |  | Das ergibt keinen Sinn. | Bunun bir [anlamı] yok. |  | sinn,sinnen
+Mord | der | n | cinayet |  | Die Polizei untersucht den Mord. | Polis [cinayeti] araştırıyor. |  | mord,morden
+Erde | die | n | toprak | dünya; yer | Die Erde im Garten ist feucht. | Bahçedeki [toprak] nemli. | der Planet Erde = Dünya. | erde,erden
+Wert | der | n | değer |  | Das hat keinen Wert. | Bunun bir [değeri] yok. |
+schrecklich |  | adj | korkunç | berbat | Das Wetter ist schrecklich. | Hava [berbat]. |
+träumen |  | v | rüya görmek | hayal kurmak | Ich habe von dir geträumt. | Seni [rüyamda gördüm]. |
+aussehen |  | v | görünmek |  | Du siehst müde aus. | Yorgun [görünüyorsun]. |
+Wahl | die | n | seçim |  | Morgen ist die Wahl. | Yarın [seçim] var. | Du hast keine Wahl = Başka seçeneğin yok.

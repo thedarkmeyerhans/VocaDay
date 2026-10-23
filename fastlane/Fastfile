@@ -1,0 +1,89 @@
+# VocaDay release automation. Runs on GitHub Actions (macOS runner), but works
+# on any Mac with the same environment variables.
+#
+# Required environment (GitHub secrets):
+#   ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8_BASE64  App Store Connect API key (Admin)
+#   APPLE_TEAM_ID                                 10-character team id
+#   MATCH_GIT_URL, MATCH_PASSWORD,
+#   MATCH_GIT_BASIC_AUTHORIZATION                 private repo for certificates
+
+default_platform(:ios)
+
+PROJECT = "VocaDay.xcodeproj"
+SCHEME = "VocaDay"
+TARGET = "VocaDay"
+
+def app_identifier
+  ENV["APP_BUNDLE_ID"] || File.read(File.expand_path("../Config/Shared.xcconfig", __dir__))[/^APP_BUNDLE_ID\s*=\s*(\S+)/, 1]
+end
+
+platform :ios do
+  private_lane :api_key do
+    app_store_connect_api_key(
+      key_id: ENV.fetch("ASC_KEY_ID"),
+      issuer_id: ENV.fetch("ASC_ISSUER_ID"),
+      key_content: ENV.fetch("ASC_KEY_P8_BASE64"),
+      is_key_content_base64: true
+    )
+  end
+
+  desc "Registers the bundle id in the developer portal if it does not exist yet"
+  lane :register_bundle_id do
+    api_key
+    if Spaceship::ConnectAPI::BundleId.find(app_identifier)
+      UI.message("Bundle id #{app_identifier} already registered")
+    else
+      Spaceship::ConnectAPI::BundleId.create(name: "VocaDay", platform: "IOS", identifier: app_identifier)
+      UI.success("Registered bundle id #{app_identifier}")
+    end
+  end
+
+  desc "Builds the app and uploads it to TestFlight (iPhone and iPad)"
+  lane :beta do
+    setup_ci if ENV["CI"]
+    key = api_key
+    register_bundle_id
+
+    match(
+      type: "appstore",
+      app_identifier: app_identifier,
+      team_id: ENV.fetch("APPLE_TEAM_ID"),
+      api_key: key,
+      readonly: ENV["MATCH_READONLY"] == "true"
+    )
+    profile = ENV.fetch("sigh_#{app_identifier}_appstore_profile-name")
+
+    build_number = latest_testflight_build_number(
+      api_key: key, app_identifier: app_identifier, initial_build_number: 0
+    ) + 1
+
+    update_code_signing_settings(
+      path: PROJECT,
+      use_automatic_signing: false,
+      team_id: ENV.fetch("APPLE_TEAM_ID"),
+      targets: [TARGET],
+      bundle_identifier: app_identifier,
+      code_sign_identity: "Apple Distribution",
+      profile_name: profile
+    )
+
+    build_app(
+      project: PROJECT,
+      scheme: SCHEME,
+      configuration: "Release",
+      clean: true,
+      output_directory: "build",
+      export_method: "app-store",
+      xcargs: "CURRENT_PROJECT_VERSION=#{build_number} DEVELOPMENT_TEAM=#{ENV.fetch('APPLE_TEAM_ID')}",
+      export_options: { provisioningProfiles: { app_identifier => profile } }
+    )
+
+    upload_to_testflight(
+      api_key: key,
+      app_identifier: app_identifier,
+      changelog: last_git_commit[:message].to_s[0, 3900],
+      skip_waiting_for_build_processing: true
+    )
+    UI.success("Build #{build_number} is on its way to TestFlight")
+  end
+end

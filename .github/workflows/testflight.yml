@@ -1,0 +1,62 @@
+name: TestFlight
+
+# Every push to main becomes a TestFlight build for iPhone and iPad.
+# Without the secrets from docs/TESTFLIGHT.md the upload is skipped.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    name: Build & upload
+    runs-on: macos-26
+    timeout-minutes: 45
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8_BASE64: ${{ secrets.ASC_KEY_P8_BASE64 }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+      MATCH_READONLY: ${{ vars.MATCH_READONLY }}
+    steps:
+      - name: Check secrets
+        id: secrets
+        run: |
+          missing=""
+          for name in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8_BASE64 APPLE_TEAM_ID MATCH_GIT_URL MATCH_PASSWORD MATCH_GIT_BASIC_AUTHORIZATION; do
+            [ -z "${!name}" ] && missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::warning::TestFlight upload skipped, missing secrets:$missing (see docs/TESTFLIGHT.md)"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v5
+        if: steps.secrets.outputs.ready == 'true'
+      - uses: ruby/setup-ruby@v1
+        if: steps.secrets.outputs.ready == 'true'
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Generate Xcode project
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          brew install xcodegen
+          xcodegen generate
+      - name: Build and upload to TestFlight
+        if: steps.secrets.outputs.ready == 'true'
+        run: bundle exec fastlane ios beta
+      - name: Keep build logs
+        if: failure() && steps.secrets.outputs.ready == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: ~/Library/Logs/gym

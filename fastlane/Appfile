@@ -1,0 +1,2 @@
+# Values come from the environment (GitHub secrets), see docs/TESTFLIGHT.md.
+team_id(ENV["APPLE_TEAM_ID"]) if ENV["APPLE_TEAM_ID"]

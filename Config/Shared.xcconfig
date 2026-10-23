@@ -1,0 +1,4 @@
+// Shared build settings for app and CI.
+// If this bundle identifier is already taken in App Store Connect, change it
+// here – fastlane reads it from this file as well.
+APP_BUNDLE_ID = com.thedarkmeyerhans.vocaday

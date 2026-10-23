@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  word-bank:
+    name: Word bank up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 tools/data/build_dataset.py --check
+
+  core-tests:
+    name: Core tests (Linux)
+    runs-on: ubuntu-latest
+    container: swift:6.1-noble
+    steps:
+      - uses: actions/checkout@v5
+      - run: swift test --package-path Packages/VocaDayCore
+
+  ios-build:
+    name: iOS build (iPhone + iPad)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Install XcodeGen and xcbeautify
+        run: brew install xcodegen xcbeautify
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Core tests (macOS)
+        run: swift test --package-path Packages/VocaDayCore
+      - name: Build app for the simulator
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project VocaDay.xcodeproj \
+            -scheme VocaDay \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
