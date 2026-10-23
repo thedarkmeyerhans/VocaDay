@@ -71,6 +71,16 @@ open VocaDay.xcodeproj
 python3 tools/data/build_dataset.py
 ```
 
+## Installieren
+
+**Kostenlos:** [docs/KOSTENLOS_INSTALLIEREN.md](docs/KOSTENLOS_INSTALLIEREN.md)
+- **Web-App ohne Computer:** https://thedarkmeyerhans.github.io/VocaDay/ → in Safari „Zum Home-Bildschirm“
+- **Windows/Mac:** fertige App-Datei unter [Releases › app-latest](https://github.com/thedarkmeyerhans/VocaDay/releases/tag/app-latest), Installation mit Sideloadly/AltStore oder Xcode und kostenloser Apple-ID
+
+### Web-App
+
+`web/` enthält eine Web-Version mit demselben Lernsystem (`web/js/core.js` entspricht dem Swift-Kern), ohne Build-Schritt und ohne Abhängigkeiten. Sie ist offline-fähig, speichert den Lernstand lokal und bietet Kalender-Export für Erinnerungen. Sie wird bei jedem Push auf `main` nach GitHub Pages veröffentlicht. Tests: `node --test web/tests/core.test.mjs`.
+
 ## TestFlight
 
 Jeder Push auf `main` wird automatisch gebaut und zu TestFlight hochgeladen, für **iPhone und iPad**. Die einmalige Einrichtung (Apple Developer Account, API-Schlüssel, Secrets) steht Schritt für Schritt in **[docs/TESTFLIGHT.md](docs/TESTFLIGHT.md)**.

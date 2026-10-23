@@ -1,0 +1,59 @@
+name: App-Datei (IPA)
+
+# Builds an unsigned VocaDay.ipa on every push to main and publishes it as the
+# release "app-latest". Install it for free with Sideloadly or AltStore using
+# your own Apple ID, see docs/KOSTENLOS_INSTALLIEREN.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ipa
+  cancel-in-progress: true
+
+jobs:
+  ipa:
+    name: Build unsigned IPA
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - name: Generate Xcode project
+        run: |
+          brew install xcodegen xcbeautify
+          xcodegen generate
+      - name: Build for iPhone and iPad (unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project VocaDay.xcodeproj \
+            -scheme VocaDay \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            | xcbeautify --renderer github-actions
+      - name: Package IPA
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/VocaDay.app Payload/
+          zip -qry VocaDay.ipa Payload
+          ls -lh VocaDay.ipa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VocaDay-ipa
+          path: VocaDay.ipa
+      - name: Publish release "app-latest"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete app-latest --cleanup-tag --yes || true
+          gh release create app-latest VocaDay.ipa \
+            --target "$GITHUB_SHA" \
+            --title "VocaDay (Build ${{ github.run_number }})" \
+            --notes "Unsignierte App-Datei für iPhone und iPad. Installation mit Sideloadly oder AltStore und deiner Apple-ID – Anleitung: docs/KOSTENLOS_INSTALLIEREN.md" \
+            --prerelease

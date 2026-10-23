@@ -20,3 +20,6 @@ vendor/
 
 .DS_Store
 __pycache__/
+
+# Web app: copied from App/Resources at deploy time
+web/words_de_tr.json

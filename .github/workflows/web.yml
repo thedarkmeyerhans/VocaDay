@@ -1,0 +1,40 @@
+name: Web-App
+
+# Publishes the web app (web/) to GitHub Pages on every push to main.
+# URL: https://<owner>.github.io/<repo>/
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: web
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Test & publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Test learning logic
+        run: node --test web/tests/core.test.mjs
+      - name: Build site
+        run: |
+          mkdir -p _site
+          cp -R web/index.html web/manifest.webmanifest web/sw.js web/css web/js web/icons _site/
+          cp App/Resources/words_de_tr.json _site/
+          sed -i "s/__VERSION__/${GITHUB_SHA::8}/" _site/sw.js
+          touch _site/.nojekyll
+      - name: Publish to gh-pages branch
+        working-directory: _site
+        run: |
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "Web-App ${GITHUB_SHA::8}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
