@@ -106,14 +106,39 @@ public struct DayPlan: Codable, Hashable, Sendable {
 }
 
 public struct DayStats: Codable, Hashable, Sendable {
+    /// All graded answers of the day.
     public var reviews: Int = 0
     public var correct: Int = 0
     public var newWords: Int = 0
+    /// Time spent in sessions and tests.
+    public var seconds: Double = 0
+    /// Answers to words that were already in the review phase – the basis
+    /// of the measured retention ("true retention").
+    public var reviewTotal: Int = 0
+    public var reviewCorrect: Int = 0
 
-    public init(reviews: Int = 0, correct: Int = 0, newWords: Int = 0) {
+    public init(reviews: Int = 0, correct: Int = 0, newWords: Int = 0, seconds: Double = 0,
+                reviewTotal: Int = 0, reviewCorrect: Int = 0) {
         self.reviews = reviews
         self.correct = correct
         self.newWords = newWords
+        self.seconds = seconds
+        self.reviewTotal = reviewTotal
+        self.reviewCorrect = reviewCorrect
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case reviews, correct, newWords, seconds, reviewTotal, reviewCorrect
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        reviews = try c.decodeIfPresent(Int.self, forKey: .reviews) ?? 0
+        correct = try c.decodeIfPresent(Int.self, forKey: .correct) ?? 0
+        newWords = try c.decodeIfPresent(Int.self, forKey: .newWords) ?? 0
+        seconds = try c.decodeIfPresent(Double.self, forKey: .seconds) ?? 0
+        reviewTotal = try c.decodeIfPresent(Int.self, forKey: .reviewTotal) ?? 0
+        reviewCorrect = try c.decodeIfPresent(Int.self, forKey: .reviewCorrect) ?? 0
     }
 }
 
@@ -129,6 +154,8 @@ public struct LearnerProgress: Codable, Sendable {
     /// Memory state of every word that has been introduced.
     public var cards: [String: CardState]
     public var stats: [DayKey: DayStats]
+    /// Results of finished vocabulary tests, oldest first.
+    public var tests: [TestResult]
 
     public init(settings: LearnerSettings = LearnerSettings()) {
         version = Self.currentVersion
@@ -137,6 +164,22 @@ public struct LearnerProgress: Codable, Sendable {
         plans = [:]
         cards = [:]
         stats = [:]
+        tests = []
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case version, settings, letterCursor, plans, cards, stats, tests
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        version = try c.decodeIfPresent(Int.self, forKey: .version) ?? Self.currentVersion
+        settings = try c.decode(LearnerSettings.self, forKey: .settings)
+        letterCursor = try c.decodeIfPresent(Int.self, forKey: .letterCursor) ?? 0
+        plans = try c.decodeIfPresent([DayKey: DayPlan].self, forKey: .plans) ?? [:]
+        cards = try c.decodeIfPresent([String: CardState].self, forKey: .cards) ?? [:]
+        stats = try c.decodeIfPresent([DayKey: DayStats].self, forKey: .stats) ?? [:]
+        tests = try c.decodeIfPresent([TestResult].self, forKey: .tests) ?? []
     }
 
     public static func decode(from data: Data) throws -> LearnerProgress {
@@ -187,13 +230,33 @@ public struct LearnerProgress: Codable, Sendable {
 
     public mutating func record(wordID: String, rating: Rating, at date: Date,
                                 scheduler: FSRSScheduler, calendar: Calendar = .current) {
-        let isNew = cards[wordID] == nil
-        cards[wordID] = scheduler.schedule(cards[wordID], rating: rating, at: date)
+        let previous = cards[wordID]
+        cards[wordID] = scheduler.schedule(previous, rating: rating, at: date)
         let day = DayKey(date, calendar: calendar)
         var dayStats = stats[day] ?? DayStats()
         dayStats.reviews += 1
         if rating != .again { dayStats.correct += 1 }
-        if isNew { dayStats.newWords += 1 }
+        if previous == nil { dayStats.newWords += 1 }
+        if previous?.phase == .review {
+            dayStats.reviewTotal += 1
+            if rating != .again { dayStats.reviewCorrect += 1 }
+        }
         stats[day] = dayStats
+    }
+
+    /// Adds time spent learning to the statistics of the day.
+    public mutating func addStudyTime(_ seconds: TimeInterval, at date: Date, calendar: Calendar = .current) {
+        guard seconds > 0 else { return }
+        let day = DayKey(date, calendar: calendar)
+        var dayStats = stats[day] ?? DayStats()
+        dayStats.seconds += min(seconds, 2 * 3600)
+        stats[day] = dayStats
+    }
+
+    /// Word ids introduced on the days `from`...`to` according to the plans.
+    public func wordsIntroduced(from start: DayKey, to end: DayKey) -> [String] {
+        plans.filter { $0.key >= start && $0.key <= end }
+            .sorted { $0.key < $1.key }
+            .flatMap { $0.value.wordIDs.filter(isIntroduced) }
     }
 }

@@ -9,6 +9,20 @@ struct ActiveSession: Identifiable {
     let session: LearningSession
 }
 
+/// A vocabulary test presented full screen.
+struct ActiveTest: Identifiable {
+    let id = UUID()
+    let test: VocabularyTest
+}
+
+struct WeekDay: Identifiable {
+    var id: DayKey { day }
+    let day: DayKey
+    let date: Date
+    let active: Bool
+    let isToday: Bool
+}
+
 enum WordStatus: String {
     case upcoming = "Geplant"
     case learning = "Lernend"
@@ -133,8 +147,68 @@ final class AppModel: ObservableObject {
     }
 
     /// Called when a session ends, so the evening reminder can be dropped.
-    func sessionFinished() {
+    func sessionFinished(studyTime: TimeInterval) {
+        progress.addStudyTime(studyTime, at: Date(), calendar: calendar)
+        save()
         rescheduleNotifications()
+    }
+
+    // MARK: Vocabulary test
+
+    func testWordCount(for scope: TestScope) -> Int {
+        var generator = SystemRandomNumberGenerator()
+        return VocabularyTest.wordIDs(for: scope, progress: progress, words: words, now: Date(),
+                                      scheduler: scheduler, calendar: calendar, using: &generator).count
+    }
+
+    func makeTest(scope: TestScope, direction: TestDirection, answerMode: TestAnswerMode) -> ActiveTest {
+        var generator = SystemRandomNumberGenerator()
+        let test = VocabularyTest.make(scope: scope, direction: direction, answerMode: answerMode,
+                                       progress: progress, words: words, now: Date(), scheduler: scheduler,
+                                       calendar: calendar, using: &generator)
+        return ActiveTest(test: test)
+    }
+
+    /// Stores the result of a finished test.
+    func finishTest(_ test: VocabularyTest) {
+        let result = test.result(at: Date())
+        progress.tests.append(result)
+        progress.addStudyTime(result.seconds, at: Date(), calendar: calendar)
+        save()
+        rescheduleNotifications()
+    }
+
+    /// Time spent in a test that was cancelled.
+    func addStudyTime(_ seconds: TimeInterval) {
+        progress.addStudyTime(seconds, at: Date(), calendar: calendar)
+        save()
+    }
+
+    var lastTest: TestResult? { progress.tests.last }
+
+    // MARK: Statistics
+
+    var statistics: LearningStatistics {
+        LearningStatistics.make(progress: progress, words: words, now: Date(), calendar: calendar)
+    }
+
+    /// Weekdays (Monday first) of the current week with their activity.
+    var currentWeek: [WeekDay] {
+        let weekday = calendar.component(.weekday, from: Date())
+        let monday = today.adding(days: -((weekday + 5) % 7), calendar: calendar)
+        return (0..<7).map { offset in
+            let day = monday.adding(days: offset, calendar: calendar)
+            return WeekDay(day: day, date: day.date(calendar: calendar) ?? Date(),
+                           active: (progress.stats[day]?.reviews ?? 0) > 0, isToday: day == today)
+        }
+    }
+
+    /// Progress of today's work: answered vs. still open.
+    var todayProgress: Double {
+        let done = Double(reviewsToday)
+        let open = Double(pendingNewWords.count * 3 + dueCount)
+        if done + open == 0 { return 0 }
+        return done / (done + open)
     }
 
     // MARK: Plans & settings

@@ -34,18 +34,33 @@ struct OnboardingView: View {
     }
 
     private var welcome: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Image(systemName: "sun.max.fill")
-                .font(.system(size: 64))
-                .foregroundStyle(Color.accentColor)
-            Text("Willkommen bei VocaDay")
-                .font(.largeTitle.bold())
-            Text("Jeden Tag mindestens ein neues Wort – ausgewählt aus den häufigsten Wörtern deiner Muttersprache, reihum von A bis Z.")
-                .font(.title3)
-            VStack(alignment: .leading, spacing: 14) {
-                FeatureRow(icon: "calendar", title: "Wort des Tages", text: "Morgens per Mitteilung, abends eine kurze Erinnerung.")
-                FeatureRow(icon: "brain.head.profile", title: "Wissenschaftlich wiederholen", text: "Der FSRS-Algorithmus fragt jedes Wort genau dann ab, bevor du es vergessen würdest.")
-                FeatureRow(icon: "text.bubble", title: "Aktiv in Sätzen", text: "Lückentexte und Satzbau trainieren die Wörter im Zusammenhang.")
+        VStack(alignment: .leading, spacing: 22) {
+            VStack(alignment: .leading, spacing: 12) {
+                Image(systemName: "sun.max.fill")
+                    .font(.system(size: 56))
+                    .foregroundStyle(Theme.sun)
+                    .shadow(color: Theme.sun.opacity(0.7), radius: 16)
+                Text("Willkommen bei VocaDay")
+                    .font(.largeTitle.bold())
+                Text("Jeden Tag mindestens ein neues Wort – ausgewählt aus den häufigsten Wörtern, reihum von A bis Z.")
+                    .font(.title3)
+                    .opacity(0.9)
+            }
+            .foregroundStyle(.white)
+            .padding(24)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Theme.sunrise, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+            .shadow(color: Theme.red.opacity(0.3), radius: 16, y: 8)
+
+            VStack(alignment: .leading, spacing: 16) {
+                FeatureRow(icon: "bell.badge.fill", color: Theme.coral, title: "Wort des Tages",
+                           text: "Morgens direkt in der Mitteilung, abends eine kurze Erinnerung.")
+                FeatureRow(icon: "brain.head.profile", color: Theme.review, title: "Wissenschaftlich wiederholen",
+                           text: "Der FSRS-Algorithmus fragt jedes Wort ab, kurz bevor du es vergessen würdest.")
+                FeatureRow(icon: "text.bubble.fill", color: Theme.sentence, title: "Aktiv in Sätzen",
+                           text: "Lückentexte und Satzbau trainieren die Wörter im Zusammenhang.")
+                FeatureRow(icon: "checklist", color: Theme.test, title: "Wortschatz-Test & Statistik",
+                           text: "Prüfe alles Gelernte auf einmal und sieh, wie dein Wortschatz wächst.")
             }
         }
     }
@@ -175,18 +190,16 @@ struct OnboardingView: View {
 
 private struct FeatureRow: View {
     let icon: String
+    let color: Color
     let title: String
     let text: String
 
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
-            Image(systemName: icon)
-                .font(.title2)
-                .frame(width: 32)
-                .foregroundStyle(Color.accentColor)
+            GradientIcon(systemName: icon, color: color, size: 40)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title).font(.headline)
-                Text(text).foregroundStyle(.secondary)
+                Text(text).font(.subheadline).foregroundStyle(.secondary)
             }
         }
     }

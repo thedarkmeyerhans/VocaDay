@@ -12,6 +12,8 @@ Erste Sprachrichtung: **Deutsch → Türkisch** (1.102 Wörter).
 - **Verpasste Tage** gehen nicht verloren: Ihre Wörter kommen am nächsten Lerntag dazu.
 - **Benachrichtigungen:** Morgens das Wort des Tages direkt in der Mitteilung („ev – das Haus“), abends eine Erinnerung, aber nur wenn noch etwas offen ist. Alles lokal, ohne Server.
 - **Aussprache** über die türkische Systemstimme, auch langsam.
+- **Wortschatz-Test:** fragt alle gelernten Wörter ab (oder die schwächsten 20, 20 zufällige, die der Woche). Richtung und Antwortart (Auswählen/Eintippen) sind wählbar.
+- **Statistik:** Textabdeckung, Aktivität, Lernkalender, Prognose der Wiederholungen, Wortstatus, gemessene Behaltensquote, Fortschritt A–Z, Test-Verlauf, Lernzeit und Serien.
 
 ## Lernsystem
 
@@ -23,6 +25,8 @@ Erste Sprachrichtung: **Deutsch → Türkisch** (1.102 Wörter).
 | Lernen im Kontext | Jedes Wort hat einen Beispielsatz. Der **Satztrainer** übt Lückentexte (Auswahl/Tippen) und das Zusammensetzen ganzer Sätze. |
 | Interleaving | Neue Wörter werden zwischen Wiederholungen gestreut. Falsche Antworten kommen in derselben Einheit etwas später noch einmal. |
 | Aussprechen | Vorlesefunktion und Hinweis zum lauten Nachsprechen (Produktionseffekt). |
+| Wortschatz-Test (Mastery Learning) | Jedes Wort einmal, gemischt. Nur der erste Versuch zählt für das Ergebnis und fließt in FSRS ein, so ist der Test eine ehrliche Messung. Falsche Wörter kommen in einer Fehlerrunde mit leichterer Übung zurück, bis sie sitzen. |
+| Messen statt schätzen | Die Statistik vergleicht die tatsächliche Behaltensquote fälliger Wörter mit dem eingestellten Ziel. Die Textabdeckung zeigt, welchen Anteil eines Alltagstexts die gelernten Wörter ausmachen. |
 
 Tippantworten werden tolerant geprüft: Groß-/Kleinschreibung mit türkischem I/ı, fehlende Sonderzeichen (`ogretmen` statt `öğretmen`) und kleine Tippfehler zählen als „fast richtig“. Eine Leiste liefert die Zeichen ç ğ ı İ ö ş ü.
 
@@ -42,6 +46,8 @@ Packages/VocaDayCore/      Plattformunabhängige Logik + Tests
   Exercises.swift          Übungsauswahl, Antwortoptionen
   AnswerChecker.swift      Türkisch-taugliche Antwortprüfung
   Reminders.swift          Inhalte der Benachrichtigungen
+  VocabularyTest.swift     Wortschatz-Test (Mastery-Schleife)
+  Statistics.swift         Kennzahlen für die Statistik
 data/                      Häufigkeitsliste + kuratierte Wortlisten (siehe data/README.md)
 tools/                     Skripte für Wortdaten und App-Icon
 fastlane/                  Signierung und TestFlight-Upload

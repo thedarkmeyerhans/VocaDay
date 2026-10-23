@@ -40,14 +40,15 @@ def slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text).strip("-")
 
 
-def load_frequency(path: str) -> dict:
-    ranks = {}
+def load_frequency(path: str) -> tuple:
+    ranks, per_million = {}, {}
     with open(path, encoding="utf-8") as fh:
         next(fh)
         for line in fh:
-            rank, lemma, _count, _pm = line.rstrip("\n").split("\t")
+            rank, lemma, _count, pm = line.rstrip("\n").split("\t")
             ranks.setdefault(lemma, int(rank))
-    return ranks
+            per_million.setdefault(lemma, float(pm))
+    return ranks, per_million
 
 
 def parse_entries(pair_dir: str) -> list:
@@ -69,7 +70,7 @@ def parse_entries(pair_dir: str) -> list:
 
 
 def build(native: str, target: str) -> dict:
-    ranks = load_frequency(os.path.join(ROOT, "data", f"{native}_lemma_frequency.tsv"))
+    ranks, per_million = load_frequency(os.path.join(ROOT, "data", f"{native}_lemma_frequency.tsv"))
     entries = parse_entries(os.path.join(ROOT, "data", f"{native}-{target}"))
     errors, words, seen_ids, seen_natives = [], [], set(), {}
     fallback = len(ranks) + 1
@@ -100,14 +101,15 @@ def build(native: str, target: str) -> dict:
             errors.append(f"{where}: id collision '{word_id}'")
         seen_ids.add(word_id)
 
-        rank = None
+        rank, frequency = None, 0.0
         keys = [k for k in e["keys"].split(",") if k] or [e["native"].lower()]
-        for k in keys:
+        for k in dict.fromkeys(keys):
             if k.startswith("#"):
                 rank = int(k[1:])
                 break
             if k in ranks:
                 rank = min(rank or ranks[k], ranks[k])
+                frequency += per_million[k]
         if rank is None:
             rank = fallback
             fallback += 1
@@ -123,6 +125,7 @@ def build(native: str, target: str) -> dict:
             "exampleNative": e["example_native"],
             "exampleTarget": e["example_target"],
             "note": e["note"] or None,
+            "frequency": round(frequency, 1) if frequency else None,
         })
 
     if errors:

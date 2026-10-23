@@ -9,6 +9,8 @@ public enum ExerciseKind: String, Codable, CaseIterable, Sendable {
     case chooseTarget
     /// Native word shown, type the target word (free recall).
     case typeTarget
+    /// Target word shown, type the native word (used by the vocabulary test).
+    case typeNative
     /// Flip card, the learner rates themself.
     case flashcard
     /// Target sentence with a gap, pick the missing word.
@@ -42,6 +44,7 @@ public enum ExerciseKind: String, Codable, CaseIterable, Sendable {
         case .chooseNative: return "Was bedeutet das?"
         case .chooseTarget: return "Wie heißt das auf Türkisch?"
         case .typeTarget: return "Schreib das Wort"
+        case .typeNative: return "Wie heißt das auf Deutsch?"
         case .flashcard: return "Erinnerst du dich?"
         case .clozeChoice: return "Welches Wort fehlt?"
         case .clozeType: return "Ergänze den Satz"
@@ -93,6 +96,7 @@ public enum ExercisePicker {
     public static func retryKind(after kind: ExerciseKind) -> ExerciseKind {
         switch kind {
         case .typeTarget, .flashcard: return .chooseTarget
+        case .typeNative: return .chooseNative
         case .clozeType, .sentenceBuilder: return .clozeChoice
         case .chooseTarget: return .chooseNative
         default: return kind
