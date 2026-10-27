@@ -93,30 +93,8 @@ struct TodayView: View {
 
     // MARK: Words of the day
 
-    @ViewBuilder
     private var wordsOfTheDay: some View {
-        let words = model.todaysWords
-        VStack(alignment: .leading, spacing: 12) {
-            SectionTitle(title: words.count > 1 ? "Deine Wörter für heute" : "Dein Wort des Tages",
-                         subtitle: "Buchstabe \(model.nextLetter) · aus den häufigsten Wörtern")
-            if words.isEmpty {
-                Text("Du hast alle Wörter der Datenbank geplant – stark! Wiederhole sie weiter, damit sie sitzen.")
-                    .foregroundStyle(.secondary)
-                    .card()
-            }
-            ForEach(Array(words.enumerated()), id: \.element.id) { index, word in
-                NavigationLink {
-                    WordDetailView(word: word)
-                } label: {
-                    if index == 0 {
-                        HeroWordCard(word: word, isLearned: model.progress.isIntroduced(word.id))
-                    } else {
-                        CompactWordCard(word: word, isLearned: model.progress.isIntroduced(word.id))
-                    }
-                }
-                .buttonStyle(PressableStyle())
-            }
-        }
+        TodayWordsCard(words: model.todaysWords, letter: model.nextLetter)
     }
 
     // MARK: Daily goal
@@ -195,6 +173,194 @@ struct TodayView: View {
 
 // MARK: - Components
 
+/// The words of the day without a long list: a swipeable card per word and a
+/// compact chip overview that jumps to a word and shows what is already learned.
+struct TodayWordsCard: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    let words: [Word]
+    let letter: String
+    @State private var selection: String?
+
+    private var learnedCount: Int { words.filter { model.progress.isIntroduced($0.id) }.count }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .firstTextBaseline) {
+                SectionTitle(title: words.count > 1 ? "Deine Wörter für heute" : "Dein Wort des Tages",
+                             subtitle: "Buchstabe \(letter) · aus den häufigsten Wörtern")
+                if words.count > 1 {
+                    Text("\(learnedCount)/\(words.count)")
+                        .font(.subheadline.weight(.bold).monospacedDigit())
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(Theme.correct.opacity(0.15), in: Capsule())
+                        .foregroundStyle(Theme.correct)
+                        .accessibilityLabel("\(learnedCount) von \(words.count) gelernt")
+                }
+            }
+            if words.isEmpty {
+                Text("Du hast alle Wörter der Datenbank geplant – stark! Wiederhole sie weiter, damit sie sitzen.")
+                    .foregroundStyle(.secondary)
+                    .card()
+            } else {
+                carousel
+                if words.count > 1 {
+                    PageDots(count: words.count, index: words.firstIndex { $0.id == (selection ?? words.first?.id) } ?? 0)
+                        .frame(maxWidth: .infinity)
+                    chips
+                }
+            }
+        }
+        .onAppear { if selection == nil { selection = firstOpenWord?.id ?? words.first?.id } }
+    }
+
+    private var firstOpenWord: Word? { words.first { !model.progress.isIntroduced($0.id) } }
+
+    private var carousel: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 12) {
+                ForEach(words) { word in
+                    NavigationLink {
+                        WordDetailView(word: word)
+                    } label: {
+                        DayWordCard(word: word, isLearned: model.progress.isIntroduced(word.id))
+                    }
+                    .buttonStyle(PressableStyle())
+                    .containerRelativeFrame(.horizontal, count: sizeClass == .regular && words.count > 1 ? 2 : 1,
+                                            spacing: 12)
+                    .id(word.id)
+                }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollTargetBehavior(.viewAligned)
+        .scrollPosition(id: $selection)
+        .scrollClipDisabled()
+    }
+
+    /// All words of the day at a glance; tap to jump to the card.
+    private var chips: some View {
+        FlowLayout(spacing: 8) {
+            ForEach(words) { word in
+                let learned = model.progress.isIntroduced(word.id)
+                let selected = word.id == selection
+                Button {
+                    withAnimation(.snappy) { selection = word.id }
+                } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: learned ? "checkmark.circle.fill" : "circle.dashed")
+                            .foregroundStyle(learned ? Theme.correct : .secondary)
+                        Text(word.translation).lineLimit(1)
+                    }
+                    .font(.subheadline.weight(selected ? .bold : .medium))
+                    .padding(.horizontal, 11)
+                    .padding(.vertical, 7)
+                    .background(selected ? AnyShapeStyle(Theme.coral.opacity(0.18))
+                                         : AnyShapeStyle(Color(.secondarySystemGroupedBackground)),
+                                in: Capsule())
+                    .overlay(Capsule().stroke(selected ? Theme.coral : Color(.separator).opacity(0.5),
+                                              lineWidth: selected ? 1.5 : 0.5))
+                    .foregroundStyle(.primary)
+                }
+                .buttonStyle(PressableStyle())
+                .accessibilityLabel("\(word.translation), \(word.nativeWithArticle)\(learned ? ", gelernt" : "")")
+            }
+        }
+    }
+}
+
+/// One word of the day in the carousel: same height for every card.
+struct DayWordCard: View {
+    let word: Word
+    let isLearned: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 6) {
+                Pill(text: word.partOfSpeech.displayName, color: .white)
+                IrregularBadge(word: word, onDark: true)
+                if isLearned {
+                    Pill(text: "gelernt", systemImage: "checkmark", color: .white)
+                }
+                Spacer(minLength: 0)
+                SpeakButton(text: word.translation, tint: .white)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(word.translation)
+                    .font(.system(size: 42, weight: .heavy, design: .rounded))
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
+                Text(word.nativeWithArticle)
+                    .font(.title3.weight(.medium))
+                    .opacity(0.92)
+                    .lineLimit(1)
+            }
+            if let definition = word.definition {
+                Text(definition)
+                    .font(.footnote)
+                    .italic()
+                    .opacity(0.85)
+                    .lineLimit(2)
+            }
+            Spacer(minLength: 0)
+            Divider().overlay(.white.opacity(0.4))
+            VStack(alignment: .leading, spacing: 2) {
+                HighlightedSentence(cloze: word.cloze, highlight: Theme.sun)
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(2)
+                Text(word.exampleNative)
+                    .font(.caption)
+                    .opacity(0.85)
+                    .lineLimit(1)
+            }
+        }
+        .foregroundStyle(.white)
+        .multilineTextAlignment(.leading)
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(height: 280)
+        .background {
+            ZStack(alignment: .topTrailing) {
+                Rectangle().fill(isLearned
+                    ? AnyShapeStyle(LinearGradient(colors: [Theme.test, Theme.review],
+                                                   startPoint: .topLeading, endPoint: .bottomTrailing))
+                    : AnyShapeStyle(Theme.sunrise))
+                Circle()
+                    .fill(Theme.sun.opacity(0.3))
+                    .frame(width: 160, height: 160)
+                    .blur(radius: 30)
+                    .offset(x: 50, y: -60)
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .shadow(color: (isLearned ? Theme.test : Theme.red).opacity(0.3), radius: 12, y: 8)
+    }
+}
+
+/// Page indicator that stays compact for many words.
+struct PageDots: View {
+    let count: Int
+    let index: Int
+
+    var body: some View {
+        if count <= 12 {
+            HStack(spacing: 6) {
+                ForEach(0..<count, id: \.self) { i in
+                    Capsule()
+                        .fill(i == index ? Theme.coral : Color(.tertiaryLabel))
+                        .frame(width: i == index ? 18 : 6, height: 6)
+                }
+            }
+            .animation(.snappy, value: index)
+        } else {
+            Text("\(index + 1) von \(count)")
+                .font(.caption.weight(.semibold).monospacedDigit())
+                .foregroundStyle(.secondary)
+        }
+    }
+}
+
 struct HeroWordCard: View {
     let word: Word
     let isLearned: Bool
@@ -244,33 +410,6 @@ struct HeroWordCard: View {
         }
         .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
         .shadow(color: Theme.red.opacity(0.35), radius: 16, y: 10)
-    }
-}
-
-struct CompactWordCard: View {
-    let word: Word
-    let isLearned: Bool
-
-    var body: some View {
-        HStack(spacing: 14) {
-            Text(String(word.native.prefix(1)).uppercased())
-                .font(.title2.bold())
-                .foregroundStyle(.white)
-                .frame(width: 46, height: 46)
-                .background(Theme.sunrise, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-            VStack(alignment: .leading, spacing: 2) {
-                Text(word.translation).font(.title3.bold())
-                ArticleWord(word: word, font: .subheadline)
-                    .foregroundStyle(.secondary)
-            }
-            Spacer()
-            if isLearned {
-                Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.correct)
-            }
-            SpeakButton(text: word.translation)
-        }
-        .foregroundStyle(.primary)
-        .card(padding: 14)
     }
 }
 

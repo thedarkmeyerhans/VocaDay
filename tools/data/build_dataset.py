@@ -28,7 +28,8 @@ FIELDS = ["native", "article", "pos", "translation", "alternatives", "example_na
           "example_target", "note", "keys"]
 ATTRIBUTION = (
     "Worthäufigkeit: FrequencyWords von Hermit Dave (OpenSubtitles 2018), CC BY-SA 4.0. "
-    "Lemmatisierung: simplemma. Übersetzungen und Beispielsätze: VocaDay."
+    "Lemmatisierung: simplemma. Bedeutungserklärungen: Wiktionary (de.wiktionary.org), CC BY-SA 4.0. "
+    "Übersetzungen und Beispielsätze: VocaDay."
 )
 
 
@@ -49,6 +50,19 @@ def load_frequency(path: str) -> tuple:
             ranks.setdefault(lemma, int(rank))
             per_million.setdefault(lemma, float(pm))
     return ranks, per_million
+
+
+def load_definitions(path: str) -> dict:
+    """{(native, pos): definition} from build_definitions.py, empty if not built yet."""
+    if not os.path.exists(path):
+        return {}
+    definitions = {}
+    with open(path, encoding="utf-8") as fh:
+        next(fh)
+        for line in fh:
+            native, pos, _sense, _matched, text = line.rstrip("\n").split("\t")
+            definitions[(native, pos)] = text
+    return definitions
 
 
 def parse_entries(pair_dir: str) -> list:
@@ -72,6 +86,7 @@ def parse_entries(pair_dir: str) -> list:
 def build(native: str, target: str) -> dict:
     ranks, per_million = load_frequency(os.path.join(ROOT, "data", f"{native}_lemma_frequency.tsv"))
     entries = parse_entries(os.path.join(ROOT, "data", f"{native}-{target}"))
+    definitions = load_definitions(os.path.join(ROOT, "data", f"{native}_definitions.tsv"))
     errors, words, seen_ids, seen_natives = [], [], set(), {}
     fallback = len(ranks) + 1
 
@@ -126,6 +141,7 @@ def build(native: str, target: str) -> dict:
             "exampleTarget": e["example_target"],
             "note": e["note"] or None,
             "frequency": round(frequency, 1) if frequency else None,
+            "definition": definitions.get((e["native"], e["pos"])),
         })
 
     if errors:

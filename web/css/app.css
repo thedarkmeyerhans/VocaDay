@@ -495,3 +495,28 @@ button.pressable { width: 100%; text-align: left; }
 .gtable td { padding: 7px 8px; border-top: 0.5px solid var(--separator); white-space: nowrap; }
 .gtable .ending { color: var(--sentence); }
 .seg.small button { font-size: 13px; padding: 7px 4px; }
+
+/* Words of the day */
+.carousel { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -16px; padding: 4px 16px 14px; scroll-padding: 0 16px; }
+.carousel::-webkit-scrollbar { display: none; }
+.carousel.single { overflow: visible; }
+.daycard { flex: 0 0 100%; scroll-snap-align: start; height: 290px; display: flex; flex-direction: column; gap: 6px; padding: 20px; border-radius: 26px; color: #fff; background: var(--sunrise); box-shadow: 0 10px 22px rgba(224, 69, 58, 0.3); position: relative; overflow: hidden; cursor: pointer; text-align: left; }
+.daycard.learned { background: linear-gradient(135deg, var(--test), var(--review)); box-shadow: 0 10px 22px rgba(20, 184, 166, 0.3); }
+.daycard .big { font-size: 40px; font-weight: 800; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.daycard .sub { font-size: 19px; opacity: 0.92; font-weight: 500; }
+.daycard .def { font-size: 13px; font-style: italic; opacity: 0.85; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.daycard .spacer { flex: 1; }
+.daycard hr { border: 0; border-top: 1px solid rgba(255, 255, 255, 0.35); margin: 4px 0; width: 100%; }
+.daycard mark { background: none; color: var(--sun); font-weight: 700; }
+.daycard .ex { font-weight: 600; font-size: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.daycard .ex1 { font-size: 13px; opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 760px) { .daycard { flex-basis: calc(50% - 6px); } }
+.dots { display: flex; justify-content: center; gap: 6px; margin-top: -4px; }
+.dots span { width: 6px; height: 6px; border-radius: 3px; background: var(--separator); transition: width 0.2s, background 0.2s; }
+.dots span.on { width: 18px; background: var(--coral); }
+.daychips { gap: 8px; }
+.daychip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 999px; font-size: 15px; font-weight: 500; background: var(--card); border: 0.5px solid var(--separator); }
+.daychip i { width: 11px; height: 11px; border-radius: 50%; border: 1.5px dashed var(--secondary); }
+.daychip.done svg { color: var(--correct); }
+.daychip.on { font-weight: 700; border: 1.5px solid var(--coral); background: color-mix(in srgb, var(--coral) 16%, var(--card)); }
+.def-card .src { font-size: 11px; color: var(--secondary); }

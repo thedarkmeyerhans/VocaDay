@@ -30,6 +30,13 @@ struct IntroductionView: View {
                         .font(.subheadline)
                         .opacity(0.85)
                 }
+                if let definition = word.definition {
+                    Text("Bedeutung: \(definition)")
+                        .font(.footnote)
+                        .italic()
+                        .opacity(0.85)
+                        .padding(.top, 4)
+                }
             }
             .foregroundStyle(.white)
             .padding(22)

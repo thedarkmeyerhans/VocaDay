@@ -31,9 +31,9 @@ const syllables = (s) => [...s].filter(isVowel).length;
 
 export const AORIST_EXCEPTIONS = new Set(["al", "bil", "bul", "dur", "gel", "gör", "kal", "ol", "öl", "san", "ver", "var", "vur"]);
 const SOFTENING = new Set(["git", "et", "tat", "güt", "dit", "kastet", "hisset", "kaybet", "emret", "affet", "bahset",
-  "keşfet", "reddet", "seyret", "sabret", "kaydet", "zannet", "hapset", "şükret", "terket"]);
+  "keşfet", "reddet", "seyret", "sabret", "kaydet", "hallet", "zannet", "hapset", "şükret", "terket"]);
 export const NOT_CONJUGATABLE = new Set(["-ebilmek", "-abilmek", "zorunda olmak", "ihtiyacı olmak", "adı olmak",
-  "anlamına gelmek", "hoşuna gitmek", "mal olmak", "eksik olmak", "ait olmak", "tadı olmak", "yağmur yağmak", "kanamak",
+  "anlamına gelmek", "hoşuna gitmek", "mal olmak", "eksik olmak", "ait olmak", "tadı olmak", "yağmur yağmak", "kar yağmak", "kanamak",
   "yetmek", "acımak", "elinde tutmak", "yanına almak", "lezzetli olmak", "aklına gelmek", "başına gelmek",
   "ihtiyaç duymak", "gerekmek"]);
 

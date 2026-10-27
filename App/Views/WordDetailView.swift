@@ -35,6 +35,10 @@ struct WordDetailView: View {
             VStack(alignment: .leading, spacing: 16) {
                 HeroWordCard(word: word, isLearned: model.progress.isIntroduced(word.id))
 
+                if let definition = word.definition {
+                    DefinitionCard(word: word, definition: definition)
+                }
+
                 if !word.alternatives.isEmpty || word.note != nil {
                     VStack(alignment: .leading, spacing: 10) {
                         if !word.alternatives.isEmpty {
@@ -238,5 +242,27 @@ private struct ForgettingCurveCard: View {
                 .foregroundStyle(.secondary)
         }
         .card(padding: 18)
+    }
+}
+
+/// German explanation of the meaning, from the German Wiktionary.
+struct DefinitionCard: View {
+    let word: Word
+    let definition: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Bedeutung", systemImage: "book.closed.fill")
+                .font(.headline)
+                .foregroundStyle(Theme.review)
+            Text("\(Text(word.native).bold()): \(definition)")
+                .font(.body)
+                .fixedSize(horizontal: false, vertical: true)
+            Text("Quelle: Wiktionary (CC BY-SA 4.0)")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .card()
     }
 }

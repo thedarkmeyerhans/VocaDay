@@ -162,6 +162,12 @@ struct SourcesView: View {
                 Link("Lizenz CC BY-SA 4.0",
                      destination: URL(string: "https://creativecommons.org/licenses/by-sa/4.0/")!)
             }
+            Section("Bedeutungserklärungen") {
+                Text("Die deutschen Bedeutungserklärungen stammen aus dem Wiktionary. Passend zur türkischen Übersetzung wird die jeweilige Bedeutung ausgewählt.")
+                Link("de.wiktionary.org", destination: URL(string: "https://de.wiktionary.org")!)
+                Link("Lizenz CC BY-SA 4.0",
+                     destination: URL(string: "https://creativecommons.org/licenses/by-sa/4.0/")!)
+            }
             Section("Lernalgorithmus") {
                 Text("FSRS-5 (Free Spaced Repetition Scheduler) von Open Spaced Repetition, MIT-Lizenz.")
                 Link("open-spaced-repetition auf GitHub",

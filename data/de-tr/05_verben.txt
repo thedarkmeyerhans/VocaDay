@@ -1,0 +1,214 @@
+# Weitere häufige Verben (Alltag, Haushalt, Reisen, Arbeit, Gefühle).
+# Format siehe data/README.md
+holen |  | v | getirmek | alıp getirmek | Ich hole Wasser. | Su [getiriyorum]. |
+setzen |  | v | oturtmak | koymak | Er setzt das Kind auf den Stuhl. | Çocuğu sandalyeye [oturtuyor]. | sich setzen = oturmak
+legen |  | v | koymak | yatırmak | Leg das Buch auf den Tisch. | Kitabı masaya [koy]. | sich legen = uzanmak
+stecken |  | v | sokmak | takmak | Er steckt den Schlüssel ins Schloss. | Anahtarı kilide [sokuyor]. |
+schätzen |  | v | tahmin etmek | takdir etmek | Ich schätze, er ist dreißig. | Otuz yaşında olduğunu [tahmin ediyorum]. | jemanden schätzen = birini takdir etmek
+erfahren |  | v | öğrenmek | haber almak | Ich habe es gestern erfahren. | Bunu dün [öğrendim]. | erfahren = (etwas Neues) duyup öğrenmek
+erledigen |  | v | halletmek | bitirmek | Ich erledige das morgen. | Bunu yarın [hallederim]. |
+zahlen |  | v | ödemek |  | Wir zahlen getrennt. | Ayrı ayrı [ödüyoruz]. |
+buchen |  | v | rezervasyon yapmak | ayırtmak | Ich habe ein Zimmer gebucht. | Bir oda için [rezervasyon yaptım]. |
+melden |  | v | bildirmek | haber vermek | Ich melde den Unfall. | Kazayı [bildiriyorum]. | sich melden = haber vermek, ses vermek
+angreifen |  | v | saldırmak |  | Der Hund hat ihn angegriffen. | Köpek ona [saldırdı]. |
+übernehmen |  | v | üstlenmek | devralmak | Ich übernehme die Verantwortung. | Sorumluluğu [üstleniyorum]. |
+bilden |  | v | oluşturmak |  | Wir bilden eine Gruppe. | Bir grup [oluşturuyoruz]. |
+stören |  | v | rahatsız etmek |  | Der Lärm stört mich. | Gürültü beni [rahatsız ediyor]. |
+treten |  | v | basmak | tekmelemek | Tritt nicht auf das Gras! | Çimlere [basma]! |
+merken |  | v | fark etmek |  | Ich habe nichts gemerkt. | Hiçbir şey [fark etmedim]. | sich etwas merken = aklında tutmak
+herausfinden |  | v | bulmak | öğrenmek | Wir müssen die Wahrheit herausfinden. | Gerçeği [bulmalıyız]. |
+bestehen |  | v | geçmek |  | Ich habe die Prüfung bestanden. | Sınavı [geçtim]. | bestehen aus = -den oluşmak
+erwischen |  | v | yakalamak |  | Die Polizei hat ihn erwischt. | Polis onu [yakaladı]. |
+handeln |  | v | hareket etmek | davranmak | Wir müssen schnell handeln. | Hızlı [hareket etmeliyiz]. | es handelt sich um = söz konusu
+erhalten |  | v | almak |  | Ich habe Ihren Brief erhalten. | Mektubunuzu [aldım]. |
+besitzen |  | v | sahip olmak |  | Sie besitzt ein großes Haus. | Büyük bir eve [sahip]. |
+verfolgen |  | v | takip etmek | izlemek | Ein Auto verfolgt uns. | Bir araba bizi [takip ediyor]. |
+dienen |  | v | hizmet etmek |  | Er dient seinem Land. | Ülkesine [hizmet ediyor]. |
+binden |  | v | bağlamak |  | Er bindet das Pferd an den Baum. | Atı ağaca [bağlıyor]. |
+packen |  | v | toplamak | paketlemek | Ich packe meinen Koffer. | Bavulumu [topluyorum]. |
+enden |  | v | bitmek | sona ermek | Der Film endet um zehn. | Film onda [bitiyor]. |
+beschäftigen |  | v | meşgul etmek |  | Das Problem beschäftigt mich. | Bu sorun beni [meşgul ediyor]. | sich beschäftigen mit = ile ilgilenmek
+herkommen |  | v | buraya gelmek |  | Komm sofort her! | Hemen [buraya gel]! |
+testen |  | v | test etmek | denemek | Wir testen das neue Auto. | Yeni arabayı [test ediyoruz]. |
+angeln |  | v | balık tutmak |  | Wir angeln am See. | Gölde [balık tutuyoruz]. |
+unterscheiden |  | v | ayırt etmek |  | Ich kann die Zwillinge nicht unterscheiden. | İkizleri [ayırt edemiyorum]. |
+klopfen |  | v | çalmak | vurmak | Jemand klopft an die Tür. | Biri kapıyı [çalıyor]. |
+befinden |  | v | bulunmak |  | Das Hotel befindet sich im Zentrum. | Otel merkezde [bulunuyor]. | meist: sich befinden
+hinterlassen |  | v | bırakmak |  | Er hat eine Nachricht hinterlassen. | Bir mesaj [bıraktı]. |
+reißen |  | v | yırtmak | koparmak | Er reißt den Brief in Stücke. | Mektubu [yırtıyor]. |
+gründen |  | v | kurmak |  | Sie hat eine Firma gegründet. | Bir şirket [kurdu]. |
+auftauchen |  | v | ortaya çıkmak |  | Plötzlich ist er aufgetaucht. | Birden [ortaya çıktı]. |
+quatschen |  | v | sohbet etmek | gevezelik etmek | Wir quatschen stundenlang. | Saatlerce [sohbet ediyoruz]. | umgangssprachlich
+gelten |  | v | geçerli olmak |  | Das Ticket gilt einen Tag. | Bilet bir gün [geçerli]. |
+empfangen |  | v | karşılamak | ağırlamak | Wir empfangen die Gäste. | Misafirleri [karşılıyoruz]. |
+verbrennen |  | v | yakmak |  | Er verbrennt die alten Briefe. | Eski mektupları [yakıyor]. | sich verbrennen = (elini) yakmak
+drucken |  | v | yazdırmak | basmak | Ich drucke das Ticket. | Bileti [yazdırıyorum]. |
+akzeptieren |  | v | kabul etmek |  | Ich akzeptiere deine Entscheidung. | Kararını [kabul ediyorum]. |
+heben |  | v | kaldırmak |  | Hebt die Hand! | Elinizi [kaldırın]! |
+leiten |  | v | yönetmek |  | Sie leitet die Firma. | Şirketi [yönetiyor]. |
+fernsehen |  | v | televizyon izlemek |  | Abends sehen wir fern. | Akşamları [televizyon izliyoruz]. |
+zurückkehren |  | v | geri dönmek |  | Er ist nach Hause zurückgekehrt. | Eve [geri döndü]. |
+begreifen |  | v | kavramak | anlamak | Ich begreife das nicht. | Bunu [kavrayamıyorum]. |
+wechseln |  | v | değiştirmek | bozdurmak | Wir wechseln das Thema. | Konuyu [değiştiriyoruz]. | Geld wechseln = para bozdurmak
+erscheinen |  | v | çıkmak | yayımlanmak; görünmek | Das Buch erscheint im Mai. | Kitap mayısta [çıkıyor]. |
+stechen |  | v | sokmak |  | Eine Biene hat mich gestochen. | Beni bir arı [soktu]. |
+erfüllen |  | v | yerine getirmek |  | Er erfüllt sein Versprechen. | Sözünü [yerine getiriyor]. | einen Wunsch erfüllen = bir dileği gerçekleştirmek
+betrachten |  | v | incelemek | seyretmek | Sie betrachtet das Bild. | Resmi [inceliyor]. |
+seufzen |  | v | iç çekmek |  | Sie seufzt leise. | Sessizce [iç çekiyor]. |
+gelingen |  | v | başarmak |  | Es ist mir gelungen. | [Başardım]. | es gelingt mir = başarıyorum
+vernichten |  | v | yok etmek |  | Sie haben die Beweise vernichtet. | Kanıtları [yok ettiler]. |
+benehmen |  | v | davranmak |  | Benimm dich! | Düzgün [davran]! | meist: sich benehmen
+beantworten |  | v | cevaplamak | yanıtlamak | Bitte beantworten Sie die Frage. | Lütfen soruyu [cevaplayın]. |
+knien |  | v | diz çökmek |  | Er kniet vor ihr. | Onun önünde [diz çöküyor]. |
+ertragen |  | v | dayanmak | katlanmak | Ich kann den Lärm nicht ertragen. | Bu gürültüye [dayanamıyorum]. |
+aufregen |  | v | sinirlenmek |  | Reg dich nicht auf! | [Sinirlenme]! | sich aufregen = sinirlenmek
+stoßen |  | v | itmek | çarpmak | Er hat mich gestoßen. | Beni [itti]. |
+anhalten |  | v | durmak | durdurmak | Der Bus hält hier an. | Otobüs burada [duruyor]. |
+verwandeln |  | v | dönüştürmek |  | Die Hexe verwandelt ihn in einen Frosch. | Cadı onu kurbağaya [dönüştürüyor]. |
+reagieren |  | v | tepki vermek |  | Wie hat er reagiert? | Nasıl [tepki verdi]? |
+begegnen |  | v | karşılaşmak | rastlamak | Ich bin ihm im Park begegnet. | Parkta onunla [karşılaştım]. |
+vermuten |  | v | sanmak | tahmin etmek | Ich vermute, dass er krank ist. | Hasta olduğunu [sanıyorum]. |
+streichen |  | v | boyamak |  | Wir streichen die Wand. | Duvarı [boyuyoruz]. | streichen = auch (durch)streichen: çizmek
+betreffen |  | v | ilgilendirmek |  | Das betrifft dich nicht. | Bu seni [ilgilendirmez]. |
+pfeifen |  | v | ıslık çalmak |  | Er pfeift fröhlich. | Neşeyle [ıslık çalıyor]. |
+abschließen |  | v | kilitlemek | bitirmek | Schließ die Tür ab! | Kapıyı [kilitle]! |
+tauchen |  | v | dalmak |  | Wir tauchen im Meer. | Denizde [dalıyoruz]. |
+gestehen |  | v | itiraf etmek |  | Er hat alles gestanden. | Her şeyi [itiraf etti]. |
+weitermachen |  | v | devam etmek |  | Mach weiter! | [Devam et]! |
+rühren |  | v | karıştırmak |  | Rühr die Suppe um! | Çorbayı [karıştır]! |
+festhalten |  | v | tutunmak | sıkı tutmak | Halt dich fest! | Sıkı [tutun]! | sich festhalten = tutunmak
+schämen |  | v | utanmak |  | Ich schäme mich. | [Utanıyorum]. | sich schämen
+erfinden |  | v | icat etmek | uydurmak | Wer hat das Telefon erfunden? | Telefonu kim [icat etti]? |
+aufräumen |  | v | toplamak | düzenlemek | Ich räume mein Zimmer auf. | Odamı [topluyorum]. |
+loswerden |  | v | kurtulmak |  | Ich will den alten Schrank loswerden. | Eski dolaptan [kurtulmak] istiyorum. |
+versagen |  | v | başarısız olmak |  | Ich habe versagt. | [Başarısız oldum]. |
+besiegen |  | v | yenmek |  | Wir haben sie besiegt. | Onları [yendik]. |
+entlassen |  | v | işten çıkarmak |  | Die Firma hat ihn entlassen. | Şirket onu [işten çıkardı]. |
+übersetzen |  | v | çevirmek | tercüme etmek | Kannst du das übersetzen? | Bunu [çevirebilir] misin? |
+einstellen |  | v | işe almak |  | Wir stellen neue Leute ein. | Yeni insanları [işe alıyoruz]. | einstellen = auch: ayarlamak
+verurteilen |  | v | mahkûm etmek |  | Der Richter verurteilt ihn. | Hâkim onu [mahkûm ediyor]. |
+leihen |  | v | ödünç vermek | ödünç almak | Kannst du mir dein Fahrrad leihen? | Bisikletini bana [ödünç verir] misin? | sich etwas leihen = ödünç almak
+riskieren |  | v | riske atmak |  | Er riskiert sein Leben. | Hayatını [riske atıyor]. |
+telefonieren |  | v | telefonda konuşmak |  | Sie telefoniert mit ihrer Mutter. | Annesiyle [telefonda konuşuyor]. |
+vergleichen |  | v | karşılaştırmak |  | Vergleiche die Preise! | Fiyatları [karşılaştır]! |
+duschen |  | v | duş almak |  | Ich dusche jeden Morgen. | Her sabah [duş alıyorum]. |
+schlucken |  | v | yutmak |  | Er schluckt die Tablette. | Hapı [yutuyor]. |
+ausziehen |  | v | çıkarmak | taşınmak | Zieh die Schuhe aus! | Ayakkabılarını [çıkar]! | aus der Wohnung ausziehen = evden taşınmak
+verursachen |  | v | sebep olmak | yol açmak | Er hat einen Unfall verursacht. | Bir kazaya [sebep oldu]. |
+einsperren |  | v | hapsetmek | kilitlemek | Sie haben ihn eingesperrt. | Onu [hapsettiler]. |
+zusehen |  | v | seyretmek | izlemek | Ich sehe euch beim Spielen zu. | Oynarken sizi [seyrediyorum]. |
+bellen |  | v | havlamak |  | Der Hund bellt. | Köpek [havlıyor]. |
+bestrafen |  | v | cezalandırmak |  | Der Lehrer bestraft ihn. | Öğretmen onu [cezalandırıyor]. |
+mieten |  | v | kiralamak |  | Wir mieten ein Auto. | Bir araba [kiralıyoruz]. |
+ausgeben |  | v | harcamak |  | Ich gebe zu viel Geld aus. | Çok fazla para [harcıyorum]. |
+ignorieren |  | v | görmezden gelmek |  | Er ignoriert mich. | Beni [görmezden geliyor]. |
+füllen |  | v | doldurmak |  | Füll das Glas! | Bardağı [doldur]! |
+begraben |  | v | gömmek |  | Sie haben den Hund im Garten begraben. | Köpeği bahçeye [gömdüler]. |
+ablehnen |  | v | reddetmek |  | Er hat das Angebot abgelehnt. | Teklifi [reddetti]. |
+trainieren |  | v | antrenman yapmak |  | Er trainiert jeden Tag. | Her gün [antrenman yapıyor]. |
+drohen |  | v | tehdit etmek |  | Er hat mir gedroht. | Beni [tehdit etti]. |
+tauschen |  | v | değiş tokuş etmek |  | Wir tauschen Briefmarken. | Pul [değiş tokuş ediyoruz]. |
+fordern |  | v | talep etmek | istemek | Sie fordern mehr Geld. | Daha fazla para [talep ediyorlar]. |
+stinken |  | v | kötü kokmak |  | Der Käse stinkt. | Peynir [kötü kokuyor]. |
+amüsieren |  | v | eğlenmek |  | Wir haben uns gut amüsiert. | Çok [eğlendik]. | sich amüsieren = eğlenmek
+blasen |  | v | üflemek |  | Blas die Kerzen aus! | Mumları [üfle]! |
+beschreiben |  | v | tarif etmek | anlatmak | Beschreib mir den Weg. | Bana yolu [tarif et]. |
+anzeigen |  | v | ihbar etmek |  | Ich zeige ihn bei der Polizei an. | Onu polise [ihbar edeceğim]. | anzeigen = auch: göstermek
+abnehmen |  | v | kilo vermek |  | Ich habe drei Kilo abgenommen. | Üç kilo [verdim]. | das Telefon abnehmen = telefonu açmak
+verdächtigen |  | v | şüphelenmek |  | Die Polizei verdächtigt ihn. | Polis ondan [şüpheleniyor]. |
+verabschieden |  | v | vedalaşmak |  | Wir verabschieden uns. | [Vedalaşıyoruz]. | sich verabschieden = vedalaşmak
+abgeben |  | v | teslim etmek |  | Gib die Hausaufgaben morgen ab. | Ödevini yarın [teslim et]. |
+lohnen |  | v | değmek |  | Es lohnt sich. | [Değer]. | sich lohnen = değmek
+respektieren |  | v | saygı duymak |  | Ich respektiere deine Meinung. | Fikrine [saygı duyuyorum]. |
+löschen |  | v | silmek | söndürmek | Lösch die Nachricht! | Mesajı [sil]! | Feuer löschen = ateşi söndürmek
+rechnen |  | v | hesaplamak |  | Ich rechne die Kosten aus. | Masrafları [hesaplıyorum]. |
+waschen |  | v | yıkamak |  | Ich wasche die Wäsche. | Çamaşırları [yıkıyorum]. | sich waschen = yıkanmak
+putzen |  | v | temizlemek |  | Ich putze das Bad. | Banyoyu [temizliyorum]. | Zähne putzen = dişleri fırçalamak
+kämmen |  | v | taramak |  | Sie kämmt ihre Haare. | Saçlarını [tarıyor]. |
+umziehen |  | v | taşınmak |  | Wir ziehen nächsten Monat um. | Gelecek ay [taşınıyoruz]. | sich umziehen = üstünü değiştirmek
+einkaufen |  | v | alışveriş yapmak |  | Samstags kaufe ich ein. | Cumartesileri [alışveriş yapıyorum]. |
+schneien |  | v | kar yağmak |  | Es schneit. | [Kar yağıyor]. |
+frieren |  | v | üşümek | donmak | Ich friere. | [Üşüyorum]. |
+schwitzen |  | v | terlemek |  | Ich schwitze. | [Terliyorum]. |
+husten |  | v | öksürmek |  | Das Kind hustet. | Çocuk [öksürüyor]. |
+niesen |  | v | hapşırmak |  | Er niest ständig. | Sürekli [hapşırıyor]. |
+erkälten |  | v | üşütmek |  | Ich habe mich erkältet. | [Üşüttüm]. | sich erkälten = üşütmek
+klettern |  | v | tırmanmak |  | Die Katze klettert auf den Baum. | Kedi ağaca [tırmanıyor]. |
+wandern |  | v | yürüyüş yapmak |  | Wir wandern in den Bergen. | Dağlarda [yürüyüş yapıyoruz]. |
+fotografieren |  | v | fotoğraf çekmek |  | Er fotografiert im Urlaub. | Tatilde [fotoğraf çekiyor]. |
+zeichnen |  | v | çizmek |  | Das Kind zeichnet ein Haus. | Çocuk bir ev [çiziyor]. |
+stricken |  | v | örmek |  | Oma strickt einen Pullover. | Büyükannem bir kazak [örüyor]. |
+nähen |  | v | dikmek |  | Sie näht ein Kleid. | Bir elbise [dikiyor]. |
+backen |  | v | pişirmek | fırında pişirmek | Wir backen einen Kuchen. | Bir kek [pişiriyoruz]. |
+braten |  | v | kızartmak |  | Ich brate Fisch. | Balık [kızartıyorum]. |
+schälen |  | v | soymak |  | Ich schäle die Kartoffeln. | Patatesleri [soyuyorum]. |
+gießen |  | v | sulamak | dökmek | Ich gieße die Blumen. | Çiçekleri [suluyorum]. |
+füttern |  | v | beslemek |  | Ich füttere die Katze. | Kediyi [besliyorum]. |
+streicheln |  | v | okşamak |  | Er streichelt den Hund. | Köpeği [okşuyor]. |
+beißen |  | v | ısırmak |  | Der Hund beißt nicht. | Köpek [ısırmaz]. |
+bremsen |  | v | fren yapmak |  | Der Fahrer bremst. | Şoför [fren yapıyor]. |
+tanken |  | v | benzin almak | yakıt almak | Wir tanken an der Tankstelle. | Benzin istasyonunda [benzin alıyoruz]. |
+landen |  | v | iniş yapmak | inmek | Das Flugzeug landet um acht. | Uçak sekizde [iniş yapıyor]. |
+einsteigen |  | v | binmek |  | Bitte steigen Sie ein. | Lütfen [binin]. |
+aussteigen |  | v | inmek |  | Wir steigen hier aus. | Burada [iniyoruz]. |
+umsteigen |  | v | aktarma yapmak |  | In Ankara steigen wir um. | Ankara'da [aktarma yapıyoruz]. |
+abfahren |  | v | kalkmak | hareket etmek | Der Zug fährt um neun ab. | Tren dokuzda [kalkıyor]. |
+verspäten |  | v | gecikmek |  | Der Bus verspätet sich. | Otobüs [gecikiyor]. | sich verspäten = gecikmek
+überqueren |  | v | geçmek | karşıya geçmek | Wir überqueren die Straße. | Caddeyi [geçiyoruz]. |
+abbiegen |  | v | dönmek | sapmak | Biegen Sie links ab. | Sola [dönün]. |
+verirren |  | v | kaybolmak | yolunu kaybetmek | Wir haben uns verirrt. | [Kaybolduk]. | sich verirren = yolunu kaybetmek
+übernachten |  | v | konaklamak | geceyi geçirmek | Wir übernachten im Hotel. | Otelde [konaklıyoruz]. |
+reservieren |  | v | ayırtmak | rezervasyon yapmak | Ich möchte einen Tisch reservieren. | Bir masa [ayırtmak] istiyorum. |
+empfehlen |  | v | tavsiye etmek | önermek | Was empfehlen Sie? | Ne [tavsiye edersiniz]? |
+überweisen |  | v | havale etmek |  | Ich überweise das Geld. | Parayı [havale ediyorum]. |
+bewerben |  | v | başvurmak |  | Ich bewerbe mich um die Stelle. | Bu işe [başvuruyorum]. | sich bewerben = başvurmak
+kündigen |  | v | istifa etmek | işten ayrılmak | Er hat gekündigt. | [İstifa etti]. | die Wohnung kündigen = kira sözleşmesini feshetmek
+verhandeln |  | v | pazarlık etmek | müzakere etmek | Wir verhandeln über den Preis. | Fiyat için [pazarlık ediyoruz]. |
+organisieren |  | v | düzenlemek | organize etmek | Wir organisieren eine Party. | Bir parti [düzenliyoruz]. |
+vorschlagen |  | v | önermek | teklif etmek | Ich schlage vor, dass wir gehen. | Gitmemizi [öneriyorum]. |
+speichern |  | v | kaydetmek |  | Hast du die Datei gespeichert? | Dosyayı [kaydettin] mi? |
+herunterladen |  | v | indirmek |  | Ich lade die App herunter. | Uygulamayı [indiriyorum]. |
+klicken |  | v | tıklamak |  | Klick hier! | Buraya [tıkla]! |
+ausschalten |  | v | kapatmak |  | Schalte das Licht aus! | Işığı [kapat]! |
+einschalten |  | v | açmak |  | Schalte den Fernseher ein. | Televizyonu [aç]. |
+laden |  | v | şarj etmek | yüklemek | Ich lade mein Handy. | Telefonumu [şarj ediyorum]. |
+ausruhen |  | v | dinlenmek |  | Ruh dich aus! | Biraz [dinlen]! | sich ausruhen = dinlenmek
+langweilen |  | v | sıkılmak |  | Ich langweile mich. | [Sıkılıyorum]. | sich langweilen = sıkılmak
+ärgern |  | v | kızmak | kızdırmak | Ärgere dich nicht! | [Kızma]! | sich ärgern = kızmak; jemanden ärgern = kızdırmak
+beschweren |  | v | şikâyet etmek |  | Er beschwert sich über das Essen. | Yemekten [şikâyet ediyor]. | sich beschweren = şikâyet etmek
+umarmen |  | v | sarılmak |  | Sie umarmt ihre Mutter. | Annesine [sarılıyor]. |
+verlieben |  | v | âşık olmak |  | Er hat sich in sie verliebt. | Ona [âşık oldu]. | sich verlieben = âşık olmak
+trösten |  | v | teselli etmek |  | Sie tröstet ihr Kind. | Çocuğunu [teselli ediyor]. |
+erschrecken |  | v | korkutmak | korkmak | Du hast mich erschreckt! | Beni [korkuttun]! | erschrecken (intransitiv) = korkmak
+zweifeln |  | v | şüphe etmek |  | Ich zweifle daran. | Bundan [şüphe ediyorum]. |
+widersprechen |  | v | itiraz etmek | karşı çıkmak | Er widerspricht mir immer. | Bana hep [itiraz ediyor]. |
+zustimmen |  | v | katılmak | onaylamak | Ich stimme dir zu. | Sana [katılıyorum]. |
+diskutieren |  | v | tartışmak |  | Wir diskutieren über Politik. | Siyaset hakkında [tartışıyoruz]. |
+buchstabieren |  | v | hecelemek |  | Können Sie das buchstabieren? | Bunu [heceleyebilir] misiniz? |
+aussprechen |  | v | telaffuz etmek |  | Er spricht das Wort falsch aus. | Kelimeyi yanlış [telaffuz ediyor]. |
+notieren |  | v | not almak |  | Ich notiere die Nummer. | Numarayı [not alıyorum]. |
+korrigieren |  | v | düzeltmek |  | Der Lehrer korrigiert die Fehler. | Öğretmen hataları [düzeltiyor]. |
+durchfallen |  | v | kalmak | sınavdan kalmak | Er ist durch die Prüfung gefallen. | Sınavdan [kaldı]. |
+erziehen |  | v | yetiştirmek | eğitmek | Sie erzieht drei Kinder. | Üç çocuk [yetiştiriyor]. |
+aufwachsen |  | v | büyümek |  | Ich bin in Berlin aufgewachsen. | Berlin'de [büyüdüm]. |
+gratulieren |  | v | tebrik etmek | kutlamak | Ich gratuliere dir! | Seni [tebrik ederim]! |
+bügeln |  | v | ütülemek |  | Ich bügle mein Hemd. | Gömleğimi [ütülüyorum]. |
+abwaschen |  | v | bulaşık yıkamak |  | Wer wäscht heute ab? | Bugün bulaşıkları kim [yıkıyor]? |
+hinlegen |  | v | uzanmak | yatırmak | Ich lege mich kurz hin. | Biraz [uzanıyorum]. | sich hinlegen = uzanmak
+einschlafen |  | v | uykuya dalmak |  | Das Baby ist eingeschlafen. | Bebek [uykuya daldı]. |
+schnarchen |  | v | horlamak |  | Mein Mann schnarcht. | Kocam [horluyor]. |
+gähnen |  | v | esnemek |  | Er gähnt. | [Esniyor]. |
+zittern |  | v | titremek |  | Sie zittert vor Kälte. | Soğuktan [titriyor]. |
+flüstern |  | v | fısıldamak |  | Sie flüstert mir etwas zu. | Bana bir şey [fısıldıyor]. |
+bewundern |  | v | hayran olmak |  | Ich bewundere dich. | Sana [hayranım]. |
+beneiden |  | v | kıskanmak | imrenmek | Ich beneide dich. | Seni [kıskanıyorum]. |
+messen |  | v | ölçmek |  | Der Arzt misst das Fieber. | Doktor ateşi [ölçüyor]. |
+wiegen |  | v | tartmak |  | Ich wiege die Äpfel. | Elmaları [tartıyorum]. | wie viel wiegst du? = kaç kilosun?
+schütteln |  | v | sallamak |  | Schüttle die Flasche! | Şişeyi [salla]! |
+sinken |  | v | batmak | düşmek | Das Schiff sinkt. | Gemi [batıyor]. | die Preise sinken = fiyatlar düşüyor
+wehen |  | v | esmek |  | Der Wind weht. | Rüzgâr [esiyor]. |
+blühen |  | v | çiçek açmak |  | Die Rosen blühen. | Güller [çiçek açıyor]. |
+glänzen |  | v | parlamak |  | Die Sterne glänzen. | Yıldızlar [parlıyor]. |
+schmelzen |  | v | erimek |  | Das Eis schmilzt. | Buz [eriyor]. |
+trocknen |  | v | kurumak | kurutmak | Die Wäsche trocknet. | Çamaşırlar [kuruyor]. |
+explodieren |  | v | patlamak |  | Die Bombe ist explodiert. | Bomba [patladı]. |

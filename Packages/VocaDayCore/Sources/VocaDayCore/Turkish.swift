@@ -137,12 +137,12 @@ public struct TurkishVerb: Hashable, Sendable {
     /// Stems whose final t softens to d before a vowel.
     static let softeningStems: Set<String> = [
         "git", "et", "tat", "güt", "dit", "kastet", "hisset", "kaybet", "emret", "affet", "bahset",
-        "keşfet", "reddet", "seyret", "sabret", "kaydet", "zannet", "hapset", "şükret", "terket",
+        "keşfet", "reddet", "seyret", "sabret", "kaydet", "hallet", "zannet", "hapset", "şükret", "terket",
     ]
     /// Dictionary entries that are not conjugated by person (possessive or impersonal phrases).
     public static let notConjugatable: Set<String> = [
         "-ebilmek", "-abilmek", "zorunda olmak", "ihtiyacı olmak", "adı olmak", "anlamına gelmek",
-        "hoşuna gitmek", "mal olmak", "eksik olmak", "ait olmak", "tadı olmak", "yağmur yağmak",
+        "hoşuna gitmek", "mal olmak", "eksik olmak", "ait olmak", "tadı olmak", "yağmur yağmak", "kar yağmak",
         "kanamak", "yetmek", "acımak", "elinde tutmak", "yanına almak", "lezzetli olmak",
         "aklına gelmek", "başına gelmek", "ihtiyaç duymak", "gerekmek",
     ]

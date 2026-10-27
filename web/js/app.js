@@ -267,7 +267,33 @@ function render() {
   const screens = { today: renderToday, practice: renderPractice, stats: renderStats, words: renderWords, settings: renderSettings };
   app.innerHTML = screens[state.tab]() + renderTabbar();
   animateRings(app);
+  setupCarousel();
   renderOverlay();
+}
+
+/** Keeps dots and chips of the day carousel in sync with the visible card. */
+function setupCarousel() {
+  const carousel = document.getElementById("day-carousel");
+  if (!carousel) return;
+  const count = carousel.children.length;
+  const index = Math.min(state.dayIndex ?? Number(carousel.dataset.first), count - 1);
+  carousel.scrollLeft = carousel.children[index]?.offsetLeft - carousel.offsetLeft || 0;
+  const mark = (i) => {
+    state.dayIndex = i;
+    const dots = document.getElementById("day-dots");
+    if (dots?.dataset.count) dots.textContent = `${i + 1} von ${dots.dataset.count}`;
+    else dots?.querySelectorAll("span").forEach((d, k) => d.classList.toggle("on", k === i));
+    app.querySelectorAll(".daychip").forEach((c, k) => c.classList.toggle("on", k === i));
+  };
+  mark(index);
+  let frame = 0;
+  carousel.addEventListener("scroll", () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      const width = carousel.children[0].offsetWidth + 12;
+      mark(Math.max(0, Math.min(count - 1, Math.round(carousel.scrollLeft / width))));
+    });
+  }, { passive: true });
 }
 
 function renderTabbar() {
@@ -299,9 +325,8 @@ function renderToday() {
   const learned = learnedCount();
   const stats = C.statistics(P(), state.bank, state.index);
 
-  const wordsHTML = words.length
-    ? words.map((w, i) => (i === 0 ? heroCard(w) : compactCard(w))).join("")
-    : `<div class="card secondary">Du hast alle Wörter der Datenbank geplant – stark!</div>`;
+  const wordsHTML = words.length ? todayWords(words) : `<div class="card secondary">Du hast alle Wörter der Datenbank geplant – stark!</div>`;
+  const doneCount = words.filter((w) => C.isIntroduced(P(), w.id)).length;
 
   const goal = `<div class="card pad row">
       ${ring(work ? todayProgress() : 1, 84, 11, [COLORS.coral, COLORS.red], work ? `<span class="small">${pct(todayProgress())}</span>` : `<span style="color:var(--correct)">${ic("check", 26)}</span>`)}
@@ -350,7 +375,8 @@ function renderToday() {
     ${weekStrip()}
     <div class="today-columns">
       <div class="stack">
-        <div><h2>${words.length > 1 ? "Deine Wörter für heute" : "Dein Wort des Tages"}</h2><div class="small secondary">Buchstabe ${letter} · aus den häufigsten Wörtern</div></div>
+        <div class="row top"><div style="flex:1"><h2>${words.length > 1 ? "Deine Wörter für heute" : "Dein Wort des Tages"}</h2><div class="small secondary">Buchstabe ${letter} · aus den häufigsten Wörtern</div></div>
+          ${words.length > 1 ? `<span class="pill" style="color:var(--correct);background:color-mix(in srgb,var(--correct) 15%,transparent)">${doneCount}/${words.length}</span>` : ""}</div>
         ${wordsHTML}
       </div>
       <div class="stack">${goal}${quick}</div>
@@ -386,12 +412,32 @@ function heroCard(w) {
   </div>`;
 }
 
-function compactCard(w) {
-  return `<div class="card row pressable" data-action="word" data-id="${w.id}" role="button">
-    <div class="icon" style="background:var(--sunrise);font-weight:800">${esc(w.native[0].toUpperCase())}</div>
-    <div style="flex:1"><div style="font-size:20px;font-weight:700">${esc(w.translation)} ${irregularBadge(w)}</div><div class="small secondary">${articleWord(w)}</div></div>
-    ${C.isIntroduced(P(), w.id) ? `<span style="color:var(--correct)">${ic("check")}</span>` : ""}
-    ${speakButton(w.translation)}
+/** Words of the day: swipeable cards plus a compact chip overview instead of a long list. */
+function todayWords(words) {
+  const first = Math.max(0, words.findIndex((w) => !C.isIntroduced(P(), w.id)));
+  const cards = words.map((w) => dayCard(w)).join("");
+  if (words.length === 1) return `<div class="carousel single">${cards}</div>`;
+  const dots = words.length <= 12
+    ? `<div class="dots" id="day-dots">${words.map((_, i) => `<span class="${i === first ? "on" : ""}"></span>`).join("")}</div>`
+    : `<div class="dots caption secondary bold" id="day-dots" data-count="${words.length}">${first + 1} von ${words.length}</div>`;
+  const chips = words.map((w, i) => {
+    const done = C.isIntroduced(P(), w.id);
+    return `<button class="daychip ${i === first ? "on" : ""} ${done ? "done" : ""}" data-action="day-jump" data-index="${i}">${done ? ic("check", 13) : "<i></i>"}${esc(w.translation)}</button>`;
+  }).join("");
+  return `<div class="carousel" id="day-carousel" data-first="${first}">${cards}</div>${dots}<div class="chips daychips">${chips}</div>`;
+}
+
+function dayCard(w) {
+  const learned = C.isIntroduced(P(), w.id);
+  return `<div class="daycard ${learned ? "learned" : ""} pressable" data-action="word" data-id="${w.id}" role="button">
+    <div class="row"><span class="pill white">${C.POS_NAMES[w.partOfSpeech]}</span>${irregularBadge(w, true)}${learned ? `<span class="pill white">${ic("check", 12)} gelernt</span>` : ""}<div class="spacer"></div>${speakButton(w.translation, true)}</div>
+    <div class="big rounded">${esc(w.translation)}</div>
+    <div class="sub">${esc(C.withArticle(w))}</div>
+    ${w.definition ? `<div class="def">${esc(w.definition)}</div>` : ""}
+    <div class="spacer"></div>
+    <hr>
+    <div class="ex">${highlighted(w)}</div>
+    <div class="muted ex1">${esc(w.exampleNative)}</div>
   </div>`;
 }
 
@@ -852,7 +898,8 @@ function renderExercise(ctx, card) {
     return `<div class="exercise">
       <div class="hero stack tight"><div class="row"><span class="pill white">✨ Neues Wort</span>${irregularBadge(w, true)}<div class="spacer"></div>${speakButton(w.translation, true)}</div>
         <div class="big rounded">${esc(w.translation)}</div><div class="sub">${esc(C.withArticle(w))}</div>
-        ${w.alternatives?.length ? `<div class="muted">auch: ${esc(w.alternatives.join(", "))}</div>` : ""}</div>
+        ${w.alternatives?.length ? `<div class="muted">auch: ${esc(w.alternatives.join(", "))}</div>` : ""}
+        ${w.definition ? `<div class="muted" style="font-style:italic;font-size:14px">Bedeutung: ${esc(w.definition)}</div>` : ""}</div>
       <div class="card stack tight"><h3>Im Satz</h3><div class="row top"><div style="flex:1;font-size:20px">${highlighted(w)}</div>${speakButton(ctx.cloze.plain)}</div><div class="secondary">${esc(w.exampleNative)}</div></div>
       ${baseFormCard(w)}
       ${w.note ? `<div class="card row top small"><span style="color:var(--almost)">${ic("bulb", 20)}</span><div>${esc(w.note)}</div></div>` : ""}
@@ -1291,6 +1338,7 @@ function renderWordDetail(o) {
   }
   return `<div class="overlay">${bar(w.translation)}<div class="body stack">
     ${heroCard(w).replace('data-action="word"', "")}
+    ${w.definition ? `<div class="card stack tight def-card"><h3 class="row" style="color:var(--review);gap:8px">${ic("book", 20)} Bedeutung</h3><div><b>${esc(w.native)}:</b> ${esc(w.definition)}</div><div class="src">Quelle: Wiktionary (CC BY-SA 4.0)</div></div>` : ""}
     ${w.alternatives?.length || w.note ? `<div class="card stack tight small">${w.alternatives?.length ? `<div>= auch: ${esc(w.alternatives.join(", "))}</div>` : ""}${w.note ? `<div class="row top"><span style="color:var(--almost)">${ic("bulb", 18)}</span><div>${esc(w.note)}</div></div>` : ""}</div>` : ""}
     <div class="grid two"><button class="btn" data-action="speak" data-text="${esc(C.parseCloze(w.exampleTarget).plain)}">${ic("play", 14)} Satz anhören</button><button class="btn" style="background:var(--sentence)" data-action="speak-slow" data-text="${esc(C.parseCloze(w.exampleTarget).plain)}">🐢 Langsam</button></div>
     ${verbCard(w)}
@@ -1387,6 +1435,10 @@ const actions = {
   "hide-install": () => { localStorage.setItem("vocaday.hideInstall", "1"); render(); },
   "backup-later": () => { localStorage.setItem("vocaday.backupSnooze", String(Date.now())); render(); },
   method: () => openOverlay({ type: "method" }),
+  "day-jump": (d) => {
+    const card = document.getElementById("day-carousel")?.children[Number(d.index)];
+    card?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+  },
   stage: (d) => openOverlay({ type: "stage", id: d.id }),
   "start-stage": (d) => {
     const stage = state.grammar.stages.find((s) => s.id === d.id);

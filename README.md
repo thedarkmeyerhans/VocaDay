@@ -2,7 +2,7 @@
 
 **Jeden Tag mindestens ein neues Wort.** VocaDay ist eine iPhone- und iPad-App zum Vokabellernen. Sie wählt die Wörter nach Häufigkeit aus, wiederholt sie wissenschaftlich fundiert und übt sie aktiv in Sätzen.
 
-Erste Sprachrichtung: **Deutsch → Türkisch** (1.102 Wörter).
+Erste Sprachrichtung: **Deutsch → Türkisch** (1.314 Wörter, davon 486 Verben).
 
 ## So funktioniert die App
 
@@ -15,6 +15,8 @@ Erste Sprachrichtung: **Deutsch → Türkisch** (1.102 Wörter).
 - **Wortschatz-Test:** fragt alle gelernten Wörter ab (oder die schwächsten 20, 20 zufällige, die der Woche). Richtung und Antwortart (Auswählen/Eintippen) sind wählbar.
 - **Wortschatz:** keine lange Liste, sondern eine Übersicht mit Fortschritt und Status-Kacheln. Darunter drei Ansichten: **A–Z** (Buchstaben-Raster → Wörter des Buchstabens), **Status** (wischbare Reihen: Lernend, Wiederholen, Gefestigt, Geplant) und **Verlauf** (nach Lerntagen). Die Suche durchsucht das ganze Wörterbuch. Jedes noch nicht geplante Wort lässt sich mit **„Heute lernen“** vorziehen, ohne die A–Z-Reihenfolge zu stören.
 - **Karteikarten:** Jede Gruppe (alle gelernten, ein Buchstabe, ein Status) lässt sich als Kartenstapel durchwischen: antippen zum Umdrehen, mit Aussprache und Mischen.
+- **Heute-Ansicht ohne lange Liste:** Die Wörter des Tages liegen als wischbare Karten nebeneinander, darunter eine kompakte Übersicht aller Tageswörter (antippen springt zur Karte, ✓ = gelernt). Auch bei 20 Wörtern pro Tag bleibt alles auf einem Bildschirm.
+- **Bedeutungserklärungen:** Zu jedem Wort steht eine deutsche Erklärung aus dem Wiktionary – passend zur türkischen Übersetzung ausgewählt.
 - **Grundform zuerst, Endungen später:** Neue Wörter lernt man immer in der Grundform (gitmek, ev). Unregelmäßige Verben sind schon beim Lernen markiert (⚠︎ unregelmäßig) – mit Erklärung, z. B. „t wird zu d: gidiyorum“ oder „Breite Zeit mit -ir: gelir“. Satzübungen mit gebeugten Formen kommen erst, wenn das Präsens sitzt.
 - **Grammatik-Lernpfad:** 7 Stufen – Personalpronomen (ich → ben …), Verbendungen -mak/-mek (Stamm und Vokalharmonie), Präsens-Endungen an Musterverben, dann Präsens, Vergangenheit, Zukunft und Breite Zeit mit den eigenen gelernten Verben. Jede Stufe hat eine kurze Lektion mit Tabellen und wird geübt, bis jede Aufgabe 2× hintereinander sitzt (erst Auswahl, dann Eintippen). Jedes Verb zeigt eine Konjugationstabelle mit hervorgehobenen Endungen.
 - **Festigen:** die schwächsten gelernten Wörter so lange, bis jedes sitzt.
@@ -102,4 +104,4 @@ Jeder Push auf `main` wird automatisch gebaut und zu TestFlight hochgeladen, fü
 
 ## Quellen
 
-Worthäufigkeit: [FrequencyWords](https://github.com/hermitdave/FrequencyWords) von Hermit Dave (CC BY-SA 4.0). Lernalgorithmus: [FSRS](https://github.com/open-spaced-repetition) (MIT).
+Worthäufigkeit: [FrequencyWords](https://github.com/hermitdave/FrequencyWords) von Hermit Dave (CC BY-SA 4.0). Bedeutungserklärungen: [Wiktionary](https://de.wiktionary.org) (CC BY-SA 4.0). Lernalgorithmus: [FSRS](https://github.com/open-spaced-repetition) (MIT).

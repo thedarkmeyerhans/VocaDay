@@ -46,11 +46,14 @@ public struct Word: Codable, Hashable, Identifiable, Sendable {
     public let note: String?
     /// Occurrences per million words in the frequency corpus.
     public let frequency: Double?
+    /// German explanation of the meaning (German Wiktionary, CC BY-SA 4.0).
+    public let definition: String?
 
     public init(
         id: String, rank: Int, native: String, article: String? = nil,
         partOfSpeech: PartOfSpeech, translation: String, alternatives: [String] = [],
-        exampleNative: String, exampleTarget: String, note: String? = nil, frequency: Double? = nil
+        exampleNative: String, exampleTarget: String, note: String? = nil, frequency: Double? = nil,
+        definition: String? = nil
     ) {
         self.id = id
         self.rank = rank
@@ -63,6 +66,7 @@ public struct Word: Codable, Hashable, Identifiable, Sendable {
         self.exampleTarget = exampleTarget
         self.note = note
         self.frequency = frequency
+        self.definition = definition
     }
 
     /// "das Haus" for nouns, otherwise just the word.
