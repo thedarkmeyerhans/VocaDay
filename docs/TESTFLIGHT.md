@@ -14,9 +14,14 @@ VocaDay ist eine Universal-App: **derselbe Build läuft auf iPhone und iPad.** D
 
 ## 2. Bundle-ID registrieren
 
-1. <https://developer.apple.com/account/resources/identifiers/list> → **+** → **App IDs** → **App**.
-2. Beschreibung: `VocaDay`, Bundle ID **Explicit**: `com.thedarkmeyerhans.vocaday`.
-3. Keine zusätzlichen Capabilities nötig, denn die Benachrichtigungen sind lokal und brauchen kein Push. Speichern.
+Die Lane `register_bundle_id` legt die IDs von App und Widget beim ersten Build selbst an und aktiviert *App Groups*. Die App Group selbst kann die API nicht anlegen, das machst du einmal von Hand:
+
+1. <https://developer.apple.com/account/resources/identifiers/list> → **+** → **App Groups** → Beschreibung `VocaDay`, ID **`group.com.thedarkmeyerhans.vocaday`** → Speichern.
+2. Falls noch nicht vorhanden: **+** → **App IDs** → **App** → `com.thedarkmeyerhans.vocaday` und `com.thedarkmeyerhans.vocaday.widget` anlegen.
+3. Bei **beiden** App-IDs unter *Capabilities* **App Groups** anhaken → **Configure** → die Gruppe aus Schritt 1 wählen → Speichern.
+4. Wenn match die Profile schon erstellt hatte, einmal mit `MATCH_READONLY=false` neu bauen, damit die Profile die App Group enthalten.
+
+Benachrichtigungen sind lokal und brauchen kein Push. Der Zwangsmodus nutzt Kurzbefehle und braucht keine Family-Controls-Berechtigung.
 
 > Falls die ID schon vergeben ist, nimm eine andere (z. B. `de.deinname.vocaday`) und trage sie in `Config/Shared.xcconfig` ein.
 

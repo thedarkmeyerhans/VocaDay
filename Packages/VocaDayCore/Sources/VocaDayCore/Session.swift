@@ -62,10 +62,11 @@ public enum SessionBuilder {
     /// Today's session: pending new words plus due reviews.
     public static func daily<G: RandomNumberGenerator>(
         progress: LearnerProgress, words: WordIndex, now: Date, style: PracticeStyle,
-        includeNewWords: Bool = true, maxReviews: Int = 60,
+        includeNewWords: Bool = true, maxReviews: Int = 60, allowInflected: Bool? = nil,
         calendar: Calendar = .current, using generator: inout G
     ) -> LearningSession {
         let today = DayKey(now, calendar: calendar)
+        let inflected = allowInflected ?? progress.inflectionUnlocked
         let newIDs = includeNewWords
             ? progress.pendingNewWords(upTo: today).filter { words[$0] != nil }
             : []
@@ -81,14 +82,16 @@ public enum SessionBuilder {
 
         var reviews = dueIDs.compactMap { id -> SessionItem? in
             guard let word = words[id] else { return nil }
-            let kind = ExercisePicker.kind(for: progress.cards[id], style: style, word: word, using: &generator)
+            let kind = ExercisePicker.kind(for: progress.cards[id], style: style, word: word,
+                                           allowInflected: inflected, using: &generator)
             return item(id, kind)
         }[...]
 
         var queue: [SessionItem] = []
         for id in newIDs {
             guard let word = words[id] else { continue }
-            let firstCheck: ExerciseKind = style == .sentences && word.cloze.hasGap ? .clozeChoice : .chooseNative
+            let gap = word.cloze.hasGap && (inflected || word.clozeIsBaseForm)
+            let firstCheck: ExerciseKind = style == .sentences && gap ? .clozeChoice : .chooseNative
             queue.append(item(id, .introduction))
             queue.append(item(id, firstCheck))
             queue.append(contentsOf: reviews.prefix(2))
@@ -97,7 +100,8 @@ public enum SessionBuilder {
         queue.append(contentsOf: reviews)
         for id in newIDs {
             guard let word = words[id] else { continue }
-            let secondCheck: ExerciseKind = style != .words && word.cloze.hasGap ? .clozeChoice : .chooseTarget
+            let gap = word.cloze.hasGap && (inflected || word.clozeIsBaseForm)
+            let secondCheck: ExerciseKind = style != .words && gap ? .clozeChoice : .chooseTarget
             queue.append(item(id, secondCheck))
         }
         return LearningSession(items: queue, newWordIDs: newIDs)
@@ -116,7 +120,8 @@ public enum SessionBuilder {
         var items: [SessionItem] = []
         for (index, entry) in ranked.enumerated() {
             guard let word = words[entry.key] else { continue }
-            let kind = ExercisePicker.kind(for: entry.value, style: style, word: word, using: &generator)
+            let kind = ExercisePicker.kind(for: entry.value, style: style, word: word,
+                                           allowInflected: progress.inflectionUnlocked, using: &generator)
             items.append(SessionItem(id: index, wordID: entry.key, kind: kind))
         }
         return LearningSession(items: items.shuffled(using: &generator), newWordIDs: [])

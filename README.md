@@ -15,6 +15,11 @@ Erste Sprachrichtung: **Deutsch → Türkisch** (1.102 Wörter).
 - **Wortschatz-Test:** fragt alle gelernten Wörter ab (oder die schwächsten 20, 20 zufällige, die der Woche). Richtung und Antwortart (Auswählen/Eintippen) sind wählbar.
 - **Wortschatz:** keine lange Liste, sondern eine Übersicht mit Fortschritt und Status-Kacheln. Darunter drei Ansichten: **A–Z** (Buchstaben-Raster → Wörter des Buchstabens), **Status** (wischbare Reihen: Lernend, Wiederholen, Gefestigt, Geplant) und **Verlauf** (nach Lerntagen). Die Suche durchsucht das ganze Wörterbuch. Jedes noch nicht geplante Wort lässt sich mit **„Heute lernen“** vorziehen, ohne die A–Z-Reihenfolge zu stören.
 - **Karteikarten:** Jede Gruppe (alle gelernten, ein Buchstabe, ein Status) lässt sich als Kartenstapel durchwischen: antippen zum Umdrehen, mit Aussprache und Mischen.
+- **Grundform zuerst, Endungen später:** Neue Wörter lernt man immer in der Grundform (gitmek, ev). Unregelmäßige Verben sind schon beim Lernen markiert (⚠︎ unregelmäßig) – mit Erklärung, z. B. „t wird zu d: gidiyorum“ oder „Breite Zeit mit -ir: gelir“. Satzübungen mit gebeugten Formen kommen erst, wenn das Präsens sitzt.
+- **Grammatik-Lernpfad:** 7 Stufen – Personalpronomen (ich → ben …), Verbendungen -mak/-mek (Stamm und Vokalharmonie), Präsens-Endungen an Musterverben, dann Präsens, Vergangenheit, Zukunft und Breite Zeit mit den eigenen gelernten Verben. Jede Stufe hat eine kurze Lektion mit Tabellen und wird geübt, bis jede Aufgabe 2× hintereinander sitzt (erst Auswahl, dann Eintippen). Jedes Verb zeigt eine Konjugationstabelle mit hervorgehobenen Endungen.
+- **Festigen:** die schwächsten gelernten Wörter so lange, bis jedes sitzt.
+- **Widget (nur native App):** Homescreen- und Sperrbildschirm-Widget mit einem neuen Wort zu einstellbaren Uhrzeiten oder sobald man an einem gespeicherten Ort ankommt (Zuhause, Bahnhof …). Antippen → Wort wird vorgestellt und abgefragt, bis es X-mal (einstellbar) richtig war; danach kommt wahlweise sofort das nächste Wort oder es gilt bis zur nächsten Uhrzeit als erledigt.
+- **Zwangsmodus (nur native App):** Vor Instagram, TikTok & Co. kommt erst eine Vokabel. Richtig → die App ist X Minuten frei, falsch → nächstes Wort. Die Quiz-Wörter rotieren über den Tag, bis sie sitzen, dann kommen neue. Umsetzung über App Intents + Kurzbefehle-Automation (Anleitung in der App unter *Einstellungen › Zwangsmodus*).
 - **Statistik:** Textabdeckung, Aktivität, Lernkalender, Prognose der Wiederholungen, Wortstatus, gemessene Behaltensquote, Fortschritt A–Z, Test-Verlauf, Lernzeit und Serien.
 
 ## Lernsystem
@@ -28,6 +33,7 @@ Erste Sprachrichtung: **Deutsch → Türkisch** (1.102 Wörter).
 | Interleaving | Neue Wörter werden zwischen Wiederholungen gestreut. Falsche Antworten kommen in derselben Einheit etwas später noch einmal. |
 | Aussprechen | Vorlesefunktion und Hinweis zum lauten Nachsprechen (Produktionseffekt). |
 | Wortschatz-Test (Mastery Learning) | Jedes Wort einmal, gemischt. Nur der erste Versuch zählt für das Ergebnis und fließt in FSRS ein, so ist der Test eine ehrliche Messung. Falsche Wörter kommen in einer Fehlerrunde mit leichterer Übung zurück, bis sie sitzen. |
+| Meisterschaftslernen (Grammatik, Festigen) | Eine Aufgabe ist erst gemeistert, wenn sie mehrmals hintereinander richtig war. Falsche kommen nach zwei, richtige nach vier anderen Aufgaben wieder. Erste Runde Auswahl, danach Eintippen (Abruf statt Wiedererkennen). |
 | Messen statt schätzen | Die Statistik vergleicht die tatsächliche Behaltensquote fälliger Wörter mit dem eingestellten Ziel. Die Textabdeckung zeigt, welchen Anteil eines Alltagstexts die gelernten Wörter ausmachen. |
 
 Tippantworten werden tolerant geprüft: Groß-/Kleinschreibung mit türkischem I/ı, fehlende Sonderzeichen (`ogretmen` statt `öğretmen`) und kleine Tippfehler zählen als „fast richtig“. Eine Leiste liefert die Zeichen ç ğ ı İ ö ş ü.
@@ -91,7 +97,6 @@ Jeder Push auf `main` wird automatisch gebaut und zu TestFlight hochgeladen, fü
 
 - Weitere Sprachpaare (Datenformat und Code sind darauf ausgelegt)
 - Weitere Modi: nach Themen, streng nach Häufigkeit, eigene Wortlisten
-- Widget mit dem Wort des Tages
 - iCloud-Sync zwischen iPhone und iPad
 - Hörverständnis-Übungen
 

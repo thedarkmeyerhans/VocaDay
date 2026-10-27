@@ -10,6 +10,20 @@ Es gibt drei kostenlose Wege, keiner braucht das Apple Developer Program:
 
 Mit dem bezahlten Apple Developer Program (99 €/Jahr) entfällt die 7-Tage-Grenze, dann geht es über TestFlight, siehe [TESTFLIGHT.md](TESTFLIGHT.md).
 
+### Und TestFlight kostenlos?
+
+TestFlight selbst ist kostenlos – aber nur für **Tester**. Hochladen kann ausschließlich ein Mitglied des bezahlten Apple Developer Program. Kostenlos nutzen kannst du TestFlight also nur, wenn dich jemand mit bezahltem Konto als Tester einlädt (dann reicht die TestFlight-App und deine E-Mail-Adresse, Builds laufen 90 Tage). Ohne so jemanden sind die Wege A–C unten die kostenlosen Alternativen.
+
+### Was geht wo?
+
+| Funktion | Web-App | Native App (B/C) |
+| --- | --- | --- |
+| Lernen, Satztrainer, Test, Statistik | ✓ | ✓ |
+| Grammatik-Lernpfad, Festigen, Konjugationstabellen | ✓ | ✓ |
+| Echte Mitteilungen | Kalender | ✓ |
+| Widget (Uhrzeit & Orte) | – | ✓ |
+| Zwangsmodus vor Instagram & Co. | – | ✓ (über Kurzbefehle) |
+
 ---
 
 ## A. Web-App: sofort, ohne Computer
@@ -67,7 +81,28 @@ open VocaDay.xcodeproj
 ```
 
 1. In Xcode: *Settings › Accounts* → deine Apple-ID hinzufügen.
-2. Projekt *VocaDay* → Target *VocaDay* → **Signing & Capabilities** → *Team*: „(Dein Name) (Personal Team)“. Falls die Bundle-ID vergeben ist, hänge etwas an, z. B. `.deniz`.
+2. Projekt *VocaDay* → Targets *VocaDay* **und** *VocaDayWidget* → **Signing & Capabilities** → *Team*: „(Dein Name) (Personal Team)“. Falls die Bundle-ID vergeben ist, ändere `APP_BUNDLE_ID` in `Config/Shared.xcconfig` (z. B. `com.deinname.vocaday`) und führe `xcodegen generate` erneut aus – Widget-ID und App Group passen sich automatisch an.
 3. iPhone per Kabel verbinden, oben als Ziel auswählen und **▶ Run** klicken.
 4. Am iPhone wie unter B Schritt 5 und 6 bestätigen.
 5. Nach 7 Tagen einfach erneut auf **Run** klicken.
+
+---
+
+## Widget und Zwangsmodus (native App)
+
+**Widget:** Homescreen lange drücken → **Bearbeiten** → **Widget hinzufügen** → *VocaDay*. Uhrzeiten, Orte und wie oft ein Wort richtig sein muss stellst du in der App unter *Einstellungen › Widget & Orte* ein. Für Orte braucht VocaDay den Standort **„Immer“**.
+
+**Zwangsmodus:** In der App *Einstellungen › Zwangsmodus* einschalten, dann einmalig in der **Kurzbefehle**-App:
+
+1. **Automation** → **+** → **App** → Instagram (und weitere) wählen → **Wird geöffnet** → **Sofort ausführen**.
+2. Aktion **„Quiz nötig?“** (VocaDay) hinzufügen.
+3. **Wenn** → *Ergebnis* *ist* *wahr* → darin **„VocaDay-Quiz öffnen“**, *Zurück zu* = Instagram.
+
+Öffnest du Instagram, kommt erst eine Vokabel. Richtig → zurück zu Instagram, und es ist für die eingestellten Minuten frei. Danach kommt beim nächsten Öffnen wieder ein Quiz.
+
+> Warum Kurzbefehle? Eine echte Sperre nach Nutzungsdauer geht nur mit Apples Bildschirmzeit-API (Family Controls). Die braucht ein bezahltes Entwicklerkonto und eine Freigabe durch Apple – mit kostenloser Apple-ID ist sie nicht verfügbar.
+
+**Hinweise für kostenloses Signieren:**
+
+- Das Widget ist eine eigene App-Erweiterung. Mit kostenloser Apple-ID zählt jede Erweiterung als eigene App-ID (max. 10 neue pro Woche); VocaDay braucht 2.
+- Widget und App teilen ihre Daten über eine *App Group*. Sideloadly/AltStore übernehmen sie in der Regel. Klappt das nicht, zeigt das Widget trotzdem jeden Tag ein häufiges Wort aus der Datenbank, nur ohne Abstimmung mit deinem Lernplan. Mit Xcode (Weg C) funktioniert die App Group zuverlässig: in beiden Targets unter *Signing & Capabilities* dein Personal Team wählen.

@@ -4,6 +4,7 @@ import VocaDayCore
 struct PracticeView: View {
     @EnvironmentObject private var model: AppModel
     @State private var activeSession: ActiveSession?
+    @State private var mastery: ActiveMastery?
     @State private var showTestSetup = false
 
     private let columns = [GridItem(.adaptive(minimum: 320), spacing: 14)]
@@ -11,6 +12,8 @@ struct PracticeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
+                LearningRoadmap()
+                SectionTitle(title: "Wörter üben", subtitle: "Erst die Grundform sicher abrufen")
                 LazyVGrid(columns: columns, spacing: 14) {
                     PracticeCard(icon: "arrow.triangle.2.circlepath", color: Theme.review,
                                  title: "Tägliche Wiederholung",
@@ -35,12 +38,16 @@ struct PracticeView: View {
                         activeSession = model.makeSentenceSession()
                     }
                     PracticeCard(icon: "dumbbell.fill", color: Theme.practice,
-                                 title: "Freies Üben",
-                                 text: "Die Wörter, die du am ehesten vergisst – auch wenn sie noch nicht fällig sind.",
+                                 title: "Festigen – bis es sitzt",
+                                 text: "Deine 10 schwächsten Wörter. Jedes kommt so lange wieder, bis du es zweimal hintereinander weißt.",
                                  badge: nil, isEnabled: model.learnedCount > 0) {
-                        activeSession = model.makeFreePracticeSession()
+                        mastery = model.makeConsolidation()
                     }
                 }
+                SectionTitle(title: "Grammatik",
+                             subtitle: "Danach: Endungen und Konjugation – Schritt für Schritt bis es sitzt")
+                GrammarPathView()
+                    .card(padding: 18)
                 NavigationLink {
                     LearningMethodView()
                 } label: {
@@ -71,9 +78,45 @@ struct PracticeView: View {
         .fullScreenCover(item: $activeSession) { active in
             SessionView(active: active)
         }
+        .fullScreenCover(item: $mastery) { MasteryPracticeView(active: $0) }
         .sheet(isPresented: $showTestSetup) {
             TestSetupView()
         }
+    }
+}
+
+/// Phase 1 words → phase 2 grammar, with progress.
+private struct LearningRoadmap: View {
+    @EnvironmentObject private var model: AppModel
+
+    var body: some View {
+        let stages = max(1, model.grammar.stages.count)
+        HStack(spacing: 12) {
+            phase(number: 1, title: "Wörter", detail: "\(model.learnedCount) gelernt · Grundform",
+                  progress: min(1, Double(model.learnedCount) / 50), color: Theme.coral, active: true)
+            Image(systemName: "arrow.right").foregroundStyle(.tertiary)
+            phase(number: 2, title: "Grammatik", detail: "\(model.completedStages)/\(stages) Stufen",
+                  progress: Double(model.completedStages) / Double(stages), color: Theme.sentence,
+                  active: model.learnedCount >= 5)
+        }
+        .card(padding: 16)
+    }
+
+    private func phase(number: Int, title: String, detail: String, progress: Double, color: Color,
+                       active: Bool) -> some View {
+        HStack(spacing: 10) {
+            ProgressRing(progress: progress, lineWidth: 6, colors: [color.opacity(0.7), color]) {
+                Text("\(number)").font(.headline).foregroundStyle(color)
+            }
+            .frame(width: 46, height: 46)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title).font(.headline)
+                Text(detail).font(.caption).foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 0)
+        }
+        .opacity(active ? 1 : 0.5)
+        .frame(maxWidth: .infinity)
     }
 }
 

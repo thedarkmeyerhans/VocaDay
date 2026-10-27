@@ -14,6 +14,7 @@ struct IntroductionView: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Pill(text: "Neues Wort", systemImage: "sparkles", color: .white)
+                    IrregularBadge(word: word, onDark: true)
                     Spacer()
                     SpeakButton(text: word.translation, tint: .white)
                 }
@@ -54,6 +55,23 @@ struct IntroductionView: View {
                     .font(.subheadline)
                     .symbolRenderingMode(.multicolor)
                     .card()
+            }
+
+            if let verb = word.turkishVerb {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Grundform: \(verb.prefix)\(verb.stem) + -\(verb.ending)").font(.subheadline.weight(.semibold))
+                    ForEach(verb.irregularities, id: \.self) { irregularity in
+                        Label(verb.explanation(of: irregularity), systemImage: "exclamationmark.triangle.fill")
+                            .font(.subheadline)
+                            .foregroundStyle(Theme.almost)
+                    }
+                    if !verb.isIrregular {
+                        Text("Regelmäßiges Verb – die Endungen lernst du später im Grammatik-Pfad.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .card()
             }
 
             Label("Sprich das Wort laut nach – das hilft beim Merken.", systemImage: "mouth")

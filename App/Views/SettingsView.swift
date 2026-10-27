@@ -67,6 +67,25 @@ struct SettingsView: View {
                 Text("Benachrichtigungen")
             }
 
+            Section {
+                NavigationLink {
+                    WidgetSettingsView()
+                } label: {
+                    Label("Widget & Orte", systemImage: "square.grid.2x2.fill")
+                }
+                NavigationLink {
+                    GateSettingsView()
+                } label: {
+                    LabeledContent {
+                        Text(model.settings.gateEnabled ? "An" : "Aus")
+                    } label: {
+                        Label("Zwangsmodus", systemImage: "lock.fill")
+                    }
+                }
+            } header: {
+                Text("Homescreen & Apps")
+            }
+
             Section("Info") {
                 NavigationLink("So funktioniert das Lernen") { LearningMethodView() }
                 NavigationLink("Quellen & Lizenzen") { SourcesView() }

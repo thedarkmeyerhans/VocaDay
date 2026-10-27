@@ -9,6 +9,22 @@ struct ActiveSession: Identifiable {
     let session: LearningSession
 }
 
+/// A mastery practice (grammar stage or consolidation) presented full screen.
+struct ActiveMastery: Identifiable {
+    enum Purpose {
+        case grammar(stageID: String)
+        case consolidation
+        case widgetWord(wordID: String)
+    }
+
+    let id = UUID()
+    let title: String
+    let purpose: Purpose
+    let session: MasterySession
+    /// Shown as an introduction first when the word is new.
+    var introWordID: String?
+}
+
 /// A vocabulary test presented full screen.
 struct ActiveTest: Identifiable {
     let id = UUID()
@@ -56,7 +72,10 @@ struct CardDeck: Identifiable {
 @MainActor
 final class AppModel: ObservableObject {
     @Published private(set) var progress: LearnerProgress
+    /// Practice opened from the widget or another deep link.
+    @Published var deepLinkMastery: ActiveMastery?
     let words: WordIndex
+    let grammar: GrammarCurriculum
     let notifications = NotificationScheduler()
 
     private let store: ProgressStore
@@ -65,8 +84,10 @@ final class AppModel: ObservableObject {
     init(store: ProgressStore = .live) {
         self.store = store
         self.words = WordIndex(WordBankLoader.load(.germanTurkish))
+        self.grammar = WordBankLoader.loadGrammar(.germanTurkish)
         self.progress = store.load() ?? LearnerProgress()
         ensurePlans()
+        startCompanions()
     }
 
     // MARK: Derived state
@@ -201,6 +222,152 @@ final class AppModel: ObservableObject {
                                               scheduler: scheduler, using: &generator)
         }
         return ActiveSession(title: "Satztrainer", session: session)
+    }
+
+    // MARK: Widget, places & deep links
+
+    private func startCompanions() {
+        GatePass.mirror(enabled: settings.gateEnabled)
+        PlaceMonitor.shared.onEnter = { [weak self] id in self?.placeEntered(id) }
+        let places = settings.places
+        if !places.isEmpty {
+            Task { await PlaceMonitor.shared.sync(places: places) }
+        }
+    }
+
+    func handle(url: URL) {
+        guard url.scheme == "vocaday" else { return }
+        let query = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? []
+        switch url.host {
+        case "widget":
+            if let id = query.first(where: { $0.name == "word" })?.value {
+                deepLinkMastery = makeWidgetPractice(wordID: id)
+            }
+        case "quiz":
+            let target = query.first(where: { $0.name == "return" })?.value.flatMap(URL.init(string:))
+            GateRouter.shared.present(returnURL: target)
+        default:
+            break
+        }
+    }
+
+    /// Practice of the widget word: introduction if new, then the configured
+    /// number of correct answers in a row.
+    func makeWidgetPractice(wordID: String) -> ActiveMastery? {
+        guard let word = words[wordID] else { return nil }
+        let isNew = progress.cards[wordID] == nil
+        if isNew { learnNow(word) }
+        var generator = SystemRandomNumberGenerator()
+        let items = GrammarBuilder.vocabularyItems(wordIDs: [wordID], words: words, using: &generator)
+        let session = MasterySession(items: items, target: max(1, settings.widgetRepetitions), using: &generator)
+        return ActiveMastery(title: "Wort des Tages", purpose: .widgetWord(wordID: wordID), session: session,
+                             introWordID: isNew ? wordID : nil)
+    }
+
+    func placeEntered(_ id: UUID) {
+        guard let place = settings.places.first(where: { $0.id == id }) else { return }
+        WidgetPlanner.placeEntered(progress: &progress, now: Date(), calendar: calendar)
+        save()
+        if let word = WidgetPlanner.nextWord(progress: progress, words: words, today: today) {
+            notifications.notifyNow(title: "📍 \(place.name): neues Wort",
+                                    body: "\(word.translation) – \(word.nativeWithArticle)",
+                                    url: "vocaday://widget?word=\(word.id)")
+        }
+    }
+
+    /// Saves the current position as a place. Returns false without location.
+    func addPlace(named name: String) async -> Bool {
+        guard let location = await PlaceMonitor.shared.currentLocation() else { return false }
+        let place = LearningPlace(name: name.isEmpty ? "Mein Ort" : name,
+                                  latitude: location.coordinate.latitude,
+                                  longitude: location.coordinate.longitude)
+        updateSettings { $0.places.append(place) }
+        PlaceMonitor.shared.requestPermission()
+        let places = settings.places
+        await PlaceMonitor.shared.sync(places: places)
+        return true
+    }
+
+    func removePlace(_ place: LearningPlace) {
+        updateSettings { $0.places.removeAll { $0.id == place.id } }
+        let places = settings.places
+        Task { await PlaceMonitor.shared.sync(places: places) }
+    }
+
+    // MARK: Zwangsmodus
+
+    /// The next word of the gate quiz (rotates during the day until known).
+    func nextGateWord() -> (word: Word, isNew: Bool)? {
+        var generator = SystemRandomNumberGenerator()
+        let result = GateQuiz.nextWord(progress: &progress, words: words, now: Date(), scheduler: scheduler,
+                                       planner: planner, calendar: calendar, using: &generator)
+        if let result, result.isNew { learnNow(result.word) }
+        save()
+        return result
+    }
+
+    func gateItem(for word: Word) -> MasteryItem? {
+        var generator = SystemRandomNumberGenerator()
+        return GrammarBuilder.vocabularyItems(wordIDs: [word.id], words: words, using: &generator).first
+    }
+
+    /// Records a gate answer. A correct answer opens the pass for the configured minutes.
+    func answerGate(wordID: String, correct: Bool) {
+        GateQuiz.record(wordID: wordID, correct: correct, progress: &progress)
+        progress.record(wordID: wordID, rating: correct ? .good : .again, at: Date(), scheduler: scheduler,
+                        calendar: calendar)
+        if correct { GatePass.grant(minutes: settings.gatePassMinutes) }
+        save()
+    }
+
+    var gateKnownToday: Int { progress.gate.day == today ? progress.gate.known.count : 0 }
+
+    // MARK: Grammar & consolidation
+
+    func state(of stage: GrammarStage) -> StageState {
+        GrammarBuilder.state(of: stage, in: grammar.stages, progress: progress, words: words)
+    }
+
+    var completedStages: Int { grammar.stages.filter { progress.grammar[$0.id]?.isCompleted == true }.count }
+
+    var learnedVerbCount: Int { GrammarBuilder.learnedVerbs(progress: progress, words: words).count }
+
+    func makeGrammarPractice(_ stage: GrammarStage) -> ActiveMastery {
+        var generator = SystemRandomNumberGenerator()
+        let items = GrammarBuilder.items(for: stage, progress: progress, words: words, using: &generator)
+        return ActiveMastery(title: stage.title, purpose: .grammar(stageID: stage.id),
+                             session: MasterySession(items: items, target: 2, using: &generator))
+    }
+
+    /// "Festigen": the weakest learned words until each is answered twice in a row.
+    func makeConsolidation(count: Int = 10) -> ActiveMastery {
+        var generator = SystemRandomNumberGenerator()
+        let now = Date()
+        let ids = progress.cards.filter { words[$0.key] != nil }
+            .sorted { scheduler.retrievability(of: $0.value, at: now) < scheduler.retrievability(of: $1.value, at: now) }
+            .prefix(count).map(\.key)
+        let items = GrammarBuilder.vocabularyItems(wordIDs: Array(ids), words: words, using: &generator)
+        return ActiveMastery(title: "Festigen", purpose: .consolidation,
+                             session: MasterySession(items: items, target: 2, using: &generator))
+    }
+
+    /// Records one answer of a mastery practice. Only the first answer to a
+    /// vocabulary or conjugation item updates the word's memory state.
+    func recordMastery(item: MasteryItem, correct: Bool, firstAttempt: Bool) {
+        guard firstAttempt, let wordID = item.wordID else { return }
+        record(wordID: wordID, rating: correct ? .good : .again)
+    }
+
+    func finishMastery(_ active: ActiveMastery, session: MasterySession, studyTime: TimeInterval) {
+        if session.isFinished, case .grammar(let stageID) = active.purpose {
+            progress.recordGrammarSession(stageID: stageID, firstTryScore: session.firstTryScore, at: Date())
+        }
+        if session.isFinished, case .widgetWord = active.purpose {
+            WidgetPlanner.completed(progress: &progress, now: Date(), calendar: calendar)
+        }
+        progress.addStudyTime(studyTime, at: Date(), calendar: calendar)
+        save()
+        rescheduleNotifications()
     }
 
     func makeFreePracticeSession() -> ActiveSession {
@@ -352,10 +519,22 @@ final class AppModel: ObservableObject {
 
     private func save() {
         store.save(progress)
+        GatePass.mirror(enabled: settings.gateEnabled)
+        WidgetBridge.update(model: self)
     }
 }
 
 enum WordBankLoader {
+    static func loadGrammar(_ pair: LanguagePair) -> GrammarCurriculum {
+        guard let url = Bundle.main.url(forResource: "grammar_\(pair.native.rawValue)_\(pair.target.rawValue)",
+                                        withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let curriculum = try? GrammarCurriculum.decode(from: data) else {
+            return GrammarCurriculum(stages: [])
+        }
+        return curriculum
+    }
+
     static func load(_ pair: LanguagePair) -> WordBank {
         guard let url = Bundle.main.url(forResource: pair.resourceName, withExtension: "json"),
               let data = try? Data(contentsOf: url),

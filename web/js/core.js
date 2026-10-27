@@ -178,6 +178,7 @@ export function newProgress(settings = {}) {
     cards: {},
     stats: {},
     tests: [],
+    grammar: {},
   };
 }
 
@@ -395,12 +396,24 @@ export const KIND_TITLES = {
 const CAP_GOOD = new Set(["chooseNative", "chooseTarget", "clozeChoice"]);
 export const capRating = (kind, rating) => (CAP_GOOD.has(kind) ? Math.min(rating, RATING.good) : rating);
 
-export function pickKind(card, style, word, random = Math.random) {
+/** True if the gap of the example sentence is the dictionary form itself. */
+export function clozeIsBaseForm(word) {
+  const answer = normalize(parseCloze(word.exampleTarget).answer);
+  return accepted(word).some((a) => normalize(a) === answer);
+}
+
+/** Inflected sentence gaps open once the present tense of the grammar path is mastered. */
+export const inflectionUnlocked = (progress) => Boolean(progress.grammar?.present?.completedAt);
+
+export function pickKind(card, style, word, random = Math.random, allowInflected = false) {
   const canSentence = parseCloze(word.exampleTarget).hasGap;
+  const canGap = canSentence && (allowInflected || clozeIsBaseForm(word));
   const wantsSentence = style === "sentences" ? canSentence : style === "mixed" ? canSentence && random() < 0.5 : false;
-  if (!card) return wantsSentence ? "clozeChoice" : "chooseNative";
+  if (!card) return wantsSentence && canGap ? "clozeChoice" : "chooseNative";
   const s = card.stability;
-  if (wantsSentence) {
+  if (wantsSentence && !canGap) {
+    if (card.phase === "review" && s >= 3) return "sentenceBuilder";
+  } else if (wantsSentence) {
     if (s < 3 || card.phase !== "review") return "clozeChoice";
     if (s < 14) return "clozeType";
     return random() < 0.5 ? "sentenceBuilder" : "clozeType";
@@ -488,23 +501,23 @@ export class Session {
 
 export function dailySession(progress, index, now, style, includeNew = true, maxReviews = 60, random = Math.random) {
   const today = dayKey(new Date(now));
+  const inflected = inflectionUnlocked(progress);
+  const gapOK = (w) => parseCloze(w.exampleTarget).hasGap && (inflected || clozeIsBaseForm(w));
   const newIDs = includeNew ? pendingNewWords(progress, today).filter((id) => index.get(id)) : [];
   let reviews = dueWordIDs(progress, now).filter((id) => index.get(id) && !newIDs.includes(id)).slice(0, maxReviews)
-    .map((id, i) => ({ id: 1000 + i, wordID: id, kind: pickKind(progress.cards[id], style, index.get(id), random) }));
+    .map((id, i) => ({ id: 1000 + i, wordID: id, kind: pickKind(progress.cards[id], style, index.get(id), random, inflected) }));
   const queue = [];
   let n = 0;
   for (const id of newIDs) {
     const word = index.get(id);
-    const hasGap = parseCloze(word.exampleTarget).hasGap;
     queue.push({ id: n++, wordID: id, kind: "introduction" });
-    queue.push({ id: n++, wordID: id, kind: style === "sentences" && hasGap ? "clozeChoice" : "chooseNative" });
+    queue.push({ id: n++, wordID: id, kind: style === "sentences" && gapOK(word) ? "clozeChoice" : "chooseNative" });
     queue.push(...reviews.slice(0, 2));
     reviews = reviews.slice(2);
   }
   queue.push(...reviews);
   for (const id of newIDs) {
-    const hasGap = parseCloze(index.get(id).exampleTarget).hasGap;
-    queue.push({ id: n++, wordID: id, kind: style !== "words" && hasGap ? "clozeChoice" : "chooseTarget" });
+    queue.push({ id: n++, wordID: id, kind: style !== "words" && gapOK(index.get(id)) ? "clozeChoice" : "chooseTarget" });
   }
   queue.forEach((item, i) => { item.id = i; });
   return new Session(queue, newIDs);
@@ -513,7 +526,7 @@ export function dailySession(progress, index, now, style, includeNew = true, max
 export function practiceSession(progress, index, now, style, count = 12, random = Math.random) {
   const ids = Object.keys(progress.cards).filter((id) => index.get(id))
     .sort((a, b) => cardRecall(progress.cards[a], now) - cardRecall(progress.cards[b], now)).slice(0, count);
-  const items = shuffle(ids, random).map((id, i) => ({ id: i, wordID: id, kind: pickKind(progress.cards[id], style, index.get(id), random) }));
+  const items = shuffle(ids, random).map((id, i) => ({ id: i, wordID: id, kind: pickKind(progress.cards[id], style, index.get(id), random, inflectionUnlocked(progress)) }));
   return new Session(items, []);
 }
 

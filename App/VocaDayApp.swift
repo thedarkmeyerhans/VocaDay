@@ -1,14 +1,20 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct VocaDayApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     @StateObject private var model = AppModel()
+    @StateObject private var gate = GateRouter.shared
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(model)
+                .environmentObject(gate)
+                .onOpenURL { model.handle(url: $0) }
+                .onAppear { delegate.openURL = { [weak model] in model?.handle(url: $0) } }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active { model.didBecomeActive() }
                 }
@@ -16,15 +22,52 @@ struct VocaDayApp: App {
     }
 }
 
+/// Opens the link of a tapped notification (e.g. "neues Wort an deinem Ort").
+final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    @MainActor var openURL: (@MainActor (URL) -> Void)? {
+        didSet {
+            if let pending, let openURL { openURL(pending) }
+            pending = nil
+        }
+    }
+    @MainActor private var pending: URL?
+
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        if let link = response.notification.request.content.userInfo["url"] as? String, let url = URL(string: link) {
+            Task { @MainActor in
+                if let openURL = self.openURL { openURL(url) } else { self.pending = url }
+            }
+        }
+        completionHandler()
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound])
+    }
+}
+
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var gate: GateRouter
 
     var body: some View {
-        if model.settings.onboardingCompleted {
-            MainTabView()
-        } else {
-            OnboardingView()
+        Group {
+            if model.settings.onboardingCompleted {
+                MainTabView()
+            } else {
+                OnboardingView()
+            }
         }
+        .fullScreenCover(item: $model.deepLinkMastery) { MasteryPracticeView(active: $0) }
+        .sheet(item: $gate.request) { GateQuizView(request: $0) }
     }
 }
 

@@ -67,10 +67,16 @@ public enum PracticeStyle: String, Codable, CaseIterable, Sendable {
 /// ("desirable difficulty"): recognition for fresh words, free recall and
 /// sentence production for well-known ones.
 public enum ExercisePicker {
+    /// - Parameter allowInflected: whether gaps with inflected forms may be asked.
+    ///   Until the learner has mastered the present tense, words are practised in
+    ///   their dictionary form only; sentences with inflected forms are then only
+    ///   used for the sentence builder, which needs no production.
     public static func kind<G: RandomNumberGenerator>(
-        for card: CardState?, style: PracticeStyle, word: Word, using generator: inout G
+        for card: CardState?, style: PracticeStyle, word: Word, allowInflected: Bool = false,
+        using generator: inout G
     ) -> ExerciseKind {
         let canUseSentence = word.cloze.hasGap
+        let canUseGap = canUseSentence && (allowInflected || word.clozeIsBaseForm)
         let wantsSentence: Bool
         switch style {
         case .words: wantsSentence = false
@@ -79,10 +85,12 @@ public enum ExercisePicker {
         }
 
         guard let card else {
-            return wantsSentence ? .clozeChoice : .chooseNative
+            return wantsSentence && canUseGap ? .clozeChoice : .chooseNative
         }
         let stability = card.stability
-        if wantsSentence {
+        if wantsSentence && !canUseGap {
+            if card.phase == .review && stability >= 3 { return .sentenceBuilder }
+        } else if wantsSentence {
             if stability < 3 || card.phase != .review { return .clozeChoice }
             if stability < 14 { return .clozeType }
             return Bool.random(using: &generator) ? .sentenceBuilder : .clozeType

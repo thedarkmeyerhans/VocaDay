@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir -p _site
           cp -R web/index.html web/manifest.webmanifest web/sw.js web/css web/js web/icons _site/
-          cp App/Resources/words_de_tr.json _site/
+          cp App/Resources/words_de_tr.json App/Resources/grammar_de_tr.json _site/
           sed -i "s/__VERSION__/${GITHUB_SHA::8}/" _site/sw.js
           touch _site/.nojekyll
       - name: Publish to gh-pages branch

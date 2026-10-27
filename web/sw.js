@@ -1,8 +1,8 @@
 // Offline support: serve the app shell from the cache, refresh it in the background.
 const CACHE = "vocaday-__VERSION__";
 const ASSETS = [
-  "./", "index.html", "manifest.webmanifest", "css/app.css", "js/app.js", "js/core.js",
-  "words_de_tr.json", "icons/icon-180.png", "icons/icon-192.png", "icons/icon-512.png",
+  "./", "index.html", "manifest.webmanifest", "css/app.css", "js/app.js", "js/core.js", "js/grammar.js", "js/turkish.js",
+  "words_de_tr.json", "grammar_de_tr.json", "icons/icon-180.png", "icons/icon-192.png", "icons/icon-512.png",
 ];
 
 self.addEventListener("install", (event) => {

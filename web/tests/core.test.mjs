@@ -123,3 +123,56 @@ test("learn now moves a picked word to today without duplicates", () => {
   core.record(progress, "haus", core.RATING.good);
   assert.equal(core.addSpecificWord("haus", progress, bank, "2026-10-27"), false);
 });
+
+import * as tr from "../js/turkish.js";
+
+test("conjugation matches the shared fixtures", () => {
+  const cases = JSON.parse(readFileSync(new URL("../../Packages/VocaDayCore/Tests/VocaDayCoreTests/Fixtures/conjugations.json", import.meta.url)));
+  const failures = [];
+  for (const c of cases) {
+    const verb = tr.parseVerb(c.verb);
+    const form = verb.conjugate(c.tense, c.person);
+    if (form !== c.form) failures.push(`${c.verb} ${c.tense} ${c.person}: ${form} ≠ ${c.form}`);
+  }
+  assert.deepEqual(failures, []);
+  assert.equal(tr.parseVerb("ihtiyacı olmak"), null);
+  assert.deepEqual(tr.parseVerb("gelmek").irregularities, ["aorist"]);
+  assert.equal(tr.parseVerb("gelmek").breakdown("present", "ben"), "gel + iyorum");
+  assert.match(tr.parseVerb("gelmek").explanation("aorist"), /gelir statt geler/);
+});
+
+import * as g from "../js/grammar.js";
+
+test("grammar path, mastery and base-form rule", () => {
+  const curriculum = JSON.parse(readFileSync(new URL("../../App/Resources/grammar_de_tr.json", import.meta.url)));
+  const stages = curriculum.stages;
+  const progress = core.newProgress();
+  assert.equal(g.stageState(stages[0], stages, progress, index).kind, "open");
+  assert.equal(g.stageState(stages[1], stages, progress, index).kind, "locked");
+  for (const id of ["pronouns", "verbEndings", "presentEndings"]) g.recordGrammarSession(progress, id, 0.9);
+  assert.match(g.stageState(stages[3], stages, progress, index).reason, /0\/3/);
+  for (const id of ["gehen", "kommen", "machen", "essen"]) core.record(progress, id, core.RATING.good);
+  assert.equal(g.stageState(stages[3], stages, progress, index).kind, "open");
+  for (const stage of stages) {
+    const items = g.stageItems(stage, progress, bank, index, seeded(40));
+    assert.ok(items.length > 0, stage.id);
+    for (const item of items) if (item.choices.length) assert.ok(item.choices.includes(item.answers[0]), `${stage.id} ${item.prompt}`);
+  }
+  const model = g.stageItems(stages[2], progress, bank, index, seeded(41));
+  assert.ok(model.some((i) => i.answers.includes("geliyorum") && i.detail === "ich"));
+
+  const session = new g.MasterySession([{ id: "a" }, { id: "b" }, { id: "c" }], 2, seeded(42));
+  session.answer(false);
+  let steps = 1;
+  while (!session.finished && steps < 50) { session.answer(true); steps++; }
+  assert.equal(steps, 7);
+  assert.equal(session.mastered, 3);
+
+  const arbeiten = { id: "x", rank: 1, native: "arbeiten", partOfSpeech: "verb", translation: "çalışmak", alternatives: [], exampleTarget: "Çok [çalışıyorum]." };
+  const card = { stability: 20, difficulty: 5, due: 0, lastReview: 0, phase: "review", reps: 3, lapses: 0 };
+  for (let i = 0; i < 20; i++) assert.ok(!["clozeChoice", "clozeType"].includes(core.pickKind(card, "sentences", arbeiten, Math.random, false)));
+  assert.equal(core.clozeIsBaseForm(index.get("haus")), false);
+  const items = g.vocabularyItems(["gehen"], bank, index, seeded(43));
+  assert.ok(items[0].answers.includes("gitmek"));
+  assert.match(items[0].detail, /unregelmäßig/);
+});

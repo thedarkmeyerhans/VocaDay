@@ -26,10 +26,33 @@ targets:
       - path: App
     dependencies:
       - package: VocaDayCore
+      - target: VocaDayWidget
+    entitlements:
+      path: Config/VocaDay.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(APP_GROUP)
     info:
       path: Config/Info.plist
       properties:
         CFBundleDisplayName: VocaDay
+        AppGroup: $(APP_GROUP)
+        CFBundleURLTypes:
+          - CFBundleURLName: $(APP_BUNDLE_ID)
+            CFBundleURLSchemes:
+              - vocaday
+        LSApplicationQueriesSchemes:
+          - instagram
+          - snssdk1233
+          - youtube
+          - twitter
+          - fb
+          - snapchat
+          - reddit
+          - whatsapp
+          - nflx
+        NSLocationWhenInUseUsageDescription: VocaDay speichert deine Lernorte (z. B. Zuhause), um dort ein neues Wort zu zeigen.
+        NSLocationAlwaysAndWhenInUseUsageDescription: Wenn du an einem gespeicherten Lernort ankommst, zeigt VocaDay ein neues Wort im Widget. Der Standort bleibt auf deinem Gerät.
         CFBundleDevelopmentRegion: de
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -56,6 +79,39 @@ targets:
         CODE_SIGN_STYLE: Automatic
         SUPPORTS_MACCATALYST: NO
         ENABLE_PREVIEWS: YES
+  VocaDayWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widget
+      - path: App/Resources/words_de_tr.json
+        buildPhase: resources
+    dependencies:
+      - package: VocaDayCore
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+    entitlements:
+      path: Config/VocaDayWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(APP_GROUP)
+    info:
+      path: Config/Widget-Info.plist
+      properties:
+        CFBundleDisplayName: VocaDay
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        AppGroup: $(APP_GROUP)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_NAME: VocaDayWidget
+        PRODUCT_BUNDLE_IDENTIFIER: $(APP_BUNDLE_ID).widget
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_STYLE: Automatic
+        SKIP_INSTALL: YES
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: ""
 schemes:
   VocaDay:
     build:

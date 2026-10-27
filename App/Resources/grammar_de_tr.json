@@ -1,0 +1,171 @@
+{
+ "stages": [
+  {
+   "id": "pronouns",
+   "kind": "pronouns",
+   "title": "Personalpronomen",
+   "subtitle": "ich, du, er … auf Türkisch",
+   "icon": "person.2.fill",
+   "webIcon": "user",
+   "requiresVerbs": 0,
+   "lesson": [
+    {
+     "title": "Wer handelt?",
+     "text": "Bevor du Verben beugst, brauchst du die Personen. Türkisch kennt kein grammatisches Geschlecht: „o“ heißt er, sie und es. „siz“ ist „ihr“ und zugleich die höfliche Anrede „Sie“.",
+     "header": ["Deutsch", "Türkisch"],
+     "table": [["ich", "ben"], ["du", "sen"], ["er / sie / es", "o"], ["wir", "biz"], ["ihr / Sie", "siz"], ["sie (Plural)", "onlar"]]
+    },
+    {
+     "title": "Oft weggelassen",
+     "text": "Weil die Verbendung schon zeigt, wer handelt, lässt man das Pronomen meist weg: „Geliyorum.“ heißt „Ich komme.“ Man setzt es nur zur Betonung: „Ben geliyorum, sen değil.“ – Ich komme, nicht du."
+    }
+   ]
+  },
+  {
+   "id": "verbEndings",
+   "kind": "verbEndings",
+   "title": "Verbendungen: -mak / -mek",
+   "subtitle": "Grundform, Stamm und Vokalharmonie",
+   "icon": "textformat.abc",
+   "webIcon": "list",
+   "requiresVerbs": 0,
+   "lesson": [
+    {
+     "title": "Die Grundform",
+     "text": "Jedes türkische Verb steht im Wörterbuch in der Grundform (Infinitiv). Sie endet immer auf -mak oder -mek: gelmek (kommen), yapmak (machen). So lernst du die Verben in VocaDay zuerst."
+    },
+    {
+     "title": "Der letzte Vokal entscheidet",
+     "text": "Nach den hinteren Vokalen a, ı, o, u steht -mak, nach den vorderen Vokalen e, i, ö, ü steht -mek. Das ist die kleine Vokalharmonie – sie begegnet dir in fast jeder Endung.",
+     "header": ["Stamm", "letzter Vokal", "Grundform"],
+     "table": [["al", "a", "almak"], ["oku", "u", "okumak"], ["yaz", "a", "yazmak"], ["gel", "e", "gelmek"], ["bil", "i", "bilmek"], ["gör", "ö", "görmek"]]
+    },
+    {
+     "title": "Der Stamm – die Basis für alles",
+     "text": "Streichst du -mak oder -mek, bleibt der Stamm. An ihn hängt Türkisch alle Endungen für Zeit und Person an, wie Bausteine: gel + iyor + um = geliyorum (ich komme)."
+    },
+    {
+     "title": "Die große Vokalharmonie: ı, i, u, ü",
+     "text": "Viele Endungen enthalten einen Vokal, der sich nach dem letzten Vokal des Wortes richtet. Diese Regel brauchst du gleich im Präsens.",
+     "header": ["letzter Vokal", "Endungsvokal", "Beispiel"],
+     "table": [["a, ı", "ı", "alıyor"], ["e, i", "i", "geliyor"], ["o, u", "u", "oturuyor"], ["ö, ü", "ü", "görüyor"]]
+    }
+   ]
+  },
+  {
+   "id": "presentEndings",
+   "kind": "modelConjugation",
+   "tense": "present",
+   "modelVerbs": ["gelmek", "yapmak"],
+   "title": "Präsens: die Endungen",
+   "subtitle": "Stamm + iyor + Person",
+   "icon": "puzzlepiece.fill",
+   "webIcon": "layers",
+   "requiresVerbs": 0,
+   "lesson": [
+    {
+     "title": "Die Bausteine",
+     "text": "Das Präsens (gerade jetzt) entsteht aus drei Teilen: Stamm + -iyor + Personalendung. Der Vokal in -iyor folgt der großen Vokalharmonie: gel-iyor, yap-ıyor, otur-uyor, gör-üyor.",
+     "conjugation": {"verbs": ["gelmek", "yapmak"], "tense": "present"}
+    },
+    {
+     "title": "Die Personalendungen",
+     "text": "Nach -yor steht immer u, weil o der letzte Vokal ist. Für „er/sie/es“ gibt es keine Endung.",
+     "header": ["Person", "Endung", "Beispiel"],
+     "table": [["ben", "-um", "geliyorum"], ["sen", "-sun", "geliyorsun"], ["o", "–", "geliyor"], ["biz", "-uz", "geliyoruz"], ["siz", "-sunuz", "geliyorsunuz"], ["onlar", "-lar", "geliyorlar"]]
+    },
+    {
+     "title": "Stamm endet auf einen Vokal",
+     "text": "Endet der Stamm auf a oder e, fällt dieser Vokal weg: bekle-mek → bekliyorum, anla-mak → anlıyorum. Endet er auf ı, i, u oder ü, kommt nur -yor dazu: oku-mak → okuyorum."
+    }
+   ]
+  },
+  {
+   "id": "present",
+   "kind": "conjugation",
+   "tense": "present",
+   "title": "Präsens konjugieren",
+   "subtitle": "mit deinen gelernten Verben",
+   "icon": "play.fill",
+   "webIcon": "play",
+   "requiresVerbs": 3,
+   "lesson": [
+    {
+     "title": "Jetzt mit deinen Verben",
+     "text": "Ab hier übst du mit den Verben, die du schon gelernt hast. Denk an die Bausteine Stamm + iyor + Person. Achte auf markierte Verben: gitmek → gidiyorum (t wird d), yemek → yiyorum (e wird i). Wenn du diese Stufe geschafft hast, übst du auch in den Satzübungen die gebeugten Formen."
+    }
+   ]
+  },
+  {
+   "id": "past",
+   "kind": "conjugation",
+   "tense": "past",
+   "title": "Vergangenheit: -di",
+   "subtitle": "geldim – ich kam",
+   "icon": "clock.arrow.circlepath",
+   "webIcon": "clock",
+   "requiresVerbs": 3,
+   "lesson": [
+    {
+     "title": "Die Bausteine",
+     "text": "Stamm + -di + Personalendung. Der Vokal folgt der großen Vokalharmonie (dı, di, du, dü). Nach den harten Konsonanten ç, f, h, k, p, s, ş, t wird d zu t: yap-tı, git-ti, iç-ti.",
+     "conjugation": {"verbs": ["gelmek", "yapmak"], "tense": "past"}
+    },
+    {
+     "title": "Die Personalendungen",
+     "text": "Die Endungen der Vergangenheit sind kurz.",
+     "header": ["Person", "Endung", "Beispiel"],
+     "table": [["ben", "-m", "geldim"], ["sen", "-n", "geldin"], ["o", "–", "geldi"], ["biz", "-k", "geldik"], ["siz", "-niz", "geldiniz"], ["onlar", "-ler / -lar", "geldiler"]]
+    }
+   ]
+  },
+  {
+   "id": "future",
+   "kind": "conjugation",
+   "tense": "future",
+   "title": "Zukunft: -ecek / -acak",
+   "subtitle": "geleceğim – ich werde kommen",
+   "icon": "arrow.forward.circle.fill",
+   "webIcon": "chevron",
+   "requiresVerbs": 3,
+   "lesson": [
+    {
+     "title": "Die Bausteine",
+     "text": "Stamm + -ecek/-acak (kleine Vokalharmonie) + Personalendung. Endet der Stamm auf einen Vokal, kommt ein y dazwischen: bekle-y-ecek. Vor einer vokalischen Endung wird k zu ğ: geleceğim, yapacağız.",
+     "conjugation": {"verbs": ["gelmek", "yapmak"], "tense": "future"}
+    },
+    {
+     "title": "Achtung bei markierten Verben",
+     "text": "gitmek → gideceğim, etmek → edeceğim (t wird d), yemek → yiyeceğim (e wird i)."
+    }
+   ]
+  },
+  {
+   "id": "aorist",
+   "kind": "conjugation",
+   "tense": "aorist",
+   "title": "Breite Zeit & Ausnahmen",
+   "subtitle": "gelirim – ich komme (immer)",
+   "icon": "infinity",
+   "webIcon": "refresh",
+   "requiresVerbs": 3,
+   "lesson": [
+    {
+     "title": "Wofür?",
+     "text": "Die breite Zeit (Geniş zaman) steht für Gewohnheiten und allgemeine Aussagen: „Her gün çay içerim.“ – Ich trinke jeden Tag Tee."
+    },
+    {
+     "title": "Die Regel",
+     "text": "Stamm auf Vokal → -r (okur, bekler). Einsilbiger Stamm → -ar/-er (yapar, gider). Mehrsilbiger Stamm → -ır/-ir/-ur/-ür (konuşur, öğrenir).",
+     "conjugation": {"verbs": ["gelmek", "yapmak"], "tense": "aorist"}
+    },
+    {
+     "title": "Die 13 unregelmäßigen Verben",
+     "text": "Diese einsilbigen Verben nehmen -ir statt -er/-ar. Beim Wörterlernen sind sie mit „unregelmäßig“ markiert.",
+     "header": ["Verb", "regelmäßig wäre", "richtig"],
+     "table": [["almak", "alar", "alır"], ["bilmek", "biler", "bilir"], ["bulmak", "bular", "bulur"], ["durmak", "durar", "durur"], ["gelmek", "geler", "gelir"], ["görmek", "görer", "görür"], ["kalmak", "kalar", "kalır"], ["olmak", "olar", "olur"], ["ölmek", "öler", "ölür"], ["sanmak", "sanar", "sanır"], ["vermek", "verer", "verir"], ["varmak", "varar", "varır"], ["vurmak", "vurar", "vurur"]]
+    }
+   ]
+  }
+ ]
+}

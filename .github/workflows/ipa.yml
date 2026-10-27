@@ -37,6 +37,18 @@ jobs:
             CURRENT_PROJECT_VERSION=${{ github.run_number }} \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             | xcbeautify --renderer github-actions
+      - name: Embed entitlements (app group for the widget)
+        run: |
+          # Unsigned builds carry no entitlements. Sign ad hoc with them, so
+          # Sideloadly/AltStore can carry the app group over when re-signing.
+          GROUP="group.$(sed -n 's/^APP_BUNDLE_ID *= *//p' Config/Shared.xcconfig)"
+          APP=build/Build/Products/Release-iphoneos/VocaDay.app
+          for f in VocaDay VocaDayWidget; do
+            sed "s/\$(APP_GROUP)/$GROUP/" "Config/$f.entitlements" > "$RUNNER_TEMP/$f.entitlements"
+          done
+          codesign --force --sign - --entitlements "$RUNNER_TEMP/VocaDayWidget.entitlements" "$APP/PlugIns/VocaDayWidget.appex"
+          codesign --force --sign - --entitlements "$RUNNER_TEMP/VocaDay.entitlements" "$APP"
+          codesign -d --entitlements - "$APP"
       - name: Package IPA
         run: |
           mkdir -p Payload

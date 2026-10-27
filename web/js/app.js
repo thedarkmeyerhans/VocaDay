@@ -1,5 +1,7 @@
 // VocaDay web app (PWA). Same learning system as the native app, see core.js.
 import * as C from "./core.js";
+import * as G from "./grammar.js";
+import * as T from "./turkish.js";
 
 const STORE_KEY = "vocaday.progress.v1";
 const app = document.getElementById("app");
@@ -7,6 +9,7 @@ const overlayRoot = document.getElementById("overlay");
 
 const state = {
   bank: null,
+  grammar: { stages: [] },
   index: new Map(),
   progress: null,
   tab: "today",
@@ -65,6 +68,8 @@ const ICONS = {
   layers: '<path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
   back: '<path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/>',
   info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+  lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
 };
 
 function ic(name, size = 22, extra = "") {
@@ -372,7 +377,7 @@ function weekStrip() {
 function heroCard(w) {
   const learned = C.isIntroduced(P(), w.id);
   return `<div class="hero stack tight pressable" data-action="word" data-id="${w.id}" role="button">
-    <div class="row"><span class="pill white">${C.POS_NAMES[w.partOfSpeech]}</span>${learned ? `<span class="pill white">${ic("check", 12)} gelernt</span>` : ""}<div class="spacer"></div>${speakButton(w.translation, true)}</div>
+    <div class="row"><span class="pill white">${C.POS_NAMES[w.partOfSpeech]}</span>${irregularBadge(w, true)}${learned ? `<span class="pill white">${ic("check", 12)} gelernt</span>` : ""}<div class="spacer"></div>${speakButton(w.translation, true)}</div>
     <div class="big rounded">${esc(w.translation)}</div>
     <div class="sub">${esc(C.withArticle(w))}</div>
     <hr>
@@ -384,7 +389,7 @@ function heroCard(w) {
 function compactCard(w) {
   return `<div class="card row pressable" data-action="word" data-id="${w.id}" role="button">
     <div class="icon" style="background:var(--sunrise);font-weight:800">${esc(w.native[0].toUpperCase())}</div>
-    <div style="flex:1"><div style="font-size:20px;font-weight:700">${esc(w.translation)}</div><div class="small secondary">${articleWord(w)}</div></div>
+    <div style="flex:1"><div style="font-size:20px;font-weight:700">${esc(w.translation)} ${irregularBadge(w)}</div><div class="small secondary">${articleWord(w)}</div></div>
     ${C.isIntroduced(P(), w.id) ? `<span style="color:var(--correct)">${ic("check")}</span>` : ""}
     ${speakButton(w.translation)}
   </div>`;
@@ -410,8 +415,10 @@ function renderPractice() {
       ${card("start-daily", "refresh", COLORS.review, "Tägliche Wiederholung", due ? `${due} Wörter sind jetzt dran.` : "Gerade ist nichts fällig – gut gemacht!", due || "", !hasWork())}
       ${card("open-test", "checklist", COLORS.test, "Wortschatz-Test", "Alle gelernten Wörter auf einmal abfragen – mit Auswertung und Fehlerrunde.", last ? pct(last.correctFirstTry / Math.max(1, last.total)) : "", !learned)}
       ${card("start-sentences", "bubble", COLORS.sentence, "Satztrainer", "Wörter aktiv im Satz verwenden: Lückentexte und Sätze bauen.", "", !learned)}
+      ${card("start-consolidation", "target", COLORS.correct, "Festigen – bis es sitzt", "Deine schwächsten Wörter kommen so lange wieder, bis jedes 2× hintereinander sitzt.", learned ? Math.min(10, learned) : "", !learned)}
       ${card("start-free", "shuffle", COLORS.practice, "Freies Üben", "Die Wörter, die du am ehesten vergisst – auch wenn sie noch nicht fällig sind.", "", !learned)}
     </div>
+    ${grammarPath()}
     <button class="card row pressable" data-action="method">${gradIcon("grad", COLORS.coral)}<div style="flex:1"><h3>So lernst du mit VocaDay</h3><div class="small secondary">Die Wissenschaft hinter den Übungen</div></div><span class="secondary">${ic("chevron")}</span></button>
     ${learned ? "" : `<div class="small secondary">Lerne zuerst dein Wort des Tages im Tab „Heute“.</div>`}
   </div>`;
@@ -778,7 +785,7 @@ function renderOverlay() {
   const scrollTop = overlayRoot.firstElementChild?.scrollTop ?? 0;
   const views = {
     session: renderSessionOverlay, test: renderTestOverlay, testSetup: renderTestSetup, word: renderWordDetail,
-    method: renderMethod, group: renderGroup, cards: renderCards,
+    method: renderMethod, group: renderGroup, cards: renderCards, stage: renderStage, mastery: renderMastery,
   };
   overlayRoot.innerHTML = views[o.type](o);
   const root = overlayRoot.firstElementChild;
@@ -843,10 +850,11 @@ function renderExercise(ctx, card) {
   const k = item.kind;
   if (k === "introduction") {
     return `<div class="exercise">
-      <div class="hero stack tight"><div class="row"><span class="pill white">✨ Neues Wort</span><div class="spacer"></div>${speakButton(w.translation, true)}</div>
+      <div class="hero stack tight"><div class="row"><span class="pill white">✨ Neues Wort</span>${irregularBadge(w, true)}<div class="spacer"></div>${speakButton(w.translation, true)}</div>
         <div class="big rounded">${esc(w.translation)}</div><div class="sub">${esc(C.withArticle(w))}</div>
         ${w.alternatives?.length ? `<div class="muted">auch: ${esc(w.alternatives.join(", "))}</div>` : ""}</div>
       <div class="card stack tight"><h3>Im Satz</h3><div class="row top"><div style="flex:1;font-size:20px">${highlighted(w)}</div>${speakButton(ctx.cloze.plain)}</div><div class="secondary">${esc(w.exampleNative)}</div></div>
+      ${baseFormCard(w)}
       ${w.note ? `<div class="card row top small"><span style="color:var(--almost)">${ic("bulb", 20)}</span><div>${esc(w.note)}</div></div>` : ""}
       <div class="caption secondary">Sprich das Wort laut nach – das hilft beim Merken.</div>
       <button class="btn" data-action="continue">Verstanden</button></div>`;
@@ -903,6 +911,214 @@ function renderExercise(ctx, card) {
         : `<button class="btn" data-action="build-check" ${ctx.chosen.length !== ctx.tokens.length ? "disabled" : ""}>Prüfen</button>`}</div>`;
   }
   return "";
+}
+
+// MARK: Grammar & consolidation
+
+const STAGE_COLORS = [COLORS.coral, COLORS.review, COLORS.sentence, COLORS.correct, COLORS.test, COLORS.practice, COLORS.red];
+
+/** "unregelmäßig" marker for irregular Turkish verbs. */
+function irregularBadge(w, white = false) {
+  const v = w && T.verbOf(w);
+  if (!v?.isIrregular) return "";
+  const title = v.irregularities.map((k) => T.IRREGULARITY_TITLES[k]).join(", ");
+  return `<span class="pill ${white ? "white" : "irregular"}" title="${esc(title)}">⚠︎ unregelmäßig</span>`;
+}
+
+const stageStateOf = (stage) => G.stageState(stage, state.grammar.stages, P(), state.index);
+
+function grammarPath() {
+  const stages = state.grammar.stages;
+  if (!stages.length) return "";
+  const done = stages.filter((s) => P().grammar?.[s.id]?.completedAt).length;
+  const verbs = G.learnedVerbs(P(), state.index).length;
+  const rows = stages.map((s, i) => {
+    const st = stageStateOf(s);
+    const color = STAGE_COLORS[i % STAGE_COLORS.length];
+    const end = st.kind === "completed" ? `<span style="color:var(--correct)">${ic("check")}</span>`
+      : st.kind === "locked" ? `<span class="secondary">${ic("lock", 18)}</span>` : `<span style="color:${color}">${ic("chevron")}</span>`;
+    return `<button class="card row pressable gstage ${st.kind}" data-action="stage" data-id="${s.id}">
+      <div class="step" style="--sc:${color}">${st.kind === "completed" ? ic("check", 16) : i + 1}</div>
+      <div style="flex:1;text-align:left"><div class="bold">${esc(s.title)}</div><div class="small secondary">${esc(st.kind === "locked" ? st.reason : s.subtitle)}</div></div>${end}</button>`;
+  }).join("");
+  return `<div class="stack tight"><div class="row"><h2 style="flex:1;margin:0">Grammatik: Verben beugen</h2><span class="pill">${done}/${stages.length}</span></div>
+    <div class="small secondary">Erst lernst du jedes Wort in der Grundform. Hier kommen die Endungen dazu – jede Stufe, bis jede Aufgabe ${2}× hintereinander sitzt. Du kennst ${verbs} Verben.</div>
+    <div class="stack tight path">${rows}</div></div>`;
+}
+
+function simpleTable(header, rows) {
+  return `<div class="table-wrap"><table class="gtable">${header ? `<thead><tr>${header.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead>` : ""}
+    <tbody>${rows.map((r) => `<tr>${r.map((c, i) => `<td class="${i ? "" : "secondary"}">${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+
+function formHTML(v, tense, person) {
+  const [base, end = ""] = v.breakdown(tense, person).split(" + ");
+  return `${esc(v.prefix + base)}<b class="ending">${esc(end)}</b>`;
+}
+
+function conjugationTable(verbs, tense) {
+  const list = verbs.map((v) => (typeof v === "string" ? T.parseVerb(v) : v)).filter(Boolean);
+  if (!list.length) return "";
+  return `<div class="table-wrap"><table class="gtable"><thead><tr><th></th>${list.map((v) => `<th>${esc(v.dictionaryForm)}</th>`).join("")}</tr></thead>
+    <tbody>${T.PERSONS.map((p, i) => `<tr><td class="secondary">${p.id}</td>${list.map((v) => `<td>${formHTML(v, tense, i)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+
+function ownVerbs(tense) {
+  const verbs = G.learnedVerbs(P(), state.index).slice(0, 5);
+  if (!verbs.length) return "";
+  return `<div class="card pad stack tight"><h3>Deine Verben</h3><div class="small secondary">So sieht „ich …“ mit deinen gelernten Verben aus:</div>
+    ${verbs.map(([w, v]) => `<div class="row"><div style="flex:1"><b>${esc(v.dictionaryForm)}</b> <span class="small secondary">${esc(w.native)}</span> ${irregularBadge(w)}</div><div>${formHTML(v, tense, 0)}</div></div>`).join("")}</div>`;
+}
+
+function renderStage(o) {
+  const stages = state.grammar.stages;
+  const index = stages.findIndex((s) => s.id === o.id);
+  const stage = stages[index];
+  const st = stageStateOf(stage);
+  const rec = P().grammar?.[stage.id];
+  const color = STAGE_COLORS[index % STAGE_COLORS.length];
+  const lessons = (stage.lesson ?? []).map((l) => `<div class="card pad stack tight"><h3>${esc(l.title)}</h3><div>${esc(l.text)}</div>
+    ${l.table ? simpleTable(l.header, l.table) : ""}${l.conjugation ? conjugationTable(l.conjugation.verbs, l.conjugation.tense) : ""}</div>`).join("");
+  return `<div class="overlay">${bar(stage.title)}<div class="body stack">
+    <div class="hero stack tight" style="background:linear-gradient(135deg, ${color}, ${COLORS.red})">
+      <div class="row"><span class="pill white">${st.kind === "completed" ? "✓ geschafft" : st.kind === "locked" ? "🔒 gesperrt" : `Stufe ${index + 1} von ${stages.length}`}</span></div>
+      <div class="big rounded" style="font-size:${stage.title.length > 14 ? 28 : 36}px;hyphens:auto" lang="de">${esc(stage.title)}</div><div class="sub">${esc(stage.subtitle)}</div>
+      ${rec ? `<div class="muted">${rec.sessions}× geübt · bestes Ergebnis ${pct(rec.bestFirstTry)} auf Anhieb</div>` : ""}</div>
+    ${lessons}
+    ${stage.kind === "conjugation" ? ownVerbs(stage.tense) : ""}
+    ${st.kind === "locked" ? `<div class="card row small">${ic("lock", 18)}<div>${esc(st.reason)}</div></div>` : ""}
+    <button class="btn" data-action="start-stage" data-id="${stage.id}" ${st.kind === "locked" ? "disabled" : ""}>${ic("play", 16)} ${rec ? "Nochmal üben" : "Üben, bis es sitzt"}</button>
+    <div class="caption secondary" style="text-align:center">Falsche Antworten kommen nach zwei Aufgaben wieder, richtige nach vier – bis jede ${2}× hintereinander sitzt.</div>
+  </div></div>`;
+}
+
+function startMastery(title, purpose, items, target = 2) {
+  if (!items.length) { toast("Lerne zuerst ein paar Wörter."); return; }
+  const o = { type: "mastery", title, purpose, session: new G.MasterySession(items, target), startedAt: Date.now() };
+  o.ctx = masteryCtx(o.session);
+  openOverlay(o, { stacked: state.overlay?.type === "stage" });
+}
+
+function masteryCtx(s) {
+  const item = s.current;
+  if (!item) return null;
+  return { item, choices: s.currentStreak === 0 && item.choices?.length > 1, selected: null, verdict: null, input: "" };
+}
+
+function consolidationIDs(count = 10) {
+  return Object.keys(P().cards).filter(word).sort((a, b) => C.cardRecall(P().cards[a]) - C.cardRecall(P().cards[b])).slice(0, count);
+}
+
+function masteryCorrect(ctx) {
+  if (ctx.selected != null) return ctx.item.choices[ctx.selected] === ctx.item.answers[0];
+  return ctx.verdict ? ctx.verdict.verdict !== "wrong" : null;
+}
+
+function renderMastery(o) {
+  const s = o.session;
+  if (s.finished) {
+    const secs = (Date.now() - o.startedAt) / 1000;
+    return `<div class="overlay">${bar(o.title)}<div class="body stack" style="align-items:center;text-align:center;padding-top:20px">
+      ${ring(1, 150, 16, [COLORS.sentence, COLORS.correct], `<span style="color:var(--correct)">${ic("check", 44)}</span>`)}
+      <h1 style="margin:0">Alles gemeistert!</h1><div class="secondary">Jede Aufgabe saß ${s.target}× hintereinander.</div>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr);width:100%;gap:12px">
+        ${[["📋", s.items.length, "Aufgaben"], ["🎯", pct(s.firstTryScore), "auf Anhieb"], ["⏱", duration(secs), "Dauer"]].map(([i, v, l]) => `<div class="card stack tight" style="align-items:center;padding:12px"><span>${i}</span><b style="font-size:20px">${v}</b><span class="caption secondary">${l}</span></div>`).join("")}
+      </div>
+      <button class="btn" data-action="close">Fertig</button></div></div>`;
+  }
+  const ctx = o.ctx;
+  const item = ctx.item;
+  const answer = item.answers[0];
+  const head = `<div class="row caption secondary bold" style="margin:-4px 2px 10px"><span style="flex:1">${s.mastered} von ${s.items.length} gemeistert</span><span>${s.currentStreak === 0 ? "1. Runde" : `noch ${s.target - s.currentStreak}× richtig`}</span></div>`;
+  const prompt = `<div class="card pad prompt"><div class="kicker" style="color:var(--sentence)">${esc(item.kicker)}</div>
+    <div class="text rounded ${item.prompt.length > 22 ? "long" : ""}">${esc(item.prompt)}</div>${item.detail ? `<div class="secondary" style="font-size:19px;margin-top:6px">${esc(item.detail)}</div>` : ""}</div>`;
+  let input;
+  if (ctx.choices) {
+    input = `<div class="stack tight">${item.choices.map((c, i) => {
+      let cls = "";
+      if (ctx.selected != null) cls = c === answer ? "correct" : i === ctx.selected ? "wrong" : "dim";
+      return `<button class="option ${cls}" data-action="m-choose" data-index="${i}" ${ctx.selected != null ? "disabled" : ""}><span class="badge">${"ABCDEF"[i]}</span><span style="flex:1">${esc(c)}</span>${cls === "correct" ? `<span style="color:var(--correct)">${ic("check")}</span>` : cls === "wrong" ? `<span style="color:var(--wrong)">${ic("x")}</span>` : ""}</button>`;
+    }).join("")}</div>`;
+  } else {
+    const v = ctx.verdict;
+    input = `<div class="input-wrap"><span>🇹🇷</span><input data-input="answer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Auf Türkisch …" value="${esc(ctx.input ?? "")}" ${v ? "disabled" : ""} enterkeyhint="done"></div>
+      ${v ? "" : `<div class="chars">${["ç", "ğ", "ı", "İ", "ö", "ş", "ü"].map((c) => `<button data-action="char" data-char="${c}">${c}</button>`).join("")}</div>
+        <button class="btn" style="background:var(--sentence)" data-action="m-check">Prüfen</button><button class="btn link" data-action="m-dont-know">Weiß ich nicht</button>`}`;
+  }
+  const correct = masteryCorrect(ctx);
+  let fb = "";
+  if (correct != null) {
+    const color = correct ? COLORS.correct : COLORS.wrong;
+    const v = ctx.verdict?.verdict;
+    fb = `<div class="feedback" style="--fb:${color}"><div class="head"><span>${ic(correct ? "check" : "x", 16)}</span>${correct ? "Richtig!" : "Noch nicht ganz"}</div>
+      ${!correct ? `<div class="small bold">Richtig ist: ${esc(answer)}</div>` : ""}
+      ${v === "diacritics" ? `<div class="small">Achte auf die Sonderzeichen: ${esc(ctx.verdict.expected)}</div>` : v === "typo" ? `<div class="small">Kleiner Tippfehler – richtig: ${esc(ctx.verdict.expected)}</div>` : ""}
+      <div class="row top">${item.explanation ? `<div class="small secondary" style="flex:1">${esc(item.explanation)}</div>` : `<div style="flex:1"></div>`}${item.speech ? speakButton(item.speech) : ""}</div>
+      <button class="btn" data-action="m-continue">${correct ? "Weiter" : "Verstanden"}</button></div>`;
+  }
+  return `<div class="overlay">${bar(o.title, s.progress)}<div class="body">${head}<div class="exercise">${prompt}${input}${fb}</div></div></div>`;
+}
+
+function masteryAnswered() {
+  const o = state.overlay;
+  const ctx = o.ctx;
+  const correct = masteryCorrect(ctx);
+  vibrate(correct);
+  if (ctx.item.speech) speak(ctx.item.speech);
+  if (o.session.isFirstAttempt && ctx.item.wordID) {
+    C.record(P(), ctx.item.wordID, correct ? C.RATING.good : C.RATING.again);
+    save();
+  }
+  o.keepScroll = true;
+  renderOverlay();
+}
+
+function masteryContinue() {
+  const o = state.overlay;
+  o.session.answer(masteryCorrect(o.ctx));
+  o.ctx = masteryCtx(o.session);
+  o.newItem = true;
+  if (o.session.finished) {
+    if (o.purpose.startsWith("stage:")) G.recordGrammarSession(P(), o.purpose.slice(6), o.session.firstTryScore);
+    C.addStudyTime(P(), (Date.now() - o.startedAt) / 1000);
+    o.saved = true;
+    save();
+    confetti();
+  }
+  renderOverlay();
+  overlayRoot.firstElementChild?.scrollTo({ top: 0 });
+}
+
+function masteryCheck() {
+  const ctx = state.overlay.ctx;
+  if (!ctx || ctx.verdict || ctx.choices) return;
+  const value = currentInput();
+  if (!value.trim()) return;
+  ctx.input = value;
+  ctx.verdict = C.checkAnswer(value, ctx.item.answers);
+  document.activeElement?.blur();
+  masteryAnswered();
+}
+
+/** Introduction of a verb: learn the dictionary form first, endings come later. */
+function baseFormCard(w) {
+  const v = T.verbOf(w);
+  if (!v) return "";
+  return `<div class="card stack tight"><div class="row"><h3 style="flex:1">Grundform</h3>${irregularBadge(w)}</div>
+    <div>Lerne zuerst <b>${esc(v.dictionaryForm)}</b>: Stamm <b>${esc(v.prefix + v.stem)}</b> + <b>-${esc(v.ending)}</b>. Die Endungen (ich gehe, du gehst …) übst du später im Grammatik-Pfad.</div>
+    ${v.irregularities.map((k) => `<div class="row top small irregular-note">⚠︎<div><b>${esc(T.IRREGULARITY_TITLES[k])}:</b> ${esc(v.explanation(k))}</div></div>`).join("")}</div>`;
+}
+
+function verbCard(w) {
+  const v = T.verbOf(w);
+  if (!v) return "";
+  const tense = state.overlay.tense ?? "present";
+  const short = { present: "Präsens", past: "Verg.", future: "Zukunft", aorist: "Breite Z." };
+  const tabs = Object.entries(T.TENSES).map(([k, t]) => `<button class="${k === tense ? "on" : ""}" data-action="verb-tense" data-tense="${k}" title="${esc(t.name)}">${short[k]}</button>`).join("");
+  return `<div class="card pad stack tight"><div class="row"><h3 style="flex:1">Konjugation</h3>${irregularBadge(w)}</div>
+    <div class="small secondary">Stamm <b>${esc(v.prefix + v.stem)}</b> + Endung <b>-${esc(v.ending)}</b> · ${esc(T.TENSES[tense].turkish)}</div>
+    ${v.irregularities.map((k) => `<div class="row top small irregular-note">⚠︎<div><b>${esc(T.IRREGULARITY_TITLES[k])}:</b> ${esc(v.explanation(k))}</div></div>`).join("")}
+    <div class="seg small">${tabs}</div>${conjugationTable([v], tense)}</div>`;
 }
 
 // Sessions
@@ -1077,6 +1293,7 @@ function renderWordDetail(o) {
     ${heroCard(w).replace('data-action="word"', "")}
     ${w.alternatives?.length || w.note ? `<div class="card stack tight small">${w.alternatives?.length ? `<div>= auch: ${esc(w.alternatives.join(", "))}</div>` : ""}${w.note ? `<div class="row top"><span style="color:var(--almost)">${ic("bulb", 18)}</span><div>${esc(w.note)}</div></div>` : ""}</div>` : ""}
     <div class="grid two"><button class="btn" data-action="speak" data-text="${esc(C.parseCloze(w.exampleTarget).plain)}">${ic("play", 14)} Satz anhören</button><button class="btn" style="background:var(--sentence)" data-action="speak-slow" data-text="${esc(C.parseCloze(w.exampleTarget).plain)}">🐢 Langsam</button></div>
+    ${verbCard(w)}
     ${memory}
     <div class="caption secondary center">${C.POS_NAMES[w.partOfSpeech]} · Platz ${w.rank} der häufigsten deutschen Wörter</div>
   </div></div>`;
@@ -1170,10 +1387,32 @@ const actions = {
   "hide-install": () => { localStorage.setItem("vocaday.hideInstall", "1"); render(); },
   "backup-later": () => { localStorage.setItem("vocaday.backupSnooze", String(Date.now())); render(); },
   method: () => openOverlay({ type: "method" }),
+  stage: (d) => openOverlay({ type: "stage", id: d.id }),
+  "start-stage": (d) => {
+    const stage = state.grammar.stages.find((s) => s.id === d.id);
+    startMastery(stage.title, `stage:${stage.id}`, G.stageItems(stage, P(), state.bank, state.index));
+  },
+  "start-consolidation": () => startMastery("Festigen", "consolidation", G.vocabularyItems(consolidationIDs(), state.bank, state.index)),
+  "m-choose": (d) => {
+    const ctx = state.overlay.ctx;
+    if (ctx.selected != null) return;
+    ctx.selected = Number(d.index);
+    masteryAnswered();
+  },
+  "m-check": () => masteryCheck(),
+  "m-dont-know": () => {
+    const ctx = state.overlay.ctx;
+    ctx.input = "";
+    ctx.verdict = { verdict: "wrong", expected: ctx.item.answers[0] };
+    masteryAnswered();
+  },
+  "m-continue": () => masteryContinue(),
+  "verb-tense": (d) => { state.overlay.tense = d.tense; state.overlay.keepScroll = true; renderOverlay(); },
   close: () => {
     const o = state.overlay;
     if (o?.type === "session" && !o.session.finished && o.session.answered) C.addStudyTime(P(), (Date.now() - o.startedAt) / 1000);
     if (o?.type === "test" && !o.saved && o.test.answeredFirstTry) C.addStudyTime(P(), (Date.now() - o.test.startedAt) / 1000);
+    if (o?.type === "mastery" && !o.saved && o.session.answers) C.addStudyTime(P(), (Date.now() - o.startedAt) / 1000);
     save();
     closeOverlay();
   },
@@ -1348,7 +1587,7 @@ document.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && event.target.matches?.("input[data-input='answer']")) {
     event.preventDefault();
-    checkTyped();
+    if (state.overlay?.type === "mastery") masteryCheck(); else checkTyped();
   }
 });
 
@@ -1402,6 +1641,12 @@ async function boot() {
   } catch (error) {
     app.innerHTML = `<div class="onboarding"><h1>Keine Verbindung</h1><p class="secondary">Die Wortdatenbank konnte nicht geladen werden. Bitte einmal mit Internet öffnen – danach funktioniert VocaDay auch offline.</p></div>`;
     return;
+  }
+  try {
+    const grammar = await fetch("grammar_de_tr.json");
+    if (grammar.ok) state.grammar = await grammar.json();
+  } catch (error) {
+    console.warn("grammar unavailable", error);
   }
   state.bank.words.sort((a, b) => a.rank - b.rank);
   state.index = new Map(state.bank.words.map((w) => [w.id, w]));

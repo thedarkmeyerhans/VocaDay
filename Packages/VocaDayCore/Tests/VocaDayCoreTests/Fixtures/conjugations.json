@@ -1,0 +1,1394 @@
+[
+ {
+  "verb": "gelmek",
+  "tense": "present",
+  "person": "ben",
+  "form": "geliyorum"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "present",
+  "person": "sen",
+  "form": "geliyorsun"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "present",
+  "person": "o",
+  "form": "geliyor"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "present",
+  "person": "biz",
+  "form": "geliyoruz"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "present",
+  "person": "siz",
+  "form": "geliyorsunuz"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "present",
+  "person": "onlar",
+  "form": "geliyorlar"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "past",
+  "person": "ben",
+  "form": "geldim"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "past",
+  "person": "sen",
+  "form": "geldin"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "past",
+  "person": "o",
+  "form": "geldi"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "past",
+  "person": "biz",
+  "form": "geldik"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "past",
+  "person": "siz",
+  "form": "geldiniz"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "past",
+  "person": "onlar",
+  "form": "geldiler"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "future",
+  "person": "ben",
+  "form": "geleceğim"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "future",
+  "person": "sen",
+  "form": "geleceksin"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "future",
+  "person": "o",
+  "form": "gelecek"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "future",
+  "person": "biz",
+  "form": "geleceğiz"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "future",
+  "person": "siz",
+  "form": "geleceksiniz"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "future",
+  "person": "onlar",
+  "form": "gelecekler"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "gelirim"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "gelirsin"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "gelir"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "geliriz"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "gelirsiniz"
+ },
+ {
+  "verb": "gelmek",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "gelirler"
+ },
+ {
+  "verb": "almak",
+  "tense": "present",
+  "person": "ben",
+  "form": "alıyorum"
+ },
+ {
+  "verb": "almak",
+  "tense": "present",
+  "person": "sen",
+  "form": "alıyorsun"
+ },
+ {
+  "verb": "almak",
+  "tense": "present",
+  "person": "o",
+  "form": "alıyor"
+ },
+ {
+  "verb": "almak",
+  "tense": "present",
+  "person": "biz",
+  "form": "alıyoruz"
+ },
+ {
+  "verb": "almak",
+  "tense": "present",
+  "person": "siz",
+  "form": "alıyorsunuz"
+ },
+ {
+  "verb": "almak",
+  "tense": "present",
+  "person": "onlar",
+  "form": "alıyorlar"
+ },
+ {
+  "verb": "almak",
+  "tense": "past",
+  "person": "ben",
+  "form": "aldım"
+ },
+ {
+  "verb": "almak",
+  "tense": "past",
+  "person": "sen",
+  "form": "aldın"
+ },
+ {
+  "verb": "almak",
+  "tense": "past",
+  "person": "o",
+  "form": "aldı"
+ },
+ {
+  "verb": "almak",
+  "tense": "past",
+  "person": "biz",
+  "form": "aldık"
+ },
+ {
+  "verb": "almak",
+  "tense": "past",
+  "person": "siz",
+  "form": "aldınız"
+ },
+ {
+  "verb": "almak",
+  "tense": "past",
+  "person": "onlar",
+  "form": "aldılar"
+ },
+ {
+  "verb": "almak",
+  "tense": "future",
+  "person": "ben",
+  "form": "alacağım"
+ },
+ {
+  "verb": "almak",
+  "tense": "future",
+  "person": "sen",
+  "form": "alacaksın"
+ },
+ {
+  "verb": "almak",
+  "tense": "future",
+  "person": "o",
+  "form": "alacak"
+ },
+ {
+  "verb": "almak",
+  "tense": "future",
+  "person": "biz",
+  "form": "alacağız"
+ },
+ {
+  "verb": "almak",
+  "tense": "future",
+  "person": "siz",
+  "form": "alacaksınız"
+ },
+ {
+  "verb": "almak",
+  "tense": "future",
+  "person": "onlar",
+  "form": "alacaklar"
+ },
+ {
+  "verb": "almak",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "alırım"
+ },
+ {
+  "verb": "almak",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "alırsın"
+ },
+ {
+  "verb": "almak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "alır"
+ },
+ {
+  "verb": "almak",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "alırız"
+ },
+ {
+  "verb": "almak",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "alırsınız"
+ },
+ {
+  "verb": "almak",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "alırlar"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "present",
+  "person": "ben",
+  "form": "gidiyorum"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "present",
+  "person": "sen",
+  "form": "gidiyorsun"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "present",
+  "person": "o",
+  "form": "gidiyor"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "present",
+  "person": "biz",
+  "form": "gidiyoruz"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "present",
+  "person": "siz",
+  "form": "gidiyorsunuz"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "present",
+  "person": "onlar",
+  "form": "gidiyorlar"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "past",
+  "person": "ben",
+  "form": "gittim"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "past",
+  "person": "sen",
+  "form": "gittin"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "past",
+  "person": "o",
+  "form": "gitti"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "past",
+  "person": "biz",
+  "form": "gittik"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "past",
+  "person": "siz",
+  "form": "gittiniz"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "past",
+  "person": "onlar",
+  "form": "gittiler"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "future",
+  "person": "ben",
+  "form": "gideceğim"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "future",
+  "person": "sen",
+  "form": "gideceksin"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "future",
+  "person": "o",
+  "form": "gidecek"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "future",
+  "person": "biz",
+  "form": "gideceğiz"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "future",
+  "person": "siz",
+  "form": "gideceksiniz"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "future",
+  "person": "onlar",
+  "form": "gidecekler"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "giderim"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "gidersin"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "gider"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "gideriz"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "gidersiniz"
+ },
+ {
+  "verb": "gitmek",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "giderler"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "yaparım"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "yaparsın"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "yapar"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "yaparız"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "yaparsınız"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "yaparlar"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "past",
+  "person": "ben",
+  "form": "yaptım"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "past",
+  "person": "sen",
+  "form": "yaptın"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "past",
+  "person": "o",
+  "form": "yaptı"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "past",
+  "person": "biz",
+  "form": "yaptık"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "past",
+  "person": "siz",
+  "form": "yaptınız"
+ },
+ {
+  "verb": "yapmak",
+  "tense": "past",
+  "person": "onlar",
+  "form": "yaptılar"
+ },
+ {
+  "verb": "okumak",
+  "tense": "present",
+  "person": "ben",
+  "form": "okuyorum"
+ },
+ {
+  "verb": "okumak",
+  "tense": "present",
+  "person": "sen",
+  "form": "okuyorsun"
+ },
+ {
+  "verb": "okumak",
+  "tense": "present",
+  "person": "o",
+  "form": "okuyor"
+ },
+ {
+  "verb": "okumak",
+  "tense": "present",
+  "person": "biz",
+  "form": "okuyoruz"
+ },
+ {
+  "verb": "okumak",
+  "tense": "present",
+  "person": "siz",
+  "form": "okuyorsunuz"
+ },
+ {
+  "verb": "okumak",
+  "tense": "present",
+  "person": "onlar",
+  "form": "okuyorlar"
+ },
+ {
+  "verb": "okumak",
+  "tense": "past",
+  "person": "ben",
+  "form": "okudum"
+ },
+ {
+  "verb": "okumak",
+  "tense": "past",
+  "person": "sen",
+  "form": "okudun"
+ },
+ {
+  "verb": "okumak",
+  "tense": "past",
+  "person": "o",
+  "form": "okudu"
+ },
+ {
+  "verb": "okumak",
+  "tense": "past",
+  "person": "biz",
+  "form": "okuduk"
+ },
+ {
+  "verb": "okumak",
+  "tense": "past",
+  "person": "siz",
+  "form": "okudunuz"
+ },
+ {
+  "verb": "okumak",
+  "tense": "past",
+  "person": "onlar",
+  "form": "okudular"
+ },
+ {
+  "verb": "okumak",
+  "tense": "future",
+  "person": "ben",
+  "form": "okuyacağım"
+ },
+ {
+  "verb": "okumak",
+  "tense": "future",
+  "person": "sen",
+  "form": "okuyacaksın"
+ },
+ {
+  "verb": "okumak",
+  "tense": "future",
+  "person": "o",
+  "form": "okuyacak"
+ },
+ {
+  "verb": "okumak",
+  "tense": "future",
+  "person": "biz",
+  "form": "okuyacağız"
+ },
+ {
+  "verb": "okumak",
+  "tense": "future",
+  "person": "siz",
+  "form": "okuyacaksınız"
+ },
+ {
+  "verb": "okumak",
+  "tense": "future",
+  "person": "onlar",
+  "form": "okuyacaklar"
+ },
+ {
+  "verb": "okumak",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "okurum"
+ },
+ {
+  "verb": "okumak",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "okursun"
+ },
+ {
+  "verb": "okumak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "okur"
+ },
+ {
+  "verb": "okumak",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "okuruz"
+ },
+ {
+  "verb": "okumak",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "okursunuz"
+ },
+ {
+  "verb": "okumak",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "okurlar"
+ },
+ {
+  "verb": "görmek",
+  "tense": "present",
+  "person": "ben",
+  "form": "görüyorum"
+ },
+ {
+  "verb": "görmek",
+  "tense": "present",
+  "person": "sen",
+  "form": "görüyorsun"
+ },
+ {
+  "verb": "görmek",
+  "tense": "present",
+  "person": "o",
+  "form": "görüyor"
+ },
+ {
+  "verb": "görmek",
+  "tense": "present",
+  "person": "biz",
+  "form": "görüyoruz"
+ },
+ {
+  "verb": "görmek",
+  "tense": "present",
+  "person": "siz",
+  "form": "görüyorsunuz"
+ },
+ {
+  "verb": "görmek",
+  "tense": "present",
+  "person": "onlar",
+  "form": "görüyorlar"
+ },
+ {
+  "verb": "görmek",
+  "tense": "past",
+  "person": "ben",
+  "form": "gördüm"
+ },
+ {
+  "verb": "görmek",
+  "tense": "past",
+  "person": "sen",
+  "form": "gördün"
+ },
+ {
+  "verb": "görmek",
+  "tense": "past",
+  "person": "o",
+  "form": "gördü"
+ },
+ {
+  "verb": "görmek",
+  "tense": "past",
+  "person": "biz",
+  "form": "gördük"
+ },
+ {
+  "verb": "görmek",
+  "tense": "past",
+  "person": "siz",
+  "form": "gördünüz"
+ },
+ {
+  "verb": "görmek",
+  "tense": "past",
+  "person": "onlar",
+  "form": "gördüler"
+ },
+ {
+  "verb": "görmek",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "görürüm"
+ },
+ {
+  "verb": "görmek",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "görürsün"
+ },
+ {
+  "verb": "görmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "görür"
+ },
+ {
+  "verb": "görmek",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "görürüz"
+ },
+ {
+  "verb": "görmek",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "görürsünüz"
+ },
+ {
+  "verb": "görmek",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "görürler"
+ },
+ {
+  "verb": "yemek",
+  "tense": "present",
+  "person": "ben",
+  "form": "yiyorum"
+ },
+ {
+  "verb": "yemek",
+  "tense": "present",
+  "person": "sen",
+  "form": "yiyorsun"
+ },
+ {
+  "verb": "yemek",
+  "tense": "present",
+  "person": "o",
+  "form": "yiyor"
+ },
+ {
+  "verb": "yemek",
+  "tense": "present",
+  "person": "biz",
+  "form": "yiyoruz"
+ },
+ {
+  "verb": "yemek",
+  "tense": "present",
+  "person": "siz",
+  "form": "yiyorsunuz"
+ },
+ {
+  "verb": "yemek",
+  "tense": "present",
+  "person": "onlar",
+  "form": "yiyorlar"
+ },
+ {
+  "verb": "yemek",
+  "tense": "future",
+  "person": "ben",
+  "form": "yiyeceğim"
+ },
+ {
+  "verb": "yemek",
+  "tense": "future",
+  "person": "sen",
+  "form": "yiyeceksin"
+ },
+ {
+  "verb": "yemek",
+  "tense": "future",
+  "person": "o",
+  "form": "yiyecek"
+ },
+ {
+  "verb": "yemek",
+  "tense": "future",
+  "person": "biz",
+  "form": "yiyeceğiz"
+ },
+ {
+  "verb": "yemek",
+  "tense": "future",
+  "person": "siz",
+  "form": "yiyeceksiniz"
+ },
+ {
+  "verb": "yemek",
+  "tense": "future",
+  "person": "onlar",
+  "form": "yiyecekler"
+ },
+ {
+  "verb": "yemek",
+  "tense": "past",
+  "person": "ben",
+  "form": "yedim"
+ },
+ {
+  "verb": "yemek",
+  "tense": "past",
+  "person": "sen",
+  "form": "yedin"
+ },
+ {
+  "verb": "yemek",
+  "tense": "past",
+  "person": "o",
+  "form": "yedi"
+ },
+ {
+  "verb": "yemek",
+  "tense": "past",
+  "person": "biz",
+  "form": "yedik"
+ },
+ {
+  "verb": "yemek",
+  "tense": "past",
+  "person": "siz",
+  "form": "yediniz"
+ },
+ {
+  "verb": "yemek",
+  "tense": "past",
+  "person": "onlar",
+  "form": "yediler"
+ },
+ {
+  "verb": "yemek",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "yerim"
+ },
+ {
+  "verb": "yemek",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "yersin"
+ },
+ {
+  "verb": "yemek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "yer"
+ },
+ {
+  "verb": "yemek",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "yeriz"
+ },
+ {
+  "verb": "yemek",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "yersiniz"
+ },
+ {
+  "verb": "yemek",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "yerler"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "konuşurum"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "konuşursun"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "konuşur"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "konuşuruz"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "konuşursunuz"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "konuşurlar"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "past",
+  "person": "ben",
+  "form": "konuştum"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "past",
+  "person": "sen",
+  "form": "konuştun"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "past",
+  "person": "o",
+  "form": "konuştu"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "past",
+  "person": "biz",
+  "form": "konuştuk"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "past",
+  "person": "siz",
+  "form": "konuştunuz"
+ },
+ {
+  "verb": "konuşmak",
+  "tense": "past",
+  "person": "onlar",
+  "form": "konuştular"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "present",
+  "person": "ben",
+  "form": "yardım ediyorum"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "present",
+  "person": "sen",
+  "form": "yardım ediyorsun"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "present",
+  "person": "o",
+  "form": "yardım ediyor"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "present",
+  "person": "biz",
+  "form": "yardım ediyoruz"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "present",
+  "person": "siz",
+  "form": "yardım ediyorsunuz"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "present",
+  "person": "onlar",
+  "form": "yardım ediyorlar"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "past",
+  "person": "ben",
+  "form": "yardım ettim"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "past",
+  "person": "sen",
+  "form": "yardım ettin"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "past",
+  "person": "o",
+  "form": "yardım etti"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "past",
+  "person": "biz",
+  "form": "yardım ettik"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "past",
+  "person": "siz",
+  "form": "yardım ettiniz"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "past",
+  "person": "onlar",
+  "form": "yardım ettiler"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "yardım ederim"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "aorist",
+  "person": "sen",
+  "form": "yardım edersin"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "yardım eder"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "yardım ederiz"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "aorist",
+  "person": "siz",
+  "form": "yardım edersiniz"
+ },
+ {
+  "verb": "yardım etmek",
+  "tense": "aorist",
+  "person": "onlar",
+  "form": "yardım ederler"
+ },
+ {
+  "verb": "söylemek",
+  "tense": "present",
+  "person": "ben",
+  "form": "söylüyorum"
+ },
+ {
+  "verb": "söylemek",
+  "tense": "future",
+  "person": "o",
+  "form": "söyleyecek"
+ },
+ {
+  "verb": "söylemek",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "söylerim"
+ },
+ {
+  "verb": "söylemek",
+  "tense": "past",
+  "person": "biz",
+  "form": "söyledik"
+ },
+ {
+  "verb": "beklemek",
+  "tense": "present",
+  "person": "o",
+  "form": "bekliyor"
+ },
+ {
+  "verb": "anlamak",
+  "tense": "present",
+  "person": "ben",
+  "form": "anlıyorum"
+ },
+ {
+  "verb": "anlamak",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "anlarım"
+ },
+ {
+  "verb": "oynamak",
+  "tense": "present",
+  "person": "ben",
+  "form": "oynuyorum"
+ },
+ {
+  "verb": "ödemek",
+  "tense": "present",
+  "person": "ben",
+  "form": "ödüyorum"
+ },
+ {
+  "verb": "dinlemek",
+  "tense": "present",
+  "person": "ben",
+  "form": "dinliyorum"
+ },
+ {
+  "verb": "taşımak",
+  "tense": "present",
+  "person": "o",
+  "form": "taşıyor"
+ },
+ {
+  "verb": "uyumak",
+  "tense": "present",
+  "person": "ben",
+  "form": "uyuyorum"
+ },
+ {
+  "verb": "yürümek",
+  "tense": "present",
+  "person": "ben",
+  "form": "yürüyorum"
+ },
+ {
+  "verb": "yürümek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "yürür"
+ },
+ {
+  "verb": "kaybetmek",
+  "tense": "present",
+  "person": "o",
+  "form": "kaybediyor"
+ },
+ {
+  "verb": "kaybetmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "kaybeder"
+ },
+ {
+  "verb": "kaybetmek",
+  "tense": "past",
+  "person": "ben",
+  "form": "kaybettim"
+ },
+ {
+  "verb": "hissetmek",
+  "tense": "future",
+  "person": "ben",
+  "form": "hissedeceğim"
+ },
+ {
+  "verb": "içmek",
+  "tense": "past",
+  "person": "ben",
+  "form": "içtim"
+ },
+ {
+  "verb": "içmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "içer"
+ },
+ {
+  "verb": "öğrenmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "öğrenir"
+ },
+ {
+  "verb": "öğrenmek",
+  "tense": "present",
+  "person": "ben",
+  "form": "öğreniyorum"
+ },
+ {
+  "verb": "öğrenmek",
+  "tense": "future",
+  "person": "ben",
+  "form": "öğreneceğim"
+ },
+ {
+  "verb": "düşünmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "düşünür"
+ },
+ {
+  "verb": "olmak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "olur"
+ },
+ {
+  "verb": "olmak",
+  "tense": "future",
+  "person": "ben",
+  "form": "olacağım"
+ },
+ {
+  "verb": "bilmek",
+  "tense": "aorist",
+  "person": "ben",
+  "form": "bilirim"
+ },
+ {
+  "verb": "sevmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "sever"
+ },
+ {
+  "verb": "sevmek",
+  "tense": "present",
+  "person": "ben",
+  "form": "seviyorum"
+ },
+ {
+  "verb": "kalmak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "kalır"
+ },
+ {
+  "verb": "istemek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "ister"
+ },
+ {
+  "verb": "istemek",
+  "tense": "present",
+  "person": "ben",
+  "form": "istiyorum"
+ },
+ {
+  "verb": "başlamak",
+  "tense": "present",
+  "person": "o",
+  "form": "başlıyor"
+ },
+ {
+  "verb": "çalışmak",
+  "tense": "aorist",
+  "person": "biz",
+  "form": "çalışırız"
+ },
+ {
+  "verb": "vermek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "verir"
+ },
+ {
+  "verb": "bulmak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "bulur"
+ },
+ {
+  "verb": "durmak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "durur"
+ },
+ {
+  "verb": "ölmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "ölür"
+ },
+ {
+  "verb": "sormak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "sorar"
+ },
+ {
+  "verb": "koşmak",
+  "tense": "past",
+  "person": "o",
+  "form": "koştu"
+ },
+ {
+  "verb": "bakmak",
+  "tense": "past",
+  "person": "sen",
+  "form": "baktın"
+ },
+ {
+  "verb": "öpmek",
+  "tense": "past",
+  "person": "o",
+  "form": "öptü"
+ },
+ {
+  "verb": "yaşamak",
+  "tense": "present",
+  "person": "biz",
+  "form": "yaşıyoruz"
+ },
+ {
+  "verb": "aramak",
+  "tense": "present",
+  "person": "ben",
+  "form": "arıyorum"
+ },
+ {
+  "verb": "hatırlamak",
+  "tense": "present",
+  "person": "ben",
+  "form": "hatırlıyorum"
+ },
+ {
+  "verb": "hatırlamak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "hatırlar"
+ },
+ {
+  "verb": "getirmek",
+  "tense": "aorist",
+  "person": "o",
+  "form": "getirir"
+ },
+ {
+  "verb": "unutmak",
+  "tense": "aorist",
+  "person": "o",
+  "form": "unutur"
+ },
+ {
+  "verb": "oturmak",
+  "tense": "future",
+  "person": "onlar",
+  "form": "oturacaklar"
+ },
+ {
+  "verb": "sigara içmek",
+  "tense": "present",
+  "person": "ben",
+  "form": "sigara içiyorum"
+ },
+ {
+  "verb": "kahvaltı yapmak",
+  "tense": "future",
+  "person": "biz",
+  "form": "kahvaltı yapacağız"
+ },
+ {
+  "verb": "dans etmek",
+  "tense": "present",
+  "person": "biz",
+  "form": "dans ediyoruz"
+ }
+]

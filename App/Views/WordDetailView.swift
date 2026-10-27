@@ -49,6 +49,8 @@ struct WordDetailView: View {
                     .card()
                 }
 
+                VerbInfoCard(word: word)
+
                 HStack(spacing: 12) {
                     Button {
                         Speaker.shared.speak(word.cloze.plain, language: .turkish)

@@ -12,9 +12,18 @@ default_platform(:ios)
 PROJECT = "VocaDay.xcodeproj"
 SCHEME = "VocaDay"
 TARGET = "VocaDay"
+WIDGET_TARGET = "VocaDayWidget"
 
 def app_identifier
   ENV["APP_BUNDLE_ID"] || File.read(File.expand_path("../Config/Shared.xcconfig", __dir__))[/^APP_BUNDLE_ID\s*=\s*(\S+)/, 1]
+end
+
+def widget_identifier
+  "#{app_identifier}.widget"
+end
+
+def app_group
+  "group.#{app_identifier}"
 end
 
 platform :ios do
@@ -27,15 +36,24 @@ platform :ios do
     )
   end
 
-  desc "Registers the bundle id in the developer portal if it does not exist yet"
+  desc "Registers the bundle ids of app and widget and enables App Groups"
   lane :register_bundle_id do
     api_key
-    if Spaceship::ConnectAPI::BundleId.find(app_identifier)
-      UI.message("Bundle id #{app_identifier} already registered")
-    else
-      Spaceship::ConnectAPI::BundleId.create(name: "VocaDay", platform: "IOS", identifier: app_identifier)
-      UI.success("Registered bundle id #{app_identifier}")
+    { app_identifier => "VocaDay", widget_identifier => "VocaDay Widget" }.each do |identifier, name|
+      bundle_id = Spaceship::ConnectAPI::BundleId.find(identifier)
+      if bundle_id
+        UI.message("Bundle id #{identifier} already registered")
+      else
+        bundle_id = Spaceship::ConnectAPI::BundleId.create(name: name, platform: "IOS", identifier: identifier)
+        UI.success("Registered bundle id #{identifier}")
+      end
+      begin
+        bundle_id.create_capability(Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS)
+      rescue StandardError => e
+        UI.message("App Groups capability for #{identifier}: #{e.message}")
+      end
     end
+    UI.important("Make sure the app group #{app_group} exists and is assigned to both ids (see docs/TESTFLIGHT.md)")
   end
 
   desc "Builds the app and uploads it to TestFlight (iPhone and iPad)"
@@ -46,12 +64,13 @@ platform :ios do
 
     match(
       type: "appstore",
-      app_identifier: app_identifier,
+      app_identifier: [app_identifier, widget_identifier],
       team_id: ENV.fetch("APPLE_TEAM_ID"),
       api_key: key,
       readonly: ENV["MATCH_READONLY"] == "true"
     )
     profile = ENV.fetch("sigh_#{app_identifier}_appstore_profile-name")
+    widget_profile = ENV.fetch("sigh_#{widget_identifier}_appstore_profile-name")
 
     build_number = latest_testflight_build_number(
       api_key: key, app_identifier: app_identifier, initial_build_number: 0
@@ -66,6 +85,15 @@ platform :ios do
       code_sign_identity: "Apple Distribution",
       profile_name: profile
     )
+    update_code_signing_settings(
+      path: PROJECT,
+      use_automatic_signing: false,
+      team_id: ENV.fetch("APPLE_TEAM_ID"),
+      targets: [WIDGET_TARGET],
+      bundle_identifier: widget_identifier,
+      code_sign_identity: "Apple Distribution",
+      profile_name: widget_profile
+    )
 
     build_app(
       project: PROJECT,
@@ -75,7 +103,7 @@ platform :ios do
       output_directory: "build",
       export_method: "app-store",
       xcargs: "CURRENT_PROJECT_VERSION=#{build_number} DEVELOPMENT_TEAM=#{ENV.fetch('APPLE_TEAM_ID')}",
-      export_options: { provisioningProfiles: { app_identifier => profile } }
+      export_options: { provisioningProfiles: { app_identifier => profile, widget_identifier => widget_profile } }
     )
 
     upload_to_testflight(

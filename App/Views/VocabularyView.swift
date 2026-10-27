@@ -236,6 +236,9 @@ struct WordTile: View {
             ArticleWord(word: word, font: .subheadline)
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
+            if word.turkishVerb?.isIrregular == true {
+                Text("unregelmäßig").font(.caption2.weight(.semibold)).foregroundStyle(Theme.almost)
+            }
             Spacer(minLength: 6)
             if let card {
                 RecallBar(value: model.scheduler.retrievability(of: card, at: Date()))

@@ -7,6 +7,7 @@ struct TodayView: View {
     @State private var activeSession: ActiveSession?
     @State private var showTestSetup = false
     @State private var addedWord: Word?
+    @State private var mastery: ActiveMastery?
 
     var body: some View {
         ScrollView {
@@ -42,6 +43,7 @@ struct TodayView: View {
         .sheet(isPresented: $showTestSetup) {
             TestSetupView()
         }
+        .fullScreenCover(item: $mastery) { MasteryPracticeView(active: $0) }
     }
 
     // MARK: Header
@@ -182,9 +184,9 @@ struct TodayView: View {
                 showTestSetup = true
             }
             .disabled(model.learnedCount == 0)
-            QuickAction(title: "Freies Üben", subtitle: "schwächste zuerst",
+            QuickAction(title: "Festigen", subtitle: "bis es sitzt",
                         systemImage: "dumbbell.fill", color: Theme.practice) {
-                activeSession = model.makeFreePracticeSession()
+                mastery = model.makeConsolidation()
             }
             .disabled(model.learnedCount == 0)
         }
@@ -204,6 +206,7 @@ struct HeroWordCard: View {
                 if isLearned {
                     Pill(text: "gelernt", systemImage: "checkmark", color: .white)
                 }
+                IrregularBadge(word: word, onDark: true)
                 Spacer()
                 SpeakButton(text: word.translation, tint: .white)
             }

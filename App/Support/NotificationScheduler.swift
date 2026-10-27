@@ -16,6 +16,18 @@ final class NotificationScheduler {
         return status == .authorized || status == .provisional || status == .ephemeral
     }
 
+    /// Shows a notification right away (e.g. when a place was entered).
+    func notifyNow(title: String, body: String, url: String? = nil) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        if let url { content.userInfo = ["url": url] }
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        center.add(UNNotificationRequest(identifier: "vocaday.now.\(UUID().uuidString)", content: content,
+                                         trigger: trigger))
+    }
+
     /// Replaces all pending VocaDay notifications with `entries`.
     func replace(with entries: [Reminder]) async {
         let pending = await center.pendingNotificationRequests()

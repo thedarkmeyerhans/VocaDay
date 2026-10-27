@@ -2,3 +2,6 @@
 // If this bundle identifier is already taken in App Store Connect, change it
 // here – fastlane reads it from this file as well.
 APP_BUNDLE_ID = com.thedarkmeyerhans.vocaday
+
+// Shared container of app and widget. Free Apple IDs can create app groups too.
+APP_GROUP = group.$(APP_BUNDLE_ID)

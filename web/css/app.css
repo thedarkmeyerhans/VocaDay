@@ -480,3 +480,18 @@ button.pressable { width: 100%; text-align: left; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Grammar */
+.pill.irregular { color: var(--almost); background: color-mix(in srgb, var(--almost) 16%, transparent); font-size: 12px; }
+.irregular-note { color: var(--text); background: color-mix(in srgb, var(--almost) 12%, transparent); padding: 8px 10px; border-radius: 12px; gap: 8px; }
+.gstage { text-align: left; gap: 14px; }
+.gstage.locked { opacity: 0.6; }
+.gstage .step { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--sc); flex: none; }
+.gstage.completed .step { background: var(--correct); }
+.path { position: relative; }
+.table-wrap { overflow-x: auto; margin: 4px -4px 0; }
+.gtable { width: 100%; border-collapse: collapse; font-size: 16px; }
+.gtable th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--secondary); padding: 6px 8px; }
+.gtable td { padding: 7px 8px; border-top: 0.5px solid var(--separator); white-space: nowrap; }
+.gtable .ending { color: var(--sentence); }
+.seg.small button { font-size: 13px; padding: 7px 4px; }

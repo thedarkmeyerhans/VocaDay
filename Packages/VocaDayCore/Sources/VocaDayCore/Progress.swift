@@ -70,6 +70,23 @@ public struct LearnerSettings: Codable, Hashable, Sendable {
     public var mixSentenceExercises: Bool
     public var onboardingCompleted: Bool
 
+    // Home screen widget
+    /// Times (hours) at which the widget shows a new word.
+    public var widgetHours: [Int] = [8]
+    /// How often the widget word has to be answered correctly in the app.
+    public var widgetRepetitions: Int = 3
+    public var widgetAfterCompletion: WidgetCompletion = .nextWord
+    /// Places where the widget shows a new word.
+    public var places: [LearningPlace] = []
+
+    // Gate quiz ("Zwangsmodus")
+    public var gateEnabled: Bool = false
+    /// Minutes the other app stays unlocked after a correct answer.
+    public var gatePassMinutes: Int = 15
+    /// Correct answers per word and day until the gate rotates to new words.
+    public var gateWordTarget: Int = 2
+    public var gateAnswerMode: TestAnswerMode = .choice
+
     public init(pair: LanguagePair = .germanTurkish, mode: SelectionMode = .standard,
                 newWordsPerDay: Int = 1, notificationsEnabled: Bool = true,
                 notificationHour: Int = 8, notificationMinute: Int = 0,
@@ -90,6 +107,41 @@ public struct LearnerSettings: Codable, Hashable, Sendable {
     }
 
     public static let newWordsRange = 1...20
+
+    private enum CodingKeys: String, CodingKey {
+        case pair, mode, newWordsPerDay, notificationsEnabled, notificationHour, notificationMinute
+        case eveningReminderEnabled, eveningReminderHour, desiredRetention, mixSentenceExercises
+        case onboardingCompleted, widgetHours, widgetRepetitions, widgetAfterCompletion, places
+        case gateEnabled, gatePassMinutes, gateWordTarget, gateAnswerMode
+    }
+
+    /// Every field falls back to its default, so older saved progress keeps loading.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let d = LearnerSettings()
+        pair = try c.decodeIfPresent(LanguagePair.self, forKey: .pair) ?? d.pair
+        mode = try c.decodeIfPresent(SelectionMode.self, forKey: .mode) ?? d.mode
+        newWordsPerDay = try c.decodeIfPresent(Int.self, forKey: .newWordsPerDay) ?? d.newWordsPerDay
+        notificationsEnabled = try c.decodeIfPresent(Bool.self, forKey: .notificationsEnabled) ?? d.notificationsEnabled
+        notificationHour = try c.decodeIfPresent(Int.self, forKey: .notificationHour) ?? d.notificationHour
+        notificationMinute = try c.decodeIfPresent(Int.self, forKey: .notificationMinute) ?? d.notificationMinute
+        eveningReminderEnabled = try c.decodeIfPresent(Bool.self, forKey: .eveningReminderEnabled)
+            ?? d.eveningReminderEnabled
+        eveningReminderHour = try c.decodeIfPresent(Int.self, forKey: .eveningReminderHour) ?? d.eveningReminderHour
+        desiredRetention = try c.decodeIfPresent(Double.self, forKey: .desiredRetention) ?? d.desiredRetention
+        mixSentenceExercises = try c.decodeIfPresent(Bool.self, forKey: .mixSentenceExercises)
+            ?? d.mixSentenceExercises
+        onboardingCompleted = try c.decodeIfPresent(Bool.self, forKey: .onboardingCompleted) ?? d.onboardingCompleted
+        widgetHours = try c.decodeIfPresent([Int].self, forKey: .widgetHours) ?? d.widgetHours
+        widgetRepetitions = try c.decodeIfPresent(Int.self, forKey: .widgetRepetitions) ?? d.widgetRepetitions
+        widgetAfterCompletion = try c.decodeIfPresent(WidgetCompletion.self, forKey: .widgetAfterCompletion)
+            ?? d.widgetAfterCompletion
+        places = try c.decodeIfPresent([LearningPlace].self, forKey: .places) ?? d.places
+        gateEnabled = try c.decodeIfPresent(Bool.self, forKey: .gateEnabled) ?? d.gateEnabled
+        gatePassMinutes = try c.decodeIfPresent(Int.self, forKey: .gatePassMinutes) ?? d.gatePassMinutes
+        gateWordTarget = try c.decodeIfPresent(Int.self, forKey: .gateWordTarget) ?? d.gateWordTarget
+        gateAnswerMode = try c.decodeIfPresent(TestAnswerMode.self, forKey: .gateAnswerMode) ?? d.gateAnswerMode
+    }
 }
 
 /// The new words assigned to one day.
@@ -156,6 +208,10 @@ public struct LearnerProgress: Codable, Sendable {
     public var stats: [DayKey: DayStats]
     /// Results of finished vocabulary tests, oldest first.
     public var tests: [TestResult]
+    /// Grammar path progress by stage id.
+    public var grammar: [String: GrammarRecord]
+    public var gate: GateState
+    public var widget: WidgetState
 
     public init(settings: LearnerSettings = LearnerSettings()) {
         version = Self.currentVersion
@@ -165,10 +221,13 @@ public struct LearnerProgress: Codable, Sendable {
         cards = [:]
         stats = [:]
         tests = []
+        grammar = [:]
+        gate = GateState()
+        widget = WidgetState()
     }
 
     private enum CodingKeys: String, CodingKey {
-        case version, settings, letterCursor, plans, cards, stats, tests
+        case version, settings, letterCursor, plans, cards, stats, tests, grammar, gate, widget
     }
 
     public init(from decoder: Decoder) throws {
@@ -180,6 +239,9 @@ public struct LearnerProgress: Codable, Sendable {
         cards = try c.decodeIfPresent([String: CardState].self, forKey: .cards) ?? [:]
         stats = try c.decodeIfPresent([DayKey: DayStats].self, forKey: .stats) ?? [:]
         tests = try c.decodeIfPresent([TestResult].self, forKey: .tests) ?? []
+        grammar = try c.decodeIfPresent([String: GrammarRecord].self, forKey: .grammar) ?? [:]
+        gate = try c.decodeIfPresent(GateState.self, forKey: .gate) ?? GateState()
+        widget = try c.decodeIfPresent(WidgetState.self, forKey: .widget) ?? WidgetState()
     }
 
     public static func decode(from data: Data) throws -> LearnerProgress {
