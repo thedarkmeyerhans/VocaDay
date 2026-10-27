@@ -80,7 +80,7 @@ enum AppTab: String, CaseIterable, Identifiable {
             case .today: TodayView()
             case .practice: PracticeView()
             case .statistics: StatisticsView()
-            case .words: WordListView()
+            case .words: VocabularyView()
             case .settings: SettingsView()
             }
         }

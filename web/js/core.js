@@ -225,6 +225,27 @@ export function addExtraWords(count, progress, bank, today, random = Math.random
   return words;
 }
 
+/** "Jetzt lernen": adds a picked word to today; later days are planned again without it. */
+export function addSpecificWord(id, progress, bank, today, random = Math.random) {
+  if (progress.cards[id]) return false;
+  if (Object.entries(progress.plans).some(([d, p]) => d <= today && p.wordIDs.includes(id))) return false;
+  dropFuture(progress, today);
+  const plan = progress.plans[today] ?? { wordIDs: [], cursorBefore: progress.letterCursor };
+  plan.wordIDs.push(id);
+  progress.plans[today] = plan;
+  ensurePlans(progress, bank, today, 29, random);
+  return true;
+}
+
+/** Day each word was planned for (= learned or will be learned). */
+export function plannedDays(progress) {
+  const result = {};
+  for (const day of Object.keys(progress.plans).sort()) {
+    for (const id of progress.plans[day].wordIDs) result[id] ??= day;
+  }
+  return result;
+}
+
 export const isIntroduced = (progress, id) => Boolean(progress.cards[id]);
 
 export function pendingNewWords(progress, upTo) {

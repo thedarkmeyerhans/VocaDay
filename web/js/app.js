@@ -11,8 +11,11 @@ const state = {
   progress: null,
   tab: "today",
   overlay: null,
-  wordFilter: "all",
   search: "",
+  wordsMode: "letters",
+  wordsLetter: null,
+  showAllLetter: false,
+  historyDays: 14,
   onboardingStep: 0,
   draft: null,
 };
@@ -186,7 +189,16 @@ function load() {
   return C.newProgress();
 }
 
+let plannedCache = null;
+
+/** Word ids planned for any day (cached until the next save). */
+function plannedSet() {
+  plannedCache ??= new Set(Object.values(P().plans).flatMap((p) => p.wordIDs));
+  return plannedCache;
+}
+
 function save() {
+  plannedCache = null;
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(state.progress));
   } catch (error) {
@@ -229,7 +241,11 @@ function nextLetter() {
 
 function status(w) {
   const card = P().cards[w.id];
-  if (!card) return { key: "upcoming", name: "Geplant", color: "#8e8e93" };
+  if (!card) {
+    return plannedSet().has(w.id)
+      ? { key: "upcoming", name: "Geplant", color: "#8e8e93" }
+      : { key: "new", name: "Noch nicht dran", color: "#d1d1d6" };
+  }
   if (C.isMature(card)) return { key: "mature", name: "Gefestigt", color: COLORS.correct };
   if (card.phase !== "review") return { key: "learning", name: "Lernend", color: COLORS.practice };
   return { key: "review", name: "Wiederholen", color: COLORS.review };
@@ -297,9 +313,16 @@ function renderToday() {
       ${quickAction("start-free", "shuffle", COLORS.practice, "Freies Üben", "schwächste zuerst", !learned)}
     </div>`;
 
-  const install = isStandalone() ? "" : `<div class="card install row top">
+  const install = isStandalone() || localStorage.getItem("vocaday.hideInstall") ? "" : `<div class="card install row top">
       ${gradIcon("share", COLORS.review, "sm")}
-      <div class="small"><b>Als App installieren:</b> Tippe in Safari auf <b>Teilen</b> ${ic("share", 14)} und dann auf <b>„Zum Home-Bildschirm“</b>. Dann startet VocaDay im Vollbild und deine Daten bleiben sicher gespeichert.</div></div>`;
+      <div class="small"><b>Als App installieren:</b> Tippe in Safari auf <b>Teilen</b> ${ic("share", 14)} und dann auf <b>„Zum Home-Bildschirm“</b>. Dann startet VocaDay im Vollbild und deine Daten bleiben sicher gespeichert.</div>
+      <button class="close-x" data-action="hide-install" aria-label="Hinweis ausblenden">${ic("x", 14)}</button></div>`;
+  const lastBackup = Number(localStorage.getItem("vocaday.lastBackup") ?? 0);
+  const snooze = Number(localStorage.getItem("vocaday.backupSnooze") ?? 0);
+  const fortnight = 14 * 86_400_000;
+  const backup = learned >= 10 && Date.now() - Math.max(lastBackup, snooze) > fortnight ? `<div class="card row top">
+      ${gradIcon("download", COLORS.test, "sm")}<div class="small" style="flex:1"><b>Lernstand sichern?</b> ${learned} Wörter stecken schon in VocaDay. Eine Sicherung schützt sie, falls du das Gerät wechselst.
+      <div class="row" style="margin-top:8px;gap:8px"><button class="pill" style="color:var(--test);font-size:13px" data-action="export">Jetzt sichern</button><button class="pill" style="color:var(--secondary);font-size:13px" data-action="backup-later">Später</button></div></div></div>` : "";
 
   const letter = nextLetter();
   const alphabet = `<div class="card stack tight">
@@ -318,6 +341,7 @@ function renderToday() {
       <button data-action="speak" data-text="${tr}" style="color:var(--sun);filter:drop-shadow(0 0 10px rgba(255,209,102,.7))">${ic("sun", 40)}</button>
     </div>
     ${install}
+    ${backup}
     ${weekStrip()}
     <div class="today-columns">
       <div class="stack">
@@ -479,38 +503,177 @@ function testRow(t) {
 
 // Words
 
-function allListedWords() {
-  return [...Object.keys(P().cards).sort((a, b) => P().cards[b].lastReview - P().cards[a].lastReview),
-    ...Object.keys(P().plans).filter((d) => d > today()).sort().flatMap((d) => P().plans[d].wordIDs)].map(word).filter(Boolean);
+const STAGES = [
+  ["learning", "Lernend", COLORS.practice, "gerade neu oder vergessen"],
+  ["review", "Wiederholen", COLORS.review, "sitzt für einige Tage"],
+  ["mature", "Gefestigt", COLORS.correct, "sitzt drei Wochen und länger"],
+  ["upcoming", "Geplant", "#8e8e93", "kommt in den nächsten Tagen"],
+];
+
+function wordsByStage() {
+  const groups = { learning: [], review: [], mature: [], upcoming: [] };
+  const ids = Object.keys(P().cards).filter(word).sort((a, b) => P().cards[b].lastReview - P().cards[a].lastReview);
+  for (const id of ids) groups[status(word(id)).key].push(id);
+  groups.upcoming = Object.keys(P().plans).filter((d) => d >= today()).sort()
+    .flatMap((d) => P().plans[d].wordIDs).filter((id) => word(id) && !P().cards[id]);
+  return groups;
 }
 
-function renderWordResults() {
-  const all = allListedWords();
+function wordTile(w, opts = {}) {
+  const st = status(w);
+  const card = P().cards[w.id];
+  const recall = card ? C.cardRecall(card) : null;
+  const rc = recall == null ? "" : recall >= 0.9 ? "var(--correct)" : recall >= 0.75 ? "var(--almost)" : "var(--wrong)";
+  return `<button class="wtile ${st.key === "new" ? "locked" : ""} ${opts.wide ? "wide" : ""}" data-action="word" data-id="${w.id}">
+    <span class="sdot" style="background:${st.color}" title="${st.name}"></span>
+    <div class="tr">${esc(w.translation)}</div>
+    <div class="de">${articleWord(w)}</div>
+    ${recall != null ? `<div class="recall"><div style="width:${recall * 100}%;background:${rc}"></div></div>` : `<div class="caption secondary">${st.key === "new" ? "noch nicht dran" : st.name}</div>`}
+  </button>`;
+}
+
+function renderWordsBody() {
+  if (state.search.trim()) return renderSearch();
+  if (state.wordsLetter) return renderLetterPage(state.wordsLetter);
+  const groups = wordsByStage();
+  const learned = learnedCount();
+  const total = state.bank.words.length;
+  const stats = C.statistics(P(), state.bank, state.index);
+  const head = `<div class="card pad stack">
+      <div class="row" style="gap:16px">${ring(learned / total, 86, 11, [COLORS.coral, COLORS.red], `<div class="small">${learned}</div>`)}
+        <div style="flex:1"><h2>${learned} von ${total} Wörtern</h2><div class="small secondary">Deine Wörter machen ${pct(stats.coverage)} eines Alltagsgesprächs aus.</div></div></div>
+      <div class="grid stages">${STAGES.map(([k, n, c]) => `<button class="stage" data-action="group" data-stage="${k}" style="--sc:${c}" ${groups[k].length ? "" : "disabled"}><b>${groups[k].length}</b><span>${n}</span></button>`).join("")}</div>
+      ${learned ? `<button class="btn" data-action="cards" data-set="learned">${ic("layers", 18)} Karteikarten üben</button>` : ""}
+    </div>`;
+  const modes = [["letters", "A–Z"], ["status", "Status"], ["history", "Verlauf"]];
+  const seg = `<div class="seg">${modes.map(([k, n]) => `<button class="${state.wordsMode === k ? "on" : ""}" data-action="words-mode" data-mode="${k}">${n}</button>`).join("")}</div>`;
+  let body = "";
+  if (state.wordsMode === "letters") {
+    body = `<div class="lettergrid">${stats.letters.map((l) => `<button class="ltile" data-action="letter" data-letter="${l.letter}">
+        ${ring(l.learned / l.total, 52, 5, l.learned ? [COLORS.coral, COLORS.red] : ["#c7c7cc", "#c7c7cc"], `<b style="font-size:20px">${l.letter}</b>`)}
+        <span class="caption secondary">${l.learned}/${l.total}</span></button>`).join("")}</div>
+      <div class="caption secondary center">Tippe auf einen Buchstaben, um seine Wörter zu sehen.</div>`;
+  } else if (state.wordsMode === "status") {
+    body = STAGES.map(([k, n, c, t]) => {
+      const ids = groups[k];
+      if (!ids.length) return "";
+      return `<div class="stack tight"><div class="row"><span class="legend-dot" style="background:${c};margin-top:0"></span><div style="flex:1"><h3>${n} <span class="secondary">${ids.length}</span></h3><div class="caption secondary">${t}</div></div>
+          <button class="btn link" style="width:auto;color:var(--red)" data-action="group" data-stage="${k}">Alle ›</button></div>
+        <div class="hscroll">${ids.slice(0, 12).map((id) => wordTile(word(id))).join("")}</div></div>`;
+    }).join("") || emptyWords();
+  } else {
+    const days = C.plannedDays(P());
+    const byDay = {};
+    for (const id of Object.keys(P().cards)) {
+      if (!word(id)) continue;
+      const d = days[id] ?? C.dayKey(new Date(P().cards[id].lastReview));
+      (byDay[d] ??= []).push(id);
+    }
+    const keys = Object.keys(byDay).sort().reverse();
+    body = keys.length ? keys.slice(0, state.historyDays).map((d) => `<div class="card stack tight"><div class="row"><b style="flex:1">${dayLabel(d)}</b><span class="caption secondary">${byDay[d].length} ${byDay[d].length === 1 ? "Wort" : "Wörter"}</span></div>
+        <div class="chips">${byDay[d].map((id) => { const w = word(id); return `<button class="wchip" data-action="word" data-id="${id}" style="--sc:${status(w).color}">${esc(w.translation)} <span class="secondary">${esc(w.native)}</span></button>`; }).join("")}</div></div>`).join("")
+        + (keys.length > state.historyDays ? `<button class="btn flat" data-action="more-history">Ältere Tage anzeigen</button>` : "")
+      : emptyWords();
+  }
+  return `${head}${seg}${body}`;
+}
+
+function emptyWords() {
+  return `<div class="card center secondary" style="padding:36px 16px">${ic("books", 40)}<div style="margin-top:8px">Dein erstes Wort wartet im Tab „Heute“.</div></div>`;
+}
+
+function dayLabel(key) {
+  if (key === today()) return "Heute";
+  if (key === C.addDays(today(), -1)) return "Gestern";
+  return C.keyToDate(key).toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" });
+}
+
+function renderLetterPage(letter) {
+  const words = state.bank.words.filter((w) => C.letterFor(w.native) === letter);
+  const learned = words.filter((w) => P().cards[w.id]).sort((a, b) => a.translation.localeCompare(b.translation, "tr"));
+  const planned = words.filter((w) => !P().cards[w.id] && status(w).key === "upcoming");
+  const rest = words.filter((w) => status(w).key === "new");
+  const shownRest = state.showAllLetter ? rest : rest.slice(0, 12);
+  const section = (title, list, hint = "") => (list.length ? `<div class="stack tight"><h3>${title} <span class="secondary">${list.length}</span></h3>${hint ? `<div class="caption secondary">${hint}</div>` : ""}<div class="wgrid">${list.map((w) => wordTile(w)).join("")}</div></div>` : "");
+  return `<button class="btn link" style="width:auto;align-self:flex-start;color:var(--red);padding:4px 0" data-action="letter" data-letter="">‹ Alle Buchstaben</button>
+    <div class="card pad row" style="gap:16px">${ring(learned.length / Math.max(1, words.length), 76, 9, [COLORS.coral, COLORS.red], `<b style="font-size:30px">${letter}</b>`)}
+      <div style="flex:1"><h2>Buchstabe ${letter}</h2><div class="small secondary">${learned.length} gelernt · ${planned.length} geplant · ${words.length} insgesamt</div></div></div>
+    ${learned.length ? `<button class="btn" data-action="cards" data-set="letter">${ic("layers", 18)} Als Karteikarten üben</button>` : ""}
+    ${section("Gelernt", learned)}
+    ${section("Geplant", planned, "Diese Wörter kommen in den nächsten Tagen.")}
+    ${rest.length ? `<div class="stack tight"><h3>Noch nicht dran <span class="secondary">${rest.length}</span></h3><div class="caption secondary">Tippe ein Wort an und wähle „Jetzt lernen“, wenn du es nicht abwarten willst.</div>
+      <div class="wgrid">${shownRest.map((w) => wordTile(w)).join("")}</div>
+      ${rest.length > shownRest.length ? `<button class="btn flat" data-action="show-all-letter">Alle ${rest.length} anzeigen</button>` : ""}</div>` : ""}`;
+}
+
+function renderSearch() {
   const q = C.normalize(state.search);
-  const list = all.filter((w) => (state.wordFilter === "all" || status(w).key === state.wordFilter)
-    && (!q || C.normalize(w.native).includes(q) || C.normalize(w.translation).includes(q) || C.foldDiacritics(C.normalize(w.translation)).includes(q)));
-  const rows = list.map((w) => {
-    const st = status(w);
-    const card = P().cards[w.id];
-    const recall = card ? C.cardRecall(card) : null;
-    const rc = recall == null ? "" : recall >= 0.9 ? "var(--correct)" : recall >= 0.75 ? "var(--almost)" : "var(--wrong)";
-    return `<button class="item" data-action="word" data-id="${w.id}"><span class="stripe" style="background:${st.color}"></span>
-      <div style="flex:1;min-width:0"><div class="bold">${esc(w.translation)}</div><div class="small secondary">${articleWord(w)}</div></div>
-      <div class="stack tight" style="align-items:flex-end;gap:4px"><span class="caption bold" style="color:${st.color}">${st.name}</span>
-      ${recall != null ? `<div class="recall"><div style="width:${recall * 100}%;background:${rc}"></div></div><span class="caption secondary" style="font-size:11px">${relative(card.due)}</span>` : ""}</div></button>`;
-  }).join("");
-  return list.length ? `<div class="list">${rows}</div><div class="caption secondary center">${list.length} Wörter</div>`
-    : `<div class="card center secondary" style="padding:40px 16px">${ic("books", 40)}<div style="margin-top:8px">${state.search ? "Nichts gefunden." : "Dein erstes Wort wartet im Tab „Heute“."}</div></div>`;
+  const hits = state.bank.words.filter((w) => C.normalize(w.native).includes(q) || C.normalize(C.withArticle(w)).includes(q)
+    || C.normalize(w.translation).includes(q) || C.foldDiacritics(C.normalize(w.translation)).includes(C.foldDiacritics(q))
+    || (w.alternatives ?? []).some((a) => C.normalize(a).includes(q)));
+  const rank = (w) => (P().cards[w.id] ? 0 : status(w).key === "upcoming" ? 1 : 2);
+  hits.sort((a, b) => rank(a) - rank(b) || a.rank - b.rank);
+  const shown = hits.slice(0, 60);
+  return hits.length ? `<div class="caption secondary">${hits.length} Treffer im Wörterbuch${hits.length > 60 ? " – die ersten 60" : ""}</div><div class="wgrid">${shown.map((w) => wordTile(w)).join("")}</div>`
+    : `<div class="card center secondary" style="padding:36px 16px">${ic("books", 40)}<div style="margin-top:8px">Kein Wort gefunden.</div></div>`;
 }
 
 function renderWords() {
-  const all = allListedWords();
-  const filters = [["all", "Alle"], ["learning", "Lernend"], ["review", "Wiederholen"], ["mature", "Gefestigt"], ["upcoming", "Geplant"]];
-  return `<div class="screen narrow stack">${titleBar("Wörter")}
-    <input class="search" type="search" placeholder="Deutsch oder Türkisch suchen" value="${esc(state.search)}" data-input="search">
-    <div class="filters">${filters.map(([k, n]) => `<button class="${state.wordFilter === k ? "on" : ""}" data-action="filter" data-filter="${k}">${n} ${all.filter((w) => k === "all" || status(w).key === k).length}</button>`).join("")}</div>
-    <div id="word-results" class="stack">${renderWordResults()}</div>
+  return `<div class="screen narrow stack">${titleBar("Wortschatz")}
+    <input class="search" type="search" placeholder="Wort suchen – Deutsch oder Türkisch" value="${esc(state.search)}" data-input="search">
+    <div id="word-results" class="stack">${renderWordsBody()}</div>
   </div>`;
+}
+
+function groupIds(stage) {
+  return wordsByStage()[stage] ?? [];
+}
+
+function renderGroup(o) {
+  const [, name, color, hint] = STAGES.find(([k]) => k === o.stage);
+  let ids = groupIds(o.stage);
+  const sorts = [["recent", "Zuletzt"], ["alpha", "A–Z"], ["weak", "Schwächste"], ["freq", "Häufigste"]];
+  if (o.sort === "alpha") ids = [...ids].sort((a, b) => word(a).translation.localeCompare(word(b).translation, "tr"));
+  if (o.sort === "weak") ids = [...ids].sort((a, b) => (P().cards[a] ? C.cardRecall(P().cards[a]) : 2) - (P().cards[b] ? C.cardRecall(P().cards[b]) : 2));
+  if (o.sort === "freq") ids = [...ids].sort((a, b) => word(a).rank - word(b).rank);
+  return `<div class="overlay">${bar(name)}<div class="body stack">
+    <div class="row"><span class="legend-dot" style="background:${color};margin-top:0"></span><div class="small secondary" style="flex:1">${ids.length} Wörter · ${hint}</div></div>
+    <div class="filters">${sorts.map(([k, n]) => `<button class="${o.sort === k ? "on" : ""}" data-action="group-sort" data-sort="${k}">${n}</button>`).join("")}</div>
+    ${o.stage !== "upcoming" && ids.length ? `<button class="btn" data-action="cards" data-set="group">${ic("layers", 18)} Als Karteikarten üben</button>` : ""}
+    <div class="wgrid">${ids.map((id) => wordTile(word(id))).join("")}</div></div></div>`;
+}
+
+// Flashcard browser: swipe through words, tap to flip.
+
+function openCards(ids, title) {
+  if (!ids.length) return;
+  openOverlay({ type: "cards", ids, index: 0, flipped: false, title });
+}
+
+function renderCards(o) {
+  const w = word(o.ids[o.index]);
+  const z = C.parseCloze(w.exampleTarget);
+  const card = P().cards[w.id];
+  const slide = o.slide ? `slide-${o.slide}` : "";
+  o.slide = null;
+  return `<div class="overlay">${bar("", (o.index + 1) / o.ids.length, `<span class="caption secondary bold">${o.index + 1}/${o.ids.length}</span>`)}
+    <div class="body stack" style="padding-top:12px">
+      <div class="caption secondary center">${esc(o.title)} · Tippen zum Umdrehen, wischen zum Weiterblättern</div>
+      <div class="flip ${o.flipped ? "flipped" : ""} ${slide}" data-action="flip" id="flipcard" role="button" aria-label="Karte umdrehen">
+        <div class="face front"><span class="pill white">🇹🇷 Türkisch</span><div class="big rounded">${esc(w.translation)}</div>
+          ${card ? `<div class="muted">Erinnerung ${pct(C.cardRecall(card))}</div>` : ""}<div class="spacer"></div><div class="muted">Was heißt das auf Deutsch?</div></div>
+        <div class="face back"><span class="pill">🇩🇪 Deutsch</span><div class="big rounded" style="color:var(--text)">${articleWord(w)}</div>
+          <div style="font-size:18px">${esc(z.before)}<mark>${esc(z.answer)}</mark>${esc(z.after)}</div><div class="secondary">${esc(w.exampleNative)}</div>
+          ${w.note ? `<div class="small secondary row top" style="gap:6px"><span style="color:var(--almost)">${ic("bulb", 16)}</span>${esc(w.note)}</div>` : ""}</div>
+      </div>
+      <div class="row" style="justify-content:center;gap:14px">
+        <button class="roundbtn" data-action="card-step" data-delta="-1" ${o.index ? "" : "disabled"} aria-label="Zurück">${ic("chevron", 22, 'style="transform:scaleX(-1)"')}</button>
+        <button class="roundbtn big" data-action="speak" data-text="${esc(w.translation)}" aria-label="Vorlesen">${ic("speaker", 24)}</button>
+        <button class="roundbtn" data-action="card-shuffle" aria-label="Mischen">${ic("shuffle", 20)}</button>
+        <button class="roundbtn" data-action="card-step" data-delta="1" ${o.index < o.ids.length - 1 ? "" : "disabled"} aria-label="Weiter">${ic("chevron", 22)}</button>
+      </div>
+      <button class="btn flat" data-action="word" data-id="${w.id}">Details zum Wort</button>
+    </div></div>`;
 }
 
 // Settings
@@ -588,14 +751,21 @@ function renderOnboarding() {
 
 // MARK: Overlays
 
-function openOverlay(o) {
+function openOverlay(o, { stacked = false } = {}) {
   o.fresh = true;
+  if (stacked && state.overlay) o.parent = state.overlay;
   state.overlay = o;
   document.body.style.overflow = "hidden";
   renderOverlay();
 }
 
 function closeOverlay() {
+  const parent = state.overlay?.parent;
+  if (parent) {
+    state.overlay = parent;
+    renderOverlay();
+    return;
+  }
   state.overlay = null;
   document.body.style.overflow = "";
   overlayRoot.innerHTML = "";
@@ -606,7 +776,10 @@ function renderOverlay() {
   const o = state.overlay;
   if (!o) { overlayRoot.innerHTML = ""; return; }
   const scrollTop = overlayRoot.firstElementChild?.scrollTop ?? 0;
-  const views = { session: renderSessionOverlay, test: renderTestOverlay, testSetup: renderTestSetup, word: renderWordDetail, method: renderMethod };
+  const views = {
+    session: renderSessionOverlay, test: renderTestOverlay, testSetup: renderTestSetup, word: renderWordDetail,
+    method: renderMethod, group: renderGroup, cards: renderCards,
+  };
   overlayRoot.innerHTML = views[o.type](o);
   const root = overlayRoot.firstElementChild;
   // Animate only when the overlay opens or a new exercise appears, not on every tap.
@@ -859,7 +1032,16 @@ function renderTestOverlay(o) {
 function renderWordDetail(o) {
   const w = word(o.id);
   const card = P().cards[w.id];
-  let memory = `<div class="card secondary row">${ic("calendar", 20)} Dieses Wort ist für einen der nächsten Tage geplant.</div>`;
+  const planned = C.plannedDays(P())[w.id];
+  let memory;
+  if (planned && planned <= today()) {
+    memory = `<div class="card pad stack tight"><div class="row">${gradIcon("star", COLORS.coral, "sm")}<div style="flex:1"><h3>Steht heute auf deinem Plan</h3><div class="small secondary">Lerne es jetzt – danach wiederholt VocaDay es automatisch.</div></div></div>
+      <button class="btn" data-action="learn-now-start">${ic("play", 16)} Jetzt lernen</button></div>`;
+  } else {
+    memory = `<div class="card pad stack tight"><div class="row">${gradIcon("calendar", "#8e8e93", "sm")}<div style="flex:1"><h3>${planned ? `Geplant für ${dayLabel(planned)}` : "Noch nicht dran"}</h3>
+        <div class="small secondary">${planned ? "Es kommt automatisch an die Reihe." : `Platz ${w.rank} der Häufigkeitsliste – es kommt dran, wenn der Buchstabe ${C.letterFor(w.native)} wieder an der Reihe ist.`}</div></div></div>
+      <button class="btn" data-action="learn-now" data-id="${w.id}">${ic("plus", 16)} Heute lernen</button></div>`;
+  }
   if (card) {
     const recall = C.cardRecall(card);
     const st = status(w);
@@ -945,7 +1127,48 @@ const actions = {
   tab: (d) => { state.tab = d.tab; window.scrollTo(0, 0); render(); },
   speak: (d) => speak(d.text),
   "speak-slow": (d) => speak(d.text, "tr-TR", true),
-  word: (d) => openOverlay({ type: "word", id: d.id }),
+  word: (d) => openOverlay({ type: "word", id: d.id }, { stacked: ["group", "cards"].includes(state.overlay?.type) }),
+  "words-mode": (d) => { state.wordsMode = d.mode; render(); },
+  letter: (d) => { state.wordsLetter = d.letter || null; state.showAllLetter = false; render(); window.scrollTo(0, 0); },
+  "show-all-letter": () => { state.showAllLetter = true; render(); },
+  "more-history": () => { state.historyDays += 14; render(); },
+  group: (d) => openOverlay({ type: "group", stage: d.stage, sort: "recent" }),
+  "group-sort": (d) => { state.overlay.sort = d.sort; state.overlay.keepScroll = true; renderOverlay(); },
+  cards: (d) => {
+    let ids = [];
+    if (d.set === "learned") ids = Object.keys(P().cards).filter(word).sort((a, b) => C.cardRecall(P().cards[a]) - C.cardRecall(P().cards[b]));
+    if (d.set === "letter") ids = state.bank.words.filter((w) => C.letterFor(w.native) === state.wordsLetter && P().cards[w.id]).map((w) => w.id);
+    if (d.set === "group") ids = groupIds(state.overlay.stage);
+    const title = d.set === "letter" ? `Buchstabe ${state.wordsLetter}` : d.set === "group" ? STAGES.find(([k]) => k === state.overlay.stage)[1] : "Gelernte Wörter";
+    openCards(ids, title);
+  },
+  flip: () => {
+    if (swipeHandled) { swipeHandled = false; return; }
+    const o = state.overlay;
+    o.flipped = !o.flipped;
+    document.getElementById("flipcard")?.classList.toggle("flipped", o.flipped);
+    if (o.flipped) speak(word(o.ids[o.index]).translation);
+  },
+  "card-step": (d) => stepCard(Number(d.delta)),
+  "card-shuffle": () => { const o = state.overlay; o.ids = C.shuffle(o.ids); o.index = 0; o.flipped = false; renderOverlay(); toast("Gemischt"); },
+  "learn-now": (d) => {
+    if (C.addSpecificWord(d.id, P(), state.bank, today())) {
+      save();
+      vibrate(true);
+      toast("Zu heute hinzugefügt – los geht's im Tab „Heute“.");
+    }
+    state.overlay.keepScroll = true;
+    renderOverlay();
+  },
+  "learn-now-start": () => {
+    state.overlay = null;
+    document.body.style.overflow = "";
+    state.tab = "today";
+    render();
+    actions["start-daily"]();
+  },
+  "hide-install": () => { localStorage.setItem("vocaday.hideInstall", "1"); render(); },
+  "backup-later": () => { localStorage.setItem("vocaday.backupSnooze", String(Date.now())); render(); },
   method: () => openOverlay({ type: "method" }),
   close: () => {
     const o = state.overlay;
@@ -1023,7 +1246,6 @@ const actions = {
     state.overlay.keepScroll = true;
     renderOverlay();
   },
-  filter: (d) => { state.wordFilter = d.filter; render(); },
   "per-day": (d) => { updateSettings((s) => { s.newWordsPerDay += Number(d.delta); }); render(); },
   toggle: (d) => { updateSettings((s) => { s[d.key] = !s[d.key]; }); render(); },
   calendar: () => {
@@ -1033,6 +1255,7 @@ const actions = {
     toast("Kalenderdatei erstellt – tippe auf „Alle hinzufügen“.");
   },
   export: () => {
+    localStorage.setItem("vocaday.lastBackup", String(Date.now()));
     downloadFile(`VocaDay-Sicherung-${today()}.json`, "application/json", JSON.stringify(P(), null, 1));
   },
   reset: () => {
@@ -1050,6 +1273,44 @@ const actions = {
   },
   "onb-back": () => { state.onboardingStep = Math.max(0, state.onboardingStep - 1); render(); },
 };
+
+function stepCard(delta) {
+  const o = state.overlay;
+  if (o?.type !== "cards") return;
+  const next = o.index + delta;
+  if (next < 0 || next >= o.ids.length) return;
+  o.index = next;
+  o.flipped = false;
+  o.slide = delta > 0 ? "next" : "prev";
+  renderOverlay();
+}
+
+let swipeStart = null;
+let swipeHandled = false;
+
+document.addEventListener("touchstart", (event) => {
+  if (!event.target.closest?.("#flipcard")) return;
+  swipeStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+}, { passive: true });
+
+document.addEventListener("touchend", (event) => {
+  if (!swipeStart) return;
+  const dx = event.changedTouches[0].clientX - swipeStart.x;
+  const dy = event.changedTouches[0].clientY - swipeStart.y;
+  swipeStart = null;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+    swipeHandled = true;
+    setTimeout(() => { swipeHandled = false; }, 400);
+    stepCard(dx < 0 ? 1 : -1);
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (state.overlay?.type !== "cards") return;
+  if (event.key === "ArrowRight") stepCard(1);
+  if (event.key === "ArrowLeft") stepCard(-1);
+  if (event.key === " ") { event.preventDefault(); actions.flip(); }
+});
 
 function currentInput() {
   return overlayRoot.querySelector("input[data-input='answer']")?.value ?? "";
@@ -1096,7 +1357,10 @@ document.addEventListener("input", (event) => {
   if (el.dataset?.input === "search") {
     state.search = el.value;
     const results = document.getElementById("word-results");
-    if (results) results.innerHTML = renderWordResults();
+    if (results) {
+      results.innerHTML = renderWordsBody();
+      animateRings(results);
+    }
   }
   if (el.dataset?.input === "answer" && state.overlay?.ctx) state.overlay.ctx.input = el.value;
 });

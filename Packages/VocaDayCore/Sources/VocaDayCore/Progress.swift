@@ -253,6 +253,15 @@ public struct LearnerProgress: Codable, Sendable {
         stats[day] = dayStats
     }
 
+    /// The day each word was planned for, i.e. when it was (or will be) learned.
+    public var plannedDays: [String: DayKey] {
+        var result: [String: DayKey] = [:]
+        for (day, plan) in plans.sorted(by: { $0.key < $1.key }) {
+            for id in plan.wordIDs where result[id] == nil { result[id] = day }
+        }
+        return result
+    }
+
     /// Word ids introduced on the days `from`...`to` according to the plans.
     public func wordsIntroduced(from start: DayKey, to end: DayKey) -> [String] {
         plans.filter { $0.key >= start && $0.key <= end }

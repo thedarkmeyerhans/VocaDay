@@ -71,6 +71,7 @@ extension WordStatus {
     var color: Color {
         switch self {
         case .upcoming: return .gray
+        case .notYet: return Color(.systemGray4)
         case .learning: return Theme.practice
         case .review: return Theme.review
         case .mature: return Theme.correct

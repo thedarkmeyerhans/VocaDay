@@ -62,6 +62,32 @@ public struct DailyPlanner: Sendable {
         return words
     }
 
+    /// Adds a word the learner picked ("Jetzt lernen") to today. If it was
+    /// planned for a later day, the following days are planned again without it.
+    /// Returns false if the word was already planned for today or learned.
+    @discardableResult
+    public func addSpecificWord<G: RandomNumberGenerator>(
+        _ wordID: String, to progress: inout LearnerProgress, today: DayKey,
+        using generator: inout G
+    ) -> Bool {
+        guard progress.cards[wordID] == nil,
+              !progress.plans.contains(where: { $0.key <= today && $0.value.wordIDs.contains(wordID) })
+        else { return false }
+
+        let future = progress.plans.keys.filter { $0 > today }.sorted()
+        if let first = future.first, let plan = progress.plans[first] {
+            progress.letterCursor = plan.cursorBefore
+        }
+        for day in future { progress.plans[day] = nil }
+
+        var todayPlan = progress.plans[today] ?? DayPlan(wordIDs: [], cursorBefore: progress.letterCursor)
+        todayPlan.wordIDs.append(wordID)
+        progress.plans[today] = todayPlan
+
+        ensurePlans(&progress, today: today, using: &generator)
+        return true
+    }
+
     private func plan<G: RandomNumberGenerator>(
         day: DayKey, count: Int, in progress: inout LearnerProgress, using generator: inout G
     ) {

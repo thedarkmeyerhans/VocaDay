@@ -23,11 +23,34 @@ struct WeekDay: Identifiable {
     let isToday: Bool
 }
 
-enum WordStatus: String {
-    case upcoming = "Geplant"
+enum WordStatus: String, CaseIterable, Identifiable {
     case learning = "Lernend"
     case review = "Wiederholen"
     case mature = "Gefestigt"
+    case upcoming = "Geplant"
+    case notYet = "Noch nicht dran"
+
+    var id: String { rawValue }
+
+    var explanation: String {
+        switch self {
+        case .learning: return "gerade neu oder vergessen"
+        case .review: return "sitzt für einige Tage"
+        case .mature: return "sitzt drei Wochen und länger"
+        case .upcoming: return "kommt in den nächsten Tagen"
+        case .notYet: return "noch nicht an der Reihe"
+        }
+    }
+
+    /// The groups shown in the vocabulary overview.
+    static let overview: [WordStatus] = [.learning, .review, .mature, .upcoming]
+}
+
+/// A stack of words for the flashcard browser.
+struct CardDeck: Identifiable {
+    let id = UUID()
+    let title: String
+    let words: [Word]
 }
 
 @MainActor
@@ -91,7 +114,9 @@ final class AppModel: ObservableObject {
     func card(for word: Word) -> CardState? { progress.cards[word.id] }
 
     func status(of word: Word) -> WordStatus {
-        guard let card = progress.cards[word.id] else { return .upcoming }
+        guard let card = progress.cards[word.id] else {
+            return progress.plans.values.contains { $0.wordIDs.contains(word.id) } ? .upcoming : .notYet
+        }
         if card.isMature { return .mature }
         if card.phase != .review { return .learning }
         return .review
@@ -109,6 +134,50 @@ final class AppModel: ObservableObject {
         progress.plans.keys.filter { $0 > today }.sorted()
             .flatMap { progress.plans[$0]?.wordIDs ?? [] }
             .compactMap { words[$0] }
+    }
+
+    // MARK: Vocabulary
+
+    /// Learned words grouped by memory state (most recently reviewed first) and
+    /// the words planned from today on.
+    var wordsByStatus: [WordStatus: [Word]] {
+        var groups: [WordStatus: [Word]] = [:]
+        for word in introducedWords {
+            groups[status(of: word), default: []].append(word)
+        }
+        groups[.upcoming] = progress.plans.keys.filter { $0 >= today }.sorted()
+            .flatMap { progress.plans[$0]?.wordIDs ?? [] }
+            .filter { progress.cards[$0] == nil }
+            .compactMap { words[$0] }
+        return groups
+    }
+
+    func words(forLetter letter: String) -> [Word] {
+        let alphabet = Alphabet.forLanguage(settings.pair.native)
+        return words.bank.words.filter { alphabet.letter(for: $0.native) == letter }
+    }
+
+    func plannedDay(for word: Word) -> DayKey? { progress.plannedDays[word.id] }
+
+    /// "Jetzt lernen": puts a word the learner picked on today's plan.
+    @discardableResult
+    func learnNow(_ word: Word) -> Bool {
+        var generator = SystemRandomNumberGenerator()
+        let added = planner.addSpecificWord(word.id, to: &progress, today: today, using: &generator)
+        if added {
+            save()
+            rescheduleNotifications()
+        }
+        return added
+    }
+
+    /// "Heute", "Gestern" or the date.
+    func dayLabel(_ day: DayKey) -> String {
+        if day == today { return "Heute" }
+        if day == today.adding(days: -1, calendar: calendar) { return "Gestern" }
+        if day == today.adding(days: 1, calendar: calendar) { return "Morgen" }
+        guard let date = day.date(calendar: calendar) else { return day.rawValue }
+        return date.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Locale(identifier: "de_DE")))
     }
 
     // MARK: Sessions

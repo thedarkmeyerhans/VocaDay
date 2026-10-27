@@ -13,6 +13,8 @@ Erste Sprachrichtung: **Deutsch → Türkisch** (1.102 Wörter).
 - **Benachrichtigungen:** Morgens das Wort des Tages direkt in der Mitteilung („ev – das Haus“), abends eine Erinnerung, aber nur wenn noch etwas offen ist. Alles lokal, ohne Server.
 - **Aussprache** über die türkische Systemstimme, auch langsam.
 - **Wortschatz-Test:** fragt alle gelernten Wörter ab (oder die schwächsten 20, 20 zufällige, die der Woche). Richtung und Antwortart (Auswählen/Eintippen) sind wählbar.
+- **Wortschatz:** keine lange Liste, sondern eine Übersicht mit Fortschritt und Status-Kacheln. Darunter drei Ansichten: **A–Z** (Buchstaben-Raster → Wörter des Buchstabens), **Status** (wischbare Reihen: Lernend, Wiederholen, Gefestigt, Geplant) und **Verlauf** (nach Lerntagen). Die Suche durchsucht das ganze Wörterbuch. Jedes noch nicht geplante Wort lässt sich mit **„Heute lernen“** vorziehen, ohne die A–Z-Reihenfolge zu stören.
+- **Karteikarten:** Jede Gruppe (alle gelernten, ein Buchstabe, ein Status) lässt sich als Kartenstapel durchwischen: antippen zum Umdrehen, mit Aussprache und Mischen.
 - **Statistik:** Textabdeckung, Aktivität, Lernkalender, Prognose der Wiederholungen, Wortstatus, gemessene Behaltensquote, Fortschritt A–Z, Test-Verlauf, Lernzeit und Serien.
 
 ## Lernsystem

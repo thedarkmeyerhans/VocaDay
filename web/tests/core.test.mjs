@@ -109,3 +109,17 @@ test("statistics and calendar export", () => {
   assert.equal(ics.match(/BEGIN:VEVENT/g).length, 30);
   assert.match(ics, /BEGIN:VALARM/);
 });
+
+test("learn now moves a picked word to today without duplicates", () => {
+  const progress = core.newProgress();
+  core.ensurePlans(progress, bank, "2026-10-27", 5, seeded(9));
+  const picked = progress.plans["2026-10-28"].wordIDs[0];
+  assert.equal(core.addSpecificWord(picked, progress, bank, "2026-10-27", seeded(10)), true);
+  assert.equal(progress.plans["2026-10-27"].wordIDs.at(-1), picked);
+  const all = Object.values(progress.plans).flatMap((p) => p.wordIDs);
+  assert.equal(new Set(all).size, all.length);
+  assert.equal(core.plannedDays(progress)[picked], "2026-10-27");
+  assert.equal(core.addSpecificWord(picked, progress, bank, "2026-10-27"), false);
+  core.record(progress, "haus", core.RATING.good);
+  assert.equal(core.addSpecificWord("haus", progress, bank, "2026-10-27"), false);
+});

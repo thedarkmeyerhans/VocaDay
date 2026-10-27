@@ -2,138 +2,6 @@ import Charts
 import SwiftUI
 import VocaDayCore
 
-struct WordListView: View {
-    @EnvironmentObject private var model: AppModel
-    @State private var search = ""
-    @State private var filter: Filter = .all
-
-    enum Filter: String, CaseIterable, Identifiable {
-        case all = "Alle"
-        case learning = "Lernend"
-        case review = "Wiederholen"
-        case mature = "Gefestigt"
-        case upcoming = "Geplant"
-
-        var id: String { rawValue }
-
-        func matches(_ status: WordStatus) -> Bool {
-            switch self {
-            case .all: return true
-            case .learning: return status == .learning
-            case .review: return status == .review
-            case .mature: return status == .mature
-            case .upcoming: return status == .upcoming
-            }
-        }
-    }
-
-    private var words: [Word] {
-        let all = model.introducedWords + model.upcomingWords
-        let query = TurkishText.normalized(search)
-        return all.filter { word in
-            guard filter.matches(model.status(of: word)) else { return false }
-            guard !query.isEmpty else { return true }
-            return TurkishText.normalized(word.native).contains(query)
-                || TurkishText.normalized(word.translation).contains(query)
-                || TurkishText.foldingDiacritics(TurkishText.normalized(word.translation)).contains(query)
-        }
-    }
-
-    var body: some View {
-        List {
-            Section {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(Filter.allCases) { option in
-                            Button {
-                                withAnimation(.spring(duration: 0.25)) { filter = option }
-                            } label: {
-                                Text("\(option.rawValue) \(count(option))")
-                                    .font(.subheadline.weight(.semibold))
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 7)
-                                    .background(filter == option ? AnyShapeStyle(Theme.sunrise)
-                                                                 : AnyShapeStyle(Color(.tertiarySystemFill)),
-                                                in: Capsule())
-                                    .foregroundStyle(filter == option ? Color.white : Color.primary)
-                            }
-                            .buttonStyle(PressableStyle())
-                        }
-                    }
-                    .padding(.vertical, 4)
-                }
-                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                .listRowBackground(Color.clear)
-            }
-
-            if words.isEmpty {
-                ContentUnavailableView(emptyTitle,
-                                       systemImage: "books.vertical",
-                                       description: Text(search.isEmpty
-                                                         ? "Dein erstes Wort wartet im Tab „Heute“."
-                                                         : "Versuch es mit einem anderen Suchbegriff."))
-                    .listRowBackground(Color.clear)
-            } else {
-                Section {
-                    ForEach(words) { word in
-                        NavigationLink {
-                            WordDetailView(word: word)
-                        } label: {
-                            WordRow(word: word, status: model.status(of: word), card: model.card(for: word),
-                                    recall: model.card(for: word).map { model.scheduler.retrievability(of: $0, at: Date()) })
-                        }
-                    }
-                } footer: {
-                    Text("\(words.count) Wörter")
-                }
-            }
-        }
-        .searchable(text: $search, prompt: "Deutsch oder Türkisch suchen")
-        .navigationTitle("Wörter")
-    }
-
-    private var emptyTitle: String { search.isEmpty ? "Keine Wörter" : "Nichts gefunden" }
-
-    private func count(_ option: Filter) -> Int {
-        (model.introducedWords + model.upcomingWords).filter { option.matches(model.status(of: $0)) }.count
-    }
-}
-
-private struct WordRow: View {
-    let word: Word
-    let status: WordStatus
-    let card: CardState?
-    let recall: Double?
-
-    var body: some View {
-        HStack(spacing: 12) {
-            RoundedRectangle(cornerRadius: 3)
-                .fill(status.color)
-                .frame(width: 5, height: 40)
-            VStack(alignment: .leading, spacing: 3) {
-                Text(word.translation).font(.headline)
-                ArticleWord(word: word, font: .subheadline)
-                    .foregroundStyle(.secondary)
-            }
-            Spacer()
-            VStack(alignment: .trailing, spacing: 5) {
-                Text(status.rawValue)
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(status.color)
-                if let recall {
-                    RecallBar(value: recall).frame(width: 64)
-                }
-                if let card {
-                    Text(card.due.relativeDescription())
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                }
-            }
-        }
-        .padding(.vertical, 2)
-    }
-}
-
 /// Small horizontal bar of the current recall probability.
 struct RecallBar: View {
     let value: Double
@@ -200,9 +68,7 @@ struct WordDetailView: View {
                     memoryCard(card)
                     ForgettingCurveCard(card: card, scheduler: model.scheduler)
                 } else {
-                    Label("Dieses Wort ist für einen der nächsten Tage geplant.", systemImage: "calendar")
-                        .foregroundStyle(.secondary)
-                        .card()
+                    LearnNowCard(word: word)
                 }
 
                 Text("\(word.partOfSpeech.displayName) · Platz \(word.rank) der häufigsten deutschen Wörter")
@@ -252,6 +118,52 @@ struct WordDetailView: View {
             Text(label).font(.caption2).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
+    }
+}
+
+/// For words not learned yet: when they are planned, and "Heute lernen".
+private struct LearnNowCard: View {
+    @EnvironmentObject private var model: AppModel
+    let word: Word
+    @State private var session: ActiveSession?
+
+    var body: some View {
+        let planned = model.plannedDay(for: word)
+        let isToday = planned.map { $0 <= model.today } ?? false
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 14) {
+                GradientIcon(systemName: isToday ? "star.fill" : "calendar",
+                             color: isToday ? Theme.coral : Color(.systemGray), size: 40)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(isToday ? "Steht heute auf deinem Plan"
+                         : planned.map { "Geplant für \(model.dayLabel($0))" } ?? "Noch nicht dran")
+                        .font(.headline)
+                    Text(isToday ? "Lerne es jetzt – danach wiederholt VocaDay es automatisch."
+                         : planned != nil ? "Es kommt automatisch an die Reihe."
+                         : "Platz \(word.rank) der Häufigkeitsliste – es kommt dran, wenn sein Buchstabe wieder an der Reihe ist.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            if isToday {
+                Button {
+                    session = model.makeDailySession()
+                } label: {
+                    Label("Jetzt lernen", systemImage: "play.fill")
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            } else {
+                Button {
+                    withAnimation { _ = model.learnNow(word) }
+                    haptic(true)
+                } label: {
+                    Label("Heute lernen", systemImage: "plus")
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            }
+        }
+        .card(padding: 18)
+        .fullScreenCover(item: $session) { SessionView(active: $0) }
     }
 }
 

@@ -318,3 +318,37 @@ final class ReminderTests: XCTestCase {
         XCTAssertEqual(body, "ta (A), tb (B), tc (C) und 1 weitere")
     }
 }
+
+final class LearnNowTests: XCTestCase {
+    func testPickedWordMovesToTodayWithoutDuplicates() throws {
+        let bank = try Fixtures.bank()
+        let calendar = Fixtures.utcCalendar
+        let planner = DailyPlanner(bank: bank, calendar: calendar)
+        var progress = LearnerProgress()
+        var generator = SeededGenerator(seed: 11)
+        let today = DayKey(rawValue: "2026-10-27")
+        planner.ensurePlans(&progress, today: today, daysAhead: 4, using: &generator)
+        let tomorrow = today.adding(days: 1, calendar: calendar)
+        let picked = try XCTUnwrap(progress.plans[tomorrow]?.wordIDs.first)
+
+        XCTAssertTrue(planner.addSpecificWord(picked, to: &progress, today: today, using: &generator))
+        XCTAssertEqual(progress.plans[today]?.wordIDs.last, picked)
+        let all = progress.plans.values.flatMap(\.wordIDs)
+        XCTAssertEqual(all.count, Set(all).count)
+        XCTAssertEqual(progress.plannedDays[picked], today)
+
+        // A second time does nothing.
+        XCTAssertFalse(planner.addSpecificWord(picked, to: &progress, today: today, using: &generator))
+    }
+
+    func testLearnedWordsCannotBeAdded() throws {
+        let bank = try Fixtures.bank()
+        let planner = DailyPlanner(bank: bank, calendar: Fixtures.utcCalendar)
+        var progress = LearnerProgress()
+        progress.record(wordID: "haus", rating: .good, at: Fixtures.date("2026-10-20T08:00:00Z"),
+                        scheduler: FSRSScheduler(), calendar: Fixtures.utcCalendar)
+        var generator = SeededGenerator(seed: 12)
+        XCTAssertFalse(planner.addSpecificWord("haus", to: &progress, today: DayKey(rawValue: "2026-10-27"),
+                                               using: &generator))
+    }
+}
